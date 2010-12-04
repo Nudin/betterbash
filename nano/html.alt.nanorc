@@ -1,0 +1,69 @@
+##
+## Highlighter-Definition für XML-Dateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "html" "\.(html?|xml|svg)$"
+
+# Quelltext
+icolor brightgreen start="<code" end="</code>"
+
+# Tags
+color brightblue start="<" end=">"
+
+# <? ?>
+color brightcyan start="<\?" end="\?>"
+
+# Attribute
+color red "[[:space:]][[:graph:]][^= ]*="
+
+# </> =
+color cyan "[<>=]" "</"
+
+# Präformatierter Text
+icolor brightyellow,blue "<pre[ >]" "</pre>"
+
+# Werte
+color green ""[^"]*""
+
+# Doctype
+color brightcyan start="<!DOCTYPE" end=">"
+color yellow "<!DOCTYPE[^"]+("|$)"
+
+# Anführungszeichen
+color cyan "["]"
+
+# <head> und <body>
+icolor black,green "</?head[ >]"
+icolor brightwhite,green "</?body[ >]"
+
+# Stylesheets
+icolor magenta start="<style" end="</style>"
+
+# CDATA
+color brightmagenta start="<!\[CDATA\[" end="\]\]>"
+
+# Farbwerte
+icolor brightred "#([0-9a-f]{3}){1,2}\>" "rgb\([^,]+,[^,]+,[^)]+\)" "\<(AliceBlue|AntiqueWhite|Aqua|Aquamarine|Azure|Beige|Bisque|Black|BlanchedAlmond|Blue|BlueViolet|Brown|BurlyWood|CadetBlue|Chartreuse|Chocolate|Coral|CornflowerBlue|Cornsilk|Crimson|Cyan|DarkBlue|DarkCyan|DarkGoldenrod|DarkGray|DarkGreen|DarkKhaki|DarkMagenta|DarkOliveGreen|DarkOrange|DarkOrchid|DarkRed|DarkSalmon|DarkSeaGreen|DarkSlateBlue|DarkSlateGray|DarkTurquoise|DarkViolet|DeepPink|DeepSkyBlue|DimGray|DodgerBlue|FireBrick|FloralWhite|ForestGreen|Fuchsia|Gainsboro|GhostWhite|Gold|Goldenrod|Gray|Green|GreenYellow|Honeydew|HotPink|IndianRed|Indigo|Ivory|Khaki|Lavender|LavenderBlush|LawnGreen|LemonChiffon|LightBlue|LightCoral|LightCyan|LightGoldenrodYellow|LightGreen|LightGrey|LightPink|LightSalmon|LightSeaGreen|LightSkyBlue|LightSlateGray|LightSteelBlue|LightYellow|Lime|LimeGreen|Linen|Magenta|Maroon|MediumAquamarine|MediumBlue|MediumOrchid|MediumPurple|MediumSeaGreen|MediumSlateBlue|MediumSpringGreen|MediumTurquoise|MediumVioletRed|MidnightBlue|MintCream|MistyRose|Moccasin|NavajoWhite|Navy|OldLace|Olive|OliveDrab|Orange|OrangeRed|Orchid|PaleGoldenrod|PaleGreen|PaleTurquoise|PaleVioletRed|PapayaWhip|PeachPuff|Peru|Pink|Plum|PowderBlue|Purple|Red|RosyBrown|RoyalBlue|SaddleBrown|Salmon|SandyBrown|SeaGreen|Seashell|Sienna|Silver|SkyBlue|SlateBlue|SlateGray|Snow|SpringGreen|SteelBlue|Tan|Teal|Thistle|Tomato|Turquoise|Violet|Wheat|White|WhiteSmoke|Yellow|YellowGreen)\>"
+
+# Kommentare
+color brightblack start="<!--" end="-->"
+
+# Skripte
+icolor brightyellow start="<script" end="</script>"
+
+# Maskierte Sonderzeichen
+icolor brightyellow "&([a-z0-9]+|#([0-9]+|x[0-9a-f]+));"

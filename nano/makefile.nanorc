@@ -1,0 +1,54 @@
+##
+## Highlighter-Definition für Makefiles in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-03-22.2
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+
+syntax "makefile" "(^|/)Makefile$"
+
+## Zahlen
+# Dec
+# icolor brightgreen "[-+]?\<([0-9]+)\>"
+
+# Schlüsselwörter
+icolor brightmagenta "^[[:space:]]*\<(include|define|else|end[ei]f|ifn?def|ifn?eq)\>"
+
+# "Strings" und 'Strings'
+color cyan ""(\\.|[^\"])*""
+color cyan "'(\\.|[^\'])*'"
+
+# Abhängigkeiten
+icolor brightyellow start="^[^=:]+[[:space:]]*:[[:space:]]+.*\<" end="[^\]$"
+
+# Targets
+icolor red "^[^=:]+[[:space:]]*:([[:space:]]|$)"
+# all-Target
+icolor brightred "^[[:space:]]*all[[:space:]]*:"
+# special Targets
+color brightred "^[[:space:]]*\.(PHONY|SUFFIXES|DEFAULT|PRECIOUS|INTERMEDIATE|SECONDARY|SECONDEXPANSION|DELETE_ON_ERROR|IGNORE|LOW_RESOLUTION_TIME|SILENT|EXPORT_ALL_VARIABLES|NOTPARALLEL)[[:space:]]*:"
+
+# Patterns
+color green "\$[<@+^]"
+
+# Makros/ Variablen
+icolor brightblue "^[[:space:]]*[-[:alnum:]_]+[[:space:]]*[+:?]?=" start="\$\(" end="\)"
+
+# Zuweisungsoperatoren
+color brightcyan "[[:space:]][+:?]?=([[:space:]]|$)"
+
+# Kommentare
+color brightblack "#.*$"
+

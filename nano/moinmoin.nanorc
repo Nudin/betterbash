@@ -1,0 +1,98 @@
+##
+## Highlighter-Definition für MoinMoin-Wiki-Dateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "moinmoin" "\.moin(moin)?$"
+
+# Überscrhiften
+color brightwhite,blue "^=[[:space:]].*[[:space:]]=[[:space:]]*$"
+color brightwhite,blue "^==[[:space:]].*[[:space:]]==[[:space:]]*$"
+color brightwhite,blue "^===[[:space:]].*[[:space:]]===[[:space:]]*$"
+color brightwhite,blue "^====[[:space:]].*[[:space:]]====[[:space:]]*$"
+color brightwhite,blue "^=====[[:space:]].*[[:space:]]=====[[:space:]]*$"
+
+# Makros
+color magenta "\[\[[^]]*]]" "^#acl.*"
+# fehlerhafter Anker
+color brightyellow,red "\[\[Anchor\(.*[äöüÄÖÜ ].*\)]]"
+
+# Parser
+color green start="^\{\{\{ *#! *Hinweis" end="^}}}$"
+color green start="^\{\{\{ *#! *Wissen" end="^}}}$"
+color green start="^\{\{\{ *#! *Warnung" end="^}}}$"
+color green start="^\{\{\{ *#! *Experten" end="^}}}$"
+color black,green start="^\{\{\{ *#! *cplusplus" end="^}}}$"
+color black,green start="^\{\{\{ *#! *java" end="^}}}$"
+color black,green start="^\{\{\{ *#! *pascal" end="^}}}$"
+color black,green start="^\{\{\{ *#! *python" end="^}}}$"
+
+# Wiki-Links
+color cyan "\[:[^:]+:[^]]*]" "\["[^"]+"[^]]*]" "\[#[^]]+]"
+color cyan "\[(attachment|inline):[^]]+]"
+
+# Weblinks
+icolor brightblue "\[[a-z]+://[^]]+]"
+icolor brightblue "\[wiki:Wikipedia/[^]]+]"
+icolor brightblue "\[mailto:.+@[^]]+]"
+
+# Listen
+color brightgreen "^ \* "
+color brightgreen "^  \* "
+color brightgreen "^ (1|a|i)\. "
+color brightgreen "^  (1|a|i)\. "
+color brightgreen "^   (1|a|i)\. "
+
+# Definitionslisten
+# color green "^ [^:]+:: .+"
+color brightgreen "^ [^:]+::"
+
+# Kursivschrift
+color red "''([^']('[^'])?)+''"
+# Fettschrift
+color brightred "'''([^'](''?[^'])?)+'''"
+# Monotype
+color brightyellow "`[^`]+`"
+
+# Fett kursiv
+color brightyellow,magenta "'''''([^']|'{1,4} )+'''''"
+# unterstrichen
+color brightyellow,magenta "__([^_](_[^_])?)+__"
+# durchgestrichen
+color brightyellow,magenta "--\(([^)]|\)-?[^-])+\)--"
+# kleiner
+color brightyellow,magenta "~-([^-]|-[^~])+-~"
+# größer
+color brightyellow,magenta "~\+([^+]|\+[^~])+\+~"
+# tiefgestellt
+color brightyellow,magenta ",,([^,]|[^,],[^,])+,,"
+# hochgestellt
+color brightyellow,magenta "\^[^^]+\^"
+
+# Flaggen
+color brightmagenta "\{(de|en|fr|cl|zh|da|fi|it|ja|hr|lv|nl|at|pl|pt|ro|ru|sv|ch|rs|sk|es|ko|cz|tr|us|dl)}( |$)"
+
+# Tabellen
+color cyan "\|\|(<[^>]*>)?"
+# letzte Spalte fehlerhaft
+color brightyellow,red "^\|\|.*[^|]\|?$"
+
+# Kommentare
+color brightblack "^##.*"
+
+# Parser 2
+color brightyellow start="^\{\{\{ *#! *Text" end="^}}}$" start="^\{\{\{$" end="^}}}$" "\{\{\{([^}]|} )+}}}"
+color brightyellow start="^\{\{\{ *#! *Befehl" end="^}}}$"

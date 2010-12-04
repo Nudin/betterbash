@@ -1,0 +1,83 @@
+##
+## Highlighter-Definition für sh-Skripte in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "sh" "\.sh$" "(/|^|\.)bash(rc|_[^/]*)$" "(^|\.|/)(bash_)?profile$"
+
+# Schlüsselwörter
+color brightmagenta "\<(break|case|do|done|elif|else|esac|exit|fi|for|if|in|local|read|return|select|shift|then|time|until|while)\>"
+
+# sudo
+color black,red "\<sudo\>"
+
+# Klammern, Operatoren
+color brightred "(\{|\}|\(|\)|\;|[[:space:]]\]\]?|\[?\[[[:space:]]|`|\\|\$|<|>|!|=|&|\|)"
+
+# Zahlen
+color red "\<-?[0-9]+\.?[0-9]*\>"
+
+# Ein-/Ausgabestreams
+color yellow "\&[0-9]"
+
+# Funktionen
+icolor magenta "(^|\;)[[:space:]]*(function[[:space:]]+)?[0-9A-Z_.]+[[:space:]]*\(\)" "(^|\;)[[:space:]]*function[[:space:]]+[0-9A-Z_.]+"
+
+# Test-Operatoren für Strings und Integer
+# color blue "-(eq|ne|gt|lt|ge|le|s|n|z|o|a)\>"
+
+# Standardprogramme
+# brightblue <- brightcyan
+color brightblue "\<(cat|cd|chgrp|chmod|chown|clear|cp(io)?|echo|env|export|[efr]?grep|install|kill(all)?|let|ln|ls|make|mkdir|mv|rm(dir)?|sed|set|tar|test|touch|umask|uname|unset|which)\>"
+
+# "Strings"
+color green ""(\\.|[^\"])*""
+
+# Befelsausgabe direkt übernehmen
+# # sollte _nach_ "Strings" stehen, z.B.:
+# #   erster_Treffer="Treffer: $(grep -m1 "gesuchter Text" "Datei") \# Kommentar"
+# # hier werden zwar die inneren Strings nicht eingefärbt, aber immer noch besser als andersrum
+color brightyellow "`(\\.|[^\`])*`" "\$\((\\.|[^\)])*\)"
+
+# Rechnungen in Bash $((x+y))
+icolor magenta start="\$\(\(" end="\)\)"
+
+# Variablen
+# brightblue -> brightcyan
+icolor brightcyan "\$[:0-9A-Z_!@#$*?-]+" "(^|\;)[[:space:]]*[0-9A-Z_!@#$*?-]+=" start="\$\{" end="}"
+
+# 'Strings'
+color cyan "'(\\.|[^\'])*'"
+
+# Syntaxfehler bei Variablenzuweisung
+icolor brightwhite,red "(^|\;)[[:space:]]*\$[0-9A-Z_!@#$*?-]+=" "(^|\;)[[:space:]]*[0-9A-Z_!@#$*?-]+[[:space:]]="
+
+# Maskierte Sonderzeichen
+color brightgreen "\\." "\\0[0-7]{1,3}" "\\x[a-fA-F0-9]{1,2}"
+
+# Kommentare
+color brightblack "(^|[[:space:]])#.*$" "(^|;)[[:space:]]*(:(;|$)|:[[:space:]][^;]*(;|$))" 
+
+# FIXME, TODO, etc.
+color brightyellow,red "\<(BUG|FIXME|IMPORTANT|WARNING)\>:?"
+color brightwhite,yellow "\<(BUGFIX|HACK|NOTE|TODO)\>:?"
+
+# Shebang
+color brightyellow "^#!.*$"
+color yellow "^#!"
+
+# Leerzeichen am Zeilenende
+color ,blue "[[:space:]]+$"

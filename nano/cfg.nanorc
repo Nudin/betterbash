@@ -1,0 +1,209 @@
+##
+## Highlighter-Definition für Konfigurationsdateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-15.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+
+## allgemeine Config-Dateien
+syntax "cfg" "\.(colors|conf|cfg|desktop|ini)$" "rc$" "(^|/)hosts(\.(allow|deny))?$"
+
+# Variablen
+color cyan "^[^="]+[[:space:]]*="
+
+# Klammern, Operatoren
+color brightred "(\{|\}|\(|\)|\;|\]|\[|`|\\|\$|<|>|!|=|&|\||,)"
+
+# Zahlen
+color brightmagenta "\<-?[0-9]+\.?[0-9]*\>"
+
+# "Strings" und 'Strings'
+color green ""(\\.|[^\"])*""
+color brightgreen "'(\\.|[^\'])*'"
+
+# Maskierte Sonderzeichen
+# color brightgreen "\\."
+
+# Abschnitte
+color brightyellow "^[[:space:]]*\[.*\][[:space:]]*([[:space:]]#|[[:space:]];|$)" "(End)?(Sub)?Section"
+# Kommentare
+color brightblack "(^|[[:space:]])(#|;).*$"
+
+# Leerzeichen am Zeilenende
+color ,blue "[[:space:]]+$"
+
+
+##########################################################################
+## /etc/fstab, /etc/mtab, /proc/mounts
+syntax "fstab" "(/|^)((fs|m)tab|mounts)$"
+
+# type
+color brightred "^[[:space:]]*[[:graph:]]+[[:space:]]+[[:graph:]]+[[:space:]]+[[:graph:]]+"
+
+# mount point
+color brightcyan "^[[:space:]]*[[:graph:]]+[[:space:]]+[[:graph:]]+"
+
+# file system
+color brightyellow "^[[:space:]]*[[:graph:]]+"
+
+# options
+color brightgreen "[[:graph:]]+[[:space:]]*[0-9][[:space:]]+[0-9][[:space:]]*($|[[:space:]]#)"
+
+# dump
+color brightblue "[0-9][[:space:]]+[0-9][[:space:]]*($|[[:space:]]#)"
+
+# pass
+color brightmagenta "[0-9][[:space:]]*($|[[:space:]]#)"
+
+# Kommentare
+color brightblack "([[:space:]]+|^)#.*$"
+
+# Legende
+color red "<type>"
+color cyan "<mount point>"
+color yellow "<file system>"
+color green "<options>"
+color blue "<dump>"
+color magenta "<pass>"
+
+##########################################################################
+## /boot/grub/menu.lst
+syntax "grub" "(^|/)menu.lst$"
+
+# Parameter
+color brightblue "[[:space:]][a-zA-Z]+="
+
+# Dateinamen von Kernel(modulen) und initrd
+color magenta "^[[:space:]]*(kernel|initrd|module)[[:space:]]+[[:graph:]]+"
+
+# Grub-Kommandos
+color brightyellow "^[[:space:]]*(background|boot|border|chainloader|clear|color|configfile|default|foreground|halt|hiddenmenu|initrd|kernel|lock|makeactive|map|module|password|pause|quiet|reboot|root(noverify)?|savedefault|setkey|setup|shade|splashimage|timeout|title|viewport)([[:space:]]|=|$)"
+
+# =
+color brightred "="
+
+# Festplatten(partitionen)
+color cyan "\(hd[0-9](,[0-9](,[a-z])?)?\)" "UUID=[-0-9a-fA-F]+" "/dev/[hs]d.[0-9]"
+
+# Floppy
+color green "\(fd[0-9]\)"
+
+# Kommentare
+color brightblack "([[:space:]]+|^)#.*$"
+
+# Optionen für update-grub
+color green "^[[:space:]]*#[[:space:]]*(alternative|altoptions|defoptions|groot|howmany|kopt|lockalternative|lockold|memtest86|nonaltoptions|recovery|savedefault|updatedefaultentry|xenhopt|xenkopt).*$"
+
+# Optionen für update-grub mit Syntaxfehler
+color brightwhite,red "^[[:space:]]*(alternative|altoptions|defoptions|groot|howmany|kopt|lockalternative|lockold|memtest86|nonaltoptions|recovery|savedefault|updatedefaultentry|xenhopt|xenkopt)=.*$"
+
+# Magic Marker
+color brightwhite,blue "^### BEGIN AUTOMAGIC KERNELS LIST$" "^### END DEBIAN AUTOMAGIC KERNELS LIST$"
+color black,green "^## ## Start Default Options ##$" "^## ## End Default Options ##$"
+
+##########################################################################
+## /etc/apt/sources.list
+syntax "sources.list" "(/|^)sources\.list$"
+
+# Komponenten
+color brightwhite ".*"
+
+# Distribution
+color cyan "((file|http|ftp|copy|rsh|ssh):[[:graph:]]+|cdrom:(\[.*\]/?|[[:graph:]]+))[[:space:]]+[[:graph:]]+"
+
+# URI
+color brightmagenta "((file|http|ftp|copy|rsh|ssh):[[:graph:]]+|cdrom:(\[.*\]/?|[[:graph:]]+))"
+
+# Typ nicht deb und nicht deb-src (für andere Distributionen)
+color brightred "^[[:space:]]*[[:graph:]]+[[:space:]]"
+
+# Typ deb
+color green "^[[:space:]]*deb[[:space:]]"
+
+# Typ deb-src
+color brightyellow "^[[:space:]]*deb-src[[:space:]]"
+
+# Kommentare
+color brightblack "([[:space:]]+|^)#.*$"
+
+##########################################################################
+## crontab, /etc/anacrontab
+syntax "cron" "(^|/)(ana)?crontab$"
+
+# Klammern, Operatoren
+color brightred "(\{|\}|\(|\)|\;|[[:space:]]\]|\[[[:space:]]|`|\\|\$|<|>|!|=|&|\|)"
+
+# Zeitangaben
+icolor brightgreen "(^|[[:space:]])(mon|tue|wed|thu|fri|sat|sun|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[[:space:]]" "(([0-9]+(-[0-9]+(/[0-9]+)?)?|\*(/[0-9]+)?),)*([0-9]+(-[0-9]+(/[0-9]+)?)?|\*(/[0-9]+)?)"
+icolor brightgreen "@(reboot|yearly|annually|monthly|weekly|daily|midnight|hourly)\>"
+
+# Standardprogramme
+color brightyellow "\<(cat|cd|chmod|chown|cp|echo|env|export|[efr]?grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|test|touch|umask|unset)\>"
+
+# root
+color brightmagenta "\<root\>"
+
+# Aus-/Eingabestreams
+color yellow "\&[0-9]"
+
+# "Strings" und 'Strings'
+color green ""(\\.|[^\"])*""
+color brightgreen "'(\\.|[^\"])*'"
+
+# Variablen
+icolor brightblue "\$\{?[:0-9A-Z_!@#$*?-]+\}?" "(^|\;)[[:space:]]*[0-9A-Z_!@#$*?-]+="
+
+# Maskierte Sonderzeichen
+color brightred "\\."
+
+# Kommentare
+color brightblack "([[:space:]]+|^)#.*$"
+
+# Legende
+color white "^[[:space:]]*#[[:space:]]+m[[:space:]]+h[[:space:]]+dom[[:space:]]+mon[[:space:]]+dow[[:space:]]+(user[[:space:]]+)?command"
+
+##########################################################################
+## /etc/passwd, /etc/shadow, /etc/group
+syntax "passwd" "(^|/)(passwd|shadow|group)$"
+
+# 9. Spalte
+icolor green "^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 8. Spalte
+icolor magenta "^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 7. Spalte
+icolor brightblue "^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 6. Spalte
+icolor brightyellow  "^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 5. Spalte
+icolor brightgreen "^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 4. Spalte
+icolor brightred "^[^:]*:[^:]*:[^:]*:[^:]*"
+
+# 3. Spalte
+icolor brightcyan "^[^:]*:[^:]*:[^:]*"
+
+# 2. Spalte
+icolor brightmagenta "^[^:]*:[^:]*"
+
+# Benutzername
+icolor brightwhite "^[^:]*"
+
+# :
+icolor brightblack ":"

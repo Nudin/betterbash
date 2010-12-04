@@ -1,0 +1,64 @@
+##
+## Highlighter-Definition für CuteStyleSheets in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "css" "\.css$"
+
+# Attribute
+color cyan start="\[" end="\]"
+
+# Modifikatoren
+color brightred "[>*+~#]" "\.\<"
+
+# Pseudoklassen
+color yellow ":?:(hover|link|visited|active|focus|first-child|last-child|only-child|first-of-type|last-of-type|only-of-type|first-letter|first-line|before|after|selection|root|empty|target|enabled|disabled|checked|indeterminate|nth-child|nth-last-child|nth-of-type|nth-last-of-type|not)\>"
+
+# =
+color white "="
+
+# Begrenzer
+color brightgreen "[]{},;[]"
+
+# Schlüsselwörter
+color red "(!important|@charset|@import|@page)"
+
+# Eigenschaften
+color brightcyan "\<(absolute|armenian|auto|baseline|bidi-override|blink|block|bold(er)?|both|bottom|capitalize|center|circle|collapse|compact|crosshair|cursive|dashed|decimal(-leading-zero)?|default|disc|dotted|double|embed|e-resize|(extra-|semi-|ultra-)?(condensed|expanded)|fantasy|fixed|georgian|groove|help|hidden|hide|inherit|inline(-block|-table)?|inset|inside|invert|italic|justify|larger?|left|light(er)?|line-through|list-item|lower(case|-(greek|latin|roman))|ltr|marker|medium|middle|monospace|move|narrower|none|no-repeat|normal|nowrap|([ns][ew]?|[ew])-resize|oblique|outset|outside|overline|pointer|pre(-line|-wrap)|relative|repeat(-[xy])?|ridge|right|rtl|run-in|sans-serif|scroll|separate|serif|show|small|small-caps|smaller|solid|square|s-resize|static|sub|super|table(-(caption|cell|(column|row)(-group)?)|-(header|footer)-group)?|text(-(bottom|top))?|thick|thin|top|transparent|underline|upper(case|-latin|-roman)|visible|wait|wider|x?x-large|x?x-small)\>"
+
+color brightyellow "\<background(-(attachment|color|image|position|repeat))?:"
+color brightyellow "\<border((-(bottom|top|left|right))?(-(color|style|width))?|-collapse|-spacing):"
+color brightyellow "\<(margin|padding)(-(bottom|top|left|right))?:"
+color brightyellow "\<font(-(family|size|stretch|style|variant|weight))?:"
+color brightyellow "\<((min|max)-)?(height|width):"
+color brightyellow "\<outline(-(color|style|width))?:"
+color brightyellow "\<(bottom|caption-side|clear|clip|color|content|counter-(increment|reset)|cursor|direction|display|empty-cells|float|left|letter-spacing|line-height|list-style(-(image|position|type))?|orphans|overflow|position|quotes|right|table-layout|text-(align|decoration|indent|transform)|top|unicode-bidi|vertical-align|visibility|white-space|widows|word-spacing|z-index):"
+
+# Zahlen
+color brightblue "(\B\.[0-9]+|\<[0-9]+\.?[0-9]*)((em|cm|px|pt|mm|in|pc)?\>|%)"
+
+# Farben
+icolor brightmagenta "#([0-9a-f]{3}){1,2}\>" "rgb\([^,]+,[^,]+,[^)]+\)" "\<(AliceBlue|AntiqueWhite|Aqua|Aquamarine|Azure|Beige|Bisque|Black|BlanchedAlmond|Blue|BlueViolet|Brown|BurlyWood|CadetBlue|Chartreuse|Chocolate|Coral|CornflowerBlue|Cornsilk|Crimson|Cyan|DarkBlue|DarkCyan|DarkGoldenrod|DarkGray|DarkGreen|DarkKhaki|DarkMagenta|DarkOliveGreen|DarkOrange|DarkOrchid|DarkRed|DarkSalmon|DarkSeaGreen|DarkSlateBlue|DarkSlateGray|DarkTurquoise|DarkViolet|DeepPink|DeepSkyBlue|DimGray|DodgerBlue|FireBrick|FloralWhite|ForestGreen|Fuchsia|Gainsboro|GhostWhite|Gold|Goldenrod|Gray|Green|GreenYellow|Honeydew|HotPink|IndianRed|Indigo|Ivory|Khaki|Lavender|LavenderBlush|LawnGreen|LemonChiffon|LightBlue|LightCoral|LightCyan|LightGoldenrodYellow|LightGreen|LightGrey|LightPink|LightSalmon|LightSeaGreen|LightSkyBlue|LightSlateGray|LightSteelBlue|LightYellow|Lime|LimeGreen|Linen|Magenta|Maroon|MediumAquamarine|MediumBlue|MediumOrchid|MediumPurple|MediumSeaGreen|MediumSlateBlue|MediumSpringGreen|MediumTurquoise|MediumVioletRed|MidnightBlue|MintCream|MistyRose|Moccasin|NavajoWhite|Navy|OldLace|Olive|OliveDrab|Orange|OrangeRed|Orchid|PaleGoldenrod|PaleGreen|PaleTurquoise|PaleVioletRed|PapayaWhip|PeachPuff|Peru|Pink|Plum|PowderBlue|Purple|Red|RosyBrown|RoyalBlue|SaddleBrown|Salmon|SandyBrown|SeaGreen|Seashell|Sienna|Silver|SkyBlue|SlateBlue|SlateGray|Snow|SpringGreen|SteelBlue|Tan|Teal|Thistle|Tomato|Turquoise|Violet|Wheat|White|WhiteSmoke|Yellow|YellowGreen)\>"
+
+# Strings
+color brightwhite ""(\\.|[^\"])*""
+color brightwhite "'(\\.|[^\"])*'"
+
+# Kommentare
+color brightblack start="/\*" end="\*/"
+
+# Leerzeichen am Zeilenende
+color ,blue "[[:space:]]+$"

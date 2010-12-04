@@ -1,0 +1,59 @@
+##
+## Highlighter-Definition für JavaScript-Dateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "js" "\.js$"
+
+# Zahlen
+icolor brightgreen "\.?\<[0-9]+\>" "\<[0-9]+\.([0-9]+\>)?"
+icolor brightgreen "\<0x[0-9a-f]\>"
+
+# Schlüsselwörter
+color brightyellow "\<(if|else|for|in|while|do|continue|break|with|try|catch|finally|switch|case|new|var|return|delete|true|false|void|throw|typeof|const|default)\>"
+color brightyellow "\<(Anchor|Applet|Area|Array|Boolean|Button|Checkbox|Date|document|window|Image|FileUpload|Form|Frame|Function|Hidden|Link|MimeType|Math|Max|Min|Layer|navigator|Object|Password|Plugin|Radio|RegExp|Reset|Screen|Select|String|Text|Textarea|this|Window)\>"
+color brightyellow "\<(abs|acos|asin|atan|atan2|ceil|cos|ctg|E|exp|floor|LN2|LN10|log|LOG2E|LOG10E|PI|pow|round|sin|sqrt|SQRT1_2|SQRT2|tan)\>"
+color brightmagenta "\<function\>"
+
+# Klammern
+color brightcyan "[{}()[]" "\]" 
+
+# Semikolon
+color brightblue ";"
+
+# Operatoren
+color brightred "[-+*/%]"
+color brightred "[-+*/&|]?="
+color brightred "(\+\+|--)"
+
+# Vergleichs-/ logische Operatoren
+color brightred "(!|&&|\|\|)"
+color brightred "[<>]=?" "[=!]==?"
+color brightred "[:?]"
+
+# Strings
+color green ""(\\.|[^\"])*"" "'(\\.|[^\'])*'"
+
+# Escape-Sequenzen
+color brightgreen "\\."
+
+# Kommentare
+color brightblack "//.*$" start="/\*" end="\*/"
+
+# FIXME, TODO, etc.
+color brightyellow,red "\<(BUG|FIXME|IMPORTANT|WARNING)\>:?"
+color brightwhite,yellow "\<(BUGFIX|HACK|NOTE|TODO)\>:?"
+

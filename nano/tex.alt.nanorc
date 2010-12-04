@@ -1,0 +1,53 @@
+##
+## Highlighter-Definition für LaTeX-Dateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "tex" "\.(tex|aux)$"
+
+# Makros und Sonderzeichen
+# in aux-Dateien zählt auch das @ als Buchstabe
+color magenta "\\.|\\[A-Za-z@]*"
+
+# Inline-Formeln
+color brightgreen "(\$?\$)(\\.|[^\$])+\1" start="\\\(" end="\\\)" start="\\begin\{math}" end="\\end\{math}"
+
+# abgesetzte Formeln
+color brightgreen start="\\\[" end="\\\]" start="\\begin\{(align|equation|eqnarray)\*?}" end="\\end\{(align|equation|eqnarray)\*?}"
+# klappt leider nicht, weil start in end enthalten ist:
+# color brightgreen start="\$\$" end="\$\$"
+
+# Klammern
+color brightred "(\]|[{}()[])"
+
+# \begin und \end
+color brightyellow "\\(begin|end)\{[^}]+}"
+
+# Zahlen
+color brightcyan "[0-9]+\.?[0-9]*" "\.[0-9]+"
+
+# Kapitel etc.
+color white,blue "\\(part|chapter|((sub)?){1,2}section|(sub)?paragraph)\*?\{[^}]+}"
+
+# selbstdefinierte Makros und deren Argumente
+color red "\\((re)?newcommand|newenvironment)\{[^{]+}(\[[1-9]\])?"
+color yellow "#[1-9]"
+
+# Verbatim (Probleme bei mehreren "\verb" in einer Zeile, aber wohl nicht besser machbar)
+color black,white "\\verb\*?(.).*\1" start="\\begin\{verbatim\*?}" end="\\end\{verbatim\*?}"
+
+# Kommentare
+color brightblack "%.*" start="\\begin\{comment}" end="\\end\{comment}"

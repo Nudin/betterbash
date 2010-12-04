@@ -1,0 +1,90 @@
+##
+## Highlighter-Definition für Nano-Konfigurationsdateien in Nano
+## Konzipiert für Terminals mit weißer Schrift auf schwarzem Hintergrund
+##
+## Version 2008-02-04.1
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/149459/
+##
+
+# mögliche Vordergrundfarben:
+#@brightblack  brightred      brightgreen  brightyellow
+#@brightblue   brightmagenta  brightcyan   brightwhite
+#
+# mögliche Hinter- und Vordergrundfarben:
+#@(black)      red            green        yellow
+#@blue         magenta        cyan         white
+
+syntax "nanorc" "(/|^|\.)nanorc$"
+
+# Syntaxfehler (hoffentlich...)
+icolor brightwhite,red "[^[:space:]]*"
+
+# Zahlen
+icolor brightmagenta "[[:space:]]+(tabsize|fill)[[:space:]]+-?[0-9]+"
+
+# Schlüsselwörter
+icolor brightcyan "^[[:space:]]*(set|unset)[[:space:]]+(autoindent|backup|backupdir|backwards|boldtext|brackets|casesensitive|const|cut|fill|historylog|matchbrackets|morespace|mouse|multibuffer|noconvert|nofollow|nohelp|nonewlines|nowrap|operatingdir|preserve|punct)\>" "^[[:space:]]*(set|unset)[[:space:]]+(quickblank|quotestr|rebinddelete|rebindkeypad|regexp|smarthome|smooth|speller|suspend|tabsize|tabstospaces|tempfile|view|whitespace|wordbounds)\>"
+icolor green "^[[:space:]]*(set|include|syntax)\>"
+icolor brightred "^[[:space:]]*unset\>"
+
+# Farben
+icolor brightblue "^[[:space:]]*i?color[[:space:]]*((bright)?(white|black|red|blue|green|yellow|magenta|cyan))?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+icolor magenta "^[[:space:]]*i?color\>" "[[:space:]]+(start|end)="
+
+# Strings (nanorc-/Regex-Spezialsyntax)
+icolor brightwhite "\B"([^"]|"[[:graph:]])*"{1,2}([[:space:]]|$)"
+
+#### regular expressions Beginn
+# Zeilenbeginn/-ende
+icolor brightmagenta "[$^]"
+
+# Zeichenklassen
+icolor green "\[\^?" "\]"
+icolor cyan "\[:(alnum|alpha|blank|cntrl|digit|graph|lower|print|punct|space|upper|xdigit):\]"
+icolor white "[[:alpha:]]-[[:alpha:]]" "[[:digit:]]-[[:digit:]]"
+
+# Regex-Operatoren
+icolor brightred "[()|.+*?]"
+
+# Quantifizierer
+icolor yellow "\{[1-9][0-9]*,?([1-9][0-9]*)?}"
+
+# überflüssige? Backslashes (und solche in Zeichenklassen)
+icolor brightblue "\\."
+
+# Escape-Sequenzen
+icolor brightgreen "\\[wb<>1-9]"
+
+# maskierte Sonderzeichen
+color brightyellow "\\[].+*?|()\{^$[]"
+#### regular expressions Ende
+
+# Beginn Syntaxschema
+icolor brightwhite,blue "^[[:space:]]*syntax[[:space:]]+"[^"]+""
+
+# Kommentare
+icolor brightblue "^[[:space:]]*#.*$"
+# icolor blue "^[[:space:]]*##.*$"
+
+# Legende
+icolor white "^[[:space:]]*#@.*white"
+icolor cyan "^[[:space:]]*#@.*cyan"
+icolor magenta "^[[:space:]]*#@.*magenta"
+icolor blue "^[[:space:]]*#@.*blue"
+icolor yellow "^[[:space:]]*#@.*yellow"
+icolor green "^[[:space:]]*#@.*green"
+icolor red "^[[:space:]]*#@.*red"
+icolor brightblack "^[[:space:]]*#@.*black."
+icolor brightwhite "^[[:space:]]*#@.*brightwhite"
+icolor brightcyan "^[[:space:]]*#@.*brightcyan"
+icolor brightmagenta "^[[:space:]]*#@.*brightmagenta"
+icolor brightblue "^[[:space:]]*#@.*brightblue"
+icolor brightyellow "^[[:space:]]*#@.*brightyellow"
+icolor brightgreen "^[[:space:]]*#@.*brightgreen"
+icolor brightred "^[[:space:]]*#@.*brightred"
+icolor brightblack "^[[:space:]]*#@.*brightblack"
+# Simsalabim...
+icolor black,black "^[[:space:]]*#@"
+icolor brightblack "^[[:space:]]*#"
