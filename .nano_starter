@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# startet nano mit Farbschema "sh", wenn Datei ein Skript ist,
+# mit Farbschema "html", wenn Datei eine XML-Datei ist,
+# ansonsten ohne spezielles Farbschema.
+# Erwartet nicht mehrere Dateien als Argument
+# (erste Datei entscheidet für alle)
+#
+# Version 2008-02-06.1
+#
+
+##
+## Verbesserungsvorschläge bitte im Forum
+## http://forum.ubuntuusers.de/topic/130525/
+##
+
+SHELLS="(sh|bash|t?csh|dash|ksh|rc)"
+
+findfilename() {
+  while [ "$1" ]
+  do
+    modifier=`echo "$1"|cut -c1`
+    if [ "$modifier" = "-" ]
+    then
+      case `echo "$1"|cut -c2-` in
+        C|Q|T|Y|o|r|s) shift;;
+        *) ;;
+      esac
+    elif [ "$modifier" = "+" ]
+    then
+      cursorposgiven=1
+    else
+      filename="$1"
+      break
+    fi
+    shift
+  done
+}
+
+findfilename "$@"
+shebang="$(head -1 "$filename" 2>/dev/null|egrep "^#![[:space:]]*[/a-zA-Z]*/$SHELLS([[:space:]]|$)")"
+# etwas kompliziert, aber ''file "$filename"'' scheitert z.B. an dash (vgl. /usr/share/file/magic )
+xmlhead="$(head -1 "$filename" 2>/dev/null|egrep -i "^<\?xml ")"
+
+# if [ -x "$filename" -a "$shebang" != "" ] # nur ausführbare Skripte
+if [ "$shebang" != "" ] # auch Skripte, die nicht ausführbar sind
+then # Datei ist Shell-Skript
+  if [ "$cursorposgiven" ]; then
+    nano -Ysh "$@"
+  else # Cursor auf erste nicht-Kommentarzeile setzen
+    firstactiveline=$(egrep -n -m1 "^[[:space:]]*[^#]" "$filename"|cut -d: -f1)
+    nano -Ysh +$firstactiveline,1 "$@"
+  fi
+elif [ "$xmlhead" ]; then # Datei ist XML-Dati
+    nano -Yhtml "$@"
+elif [ $(basename "$filename") = ".bashrc" ] ; then
+   if [ "$cursorposgiven" ]; then
+       nano -Ysh "$@"
+   else # Cursor auf erste nicht-Kommentarzeile setzen
+       firstactiveline=$(egrep -n -m1 "^[[:space:]]*[^#]" "$filename"|cut -d: -f1)
+       nano -Ysh +$firstactiveline,1 "$@"
+   fi
+else
+    nano "$@"
+fi

@@ -1,0 +1,47 @@
+defautscale=3 #Sacle that should be used as default
+scale = 20 #Scale used fpr pi, e, etc.
+pi=4*a(1)
+
+define mod(x,y) { auto tempmyscale, tempvar; tempmyscale=scale; scale = 0; tempvar=x%y; scale = tempmyscale; return tempvar}
+define abs(x) { if (x<0) return -x; return x }
+define sgn(x) { if (x==0) {return 0} else {return x/abs(x) }}
+
+define hoch(a,b) { if (a>0) {return e(b*l(a));} else { if (mod(b,1)==0) {return a^b} ;  print "Fehler..." } }
+
+define fact (n) {
+auto c
+c=1
+if (n>0) c=n*fact(n-1)
+return(c)
+}
+define fac(x) { return fact(x) }
+
+define exp(x) { return e(x) }
+e=e(1)
+
+define sin(x) { return s(x) }
+define cos(x) { return c(x) }
+define tan(x) { return s(x)/c(x) }
+define cot(x) { return 1/tan(x) }
+define arctan(x) { return a(x) }
+define arcsin(x) { return sgn(x)*a(x*sqrt(1/(1-x^2)))  }
+define arccos(x) { return pi/2-arcsin(x) }
+
+define ln(x) { return l(x) }
+define log(x) { return l(x)/l(10) }
+define lg(x,y) { return ln(x)/ln(y) }
+define lb(x) { return ln(x)/ln(2) }
+
+define pi(x) { auto tempmyscale; tempmyscale=scale; scale=x; bigpi=4*a(1); scale = tempmyscale; return bigpi }
+
+gs=(1+sqrt(5))/2
+
+#Physikalische Konstanten
+h=6.6260755*10^-34 #Js
+kb=1.380658*10^-23 #J/K
+elem=1.60217733*10^-19 #C #e ist schon vergeben
+c=2.99792458*10^8 #m/s
+g=9.80665 #m/s^2
+
+scale = defautscale
+

@@ -1,0 +1,33 @@
+set backup
+set autoindent
+#set const
+unset casesensitive
+#set mouse nette Idee, aber ist nicht so das wahre
+set smooth
+set historylog
+set speller hunspell
+set quickblank
+set nowrap
+include "/usr/share/nano/cfg.nanorc"
+include "/usr/share/nano/c.nanorc"
+include "/usr/share/nano/css.nanorc"
+include "/usr/share/nano/default.nanorc"
+include "/usr/share/nano/html.nanorc"
+include "/usr/share/nano/java.nanorc"
+include "/usr/share/nano/js.nanorc"
+include "/usr/share/nano/makefile.nanorc"
+include "/usr/share/nano/man.nanorc"
+#include "/usr/share/nano/nanorc.nanorc"
+include "/usr/share/nano/nanorc.alt.nanorc"
+include "/usr/share/nano/patch.nanorc"
+include "/usr/share/nano/perl.nanorc"
+include "/usr/share/nano/pov.nanorc"
+include "/usr/share/nano/python.nanorc"
+include "/usr/share/nano/ruby.nanorc"
+#include "/usr/share/nano/sh.nanorc" 
+include "/usr/share/nano/sh.alt.nanorc"
+include "/usr/share/nano/tex.nanorc"
+#include "/usr/share/nano/asm.nanorc"
+#include "/usr/share/nano/groff.nanorc"
+#include "/usr/share/nano/mutt.nanorc"
+#include "/usr/share/nano/moinmoin.nanorc"
