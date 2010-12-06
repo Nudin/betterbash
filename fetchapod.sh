@@ -10,7 +10,7 @@
 # veröffentlichen
 # mehr
 
-APOD_DIR=/home/$USER/apod
+APOD_DIR=$HOME/apod
 gnote=1
 w3m=0
 links=1
@@ -18,6 +18,15 @@ term=terminator
 gnotefile="71a2ba1e-fa32-4ea1-9275-57f5e976a9ca.note"
 
 line() {  head -$1  | tail -1; }
+
+if [ ! -d $APOD_DIR ] ; then
+ if [ ! -e $APOD_DIR ] ; then
+  mkdir -p $APOD_DIR
+ else
+  echo "$APOD_DIR is not a directory."
+  exit
+ fi
+fi
 
 # Test if we have an different date
 if [ "$1" = "" ]; then
