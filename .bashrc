@@ -12,7 +12,10 @@ PATH=$PATH:/usr/games
 #========================================
 #	Bash-behavior
 #========================================
-shopt -s autocd cdspell checkjobs dirspell globstar hostcomplete histreedit histverify
+shopt -s cdspell hostcomplete histreedit histverify
+if [ $BASH_VERSINFO -eq 4 ] ; then
+        shopt -s autocd checkjobs dirspell globstar
+fi
 CDPATH='~'
 
 
