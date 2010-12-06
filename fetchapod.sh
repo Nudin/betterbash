@@ -10,7 +10,7 @@
 # veröffentlichen
 # mehr
 
-APOD_DIR=/home/$USER/apod
+APOD_DIR=$HOME/apod
 gnote=1
 w3m=0
 links=1

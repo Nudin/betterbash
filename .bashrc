@@ -57,7 +57,9 @@ alias df='df -h'
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
 alias free="free -m"
-alias man="man -P most"
+if  most --version 2>/dev/null ; then
+ alias man="man -P most"
+fi
 alias pidof='/sbin/pidof'
 alias alsamixer='alsamixer -c 0'
 alias ping='ping -c 4'
