@@ -44,7 +44,7 @@ CDPATH='~'
 #========================================
 # 	Envoirements
 #========================================
-export BROWSER="/home/michi/Code/browserweiche.sh"
+export BROWSER="~/Code/browserweiche.sh"
 # export JAVA_HOME="/usr/java/jdk1.6.0_03/bin/"
 export EDITOR="nano"
 
@@ -67,12 +67,12 @@ alias vdir='vdir --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree -C'
-alias rm='mv --target-directory=/home/michi/.local/share/Trash/files'
+alias rm='mv --target-directory=~/.local/share/Trash/files'
 
 #========================================
 # 	Complex overwriting
 #========================================
-alias nano='/home/michi/.nano_starter'
+alias nano='~/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq ~/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
 
 
@@ -414,9 +414,9 @@ alias nautilus='nautilus . &'
 # 	Stuff for several Programms
 #========================================
 #	BOINC
-#alias boinc='boinc_client --dir /home/michi/.BOINC'
-#alias boinc_client='boinc_client --dir /home/michi/.BOINC'
-#alias boincmgr='cd /home/michi/.BOINC;boincmgr'
+#alias boinc='boinc_client --dir ~/.BOINC'
+#alias boinc_client='boinc_client --dir ~/.BOINC'
+#alias boincmgr='cd ~/.BOINC;boincmgr'
 
 #	libtrash
 # export LD_PRELOAD=/usr/local/lib/libtrash.so 
