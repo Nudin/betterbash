@@ -16,7 +16,7 @@ shopt -s cdspell hostcomplete histreedit histverify
 if [ $BASH_VERSINFO -eq 4 ] ; then
         shopt -s autocd checkjobs dirspell globstar
 fi
-CDPATH='~'
+CDPATH='$HOME'
 
 
 #========================================
@@ -44,7 +44,7 @@ CDPATH='~'
 #========================================
 # 	Envoirements
 #========================================
-export BROWSER="~/Code/browserweiche.sh"
+export BROWSER="$HOME/Code/browserweiche.sh"
 # export JAVA_HOME="/usr/java/jdk1.6.0_03/bin/"
 export EDITOR="nano"
 
@@ -67,13 +67,13 @@ alias vdir='vdir --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree -C'
-alias rm='mv --target-directory=~/.local/share/Trash/files'
+alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 
 #========================================
 # 	Complex overwriting
 #========================================
-alias nano='~/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq ~/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+alias nano='$HOME/.nano_starter'
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
 
 
 #========================================
@@ -127,11 +127,11 @@ function mkcd { # Makes directory then moves into it
     mkdir -p -v $1
     cd $1
 }
-alias texte='cd ~/Eigene Texte'
-alias downloads='cd ~/Downloads'
-alias books='cd ~/E-Books'
-alias images='cd ~/Bilder'
-alias tv='cd ~/Videos/TV'
+alias texte='cd $HOME/Eigene Texte'
+alias downloads='cd $HOME/Downloads'
+alias books='cd $HOME/E-Books'
+alias images='cd $HOME/Bilder'
+alias tv='cd $HOME/Videos/TV'
 alias localhost='cd /var/www'
 #-----------------------------
 #	find
@@ -164,7 +164,7 @@ Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
         return;
     fi
     find . -type f -name "${2:-*}" -print0 | \
-    xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more 
+    xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
 
 }
 alias findbig='find . -type f -exec ls -s {} \; | sort -h -r | head -5'
@@ -192,13 +192,13 @@ function lowercase()  # move filenames to lowercase
 
 function swichfiles()  # Swap 2 filenames around, if they exist
 {
-    local TMPFILE=tmp.$$ 
+    local TMPFILE=tmp.$$
 
     [ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
     [ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
     [ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
 
-    mv "$1" $TMPFILE 
+    mv "$1" $TMPFILE
     mv "$2" "$1"
     mv $TMPFILE "$2"
 }
@@ -311,7 +311,7 @@ function killps()                 # Kill by process name.
 #	other
 #-----------------------------
 alias datum='date "+%d. %b %Y    %T"'
-alias reload='source ~/.bashrc'
+alias reload='source $HOME/.bashrc'
 alias mx='chmod a+x'
 function repeat()       # Repeat n times command.
 {
@@ -414,9 +414,9 @@ alias nautilus='nautilus . &'
 # 	Stuff for several Programms
 #========================================
 #	BOINC
-#alias boinc='boinc_client --dir ~/.BOINC'
-#alias boinc_client='boinc_client --dir ~/.BOINC'
-#alias boincmgr='cd ~/.BOINC;boincmgr'
+#alias boinc='boinc_client --dir $HOME/.BOINC'
+#alias boinc_client='boinc_client --dir $HOME/.BOINC'
+#alias boincmgr='cd $HOME/.BOINC;boincmgr'
 
 #	libtrash
 # export LD_PRELOAD=/usr/local/lib/libtrash.so 
