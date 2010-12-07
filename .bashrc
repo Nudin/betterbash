@@ -58,7 +58,7 @@ alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
 alias free="free -m"
 if  most --version 2>/dev/null ; then
- alias man="man -P most"
+	alias man="man -P most"
 fi
 alias pidof='/sbin/pidof'
 alias alsamixer='alsamixer -c 0'
