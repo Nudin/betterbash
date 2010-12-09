@@ -75,7 +75,7 @@ if [ $Xdim -eq $picdim ] ; then
 elif [ $Xdim -gt $picdim ] ; then	# Höher als der Bildschirm
 	echo gt
 	identify -verbose -crop 10x$picdimy+0+0 $dest | grep mean > $APOD_DIR/mean.tmp
-	identify -verbose -crop 10x$picdimy+0+$(expr $picdimx "-" 10) $dest | grep mean > $APOD_DIR/mean2.tmp
+	identify -verbose -crop 10x$picdimy+$(expr $picdimx "-" 10)+0 $dest | grep mean > $APOD_DIR/mean2.tmp
 	if [ $(cat $APOD_DIR/mean.tmp | wc -l ) -eq 1 ] ; then # Gray
 	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 	  green=$red
