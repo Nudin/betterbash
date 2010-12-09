@@ -46,9 +46,7 @@ rm $APOD_DIR/apod_*
 curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html > $tempfile
 
 ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
-# ext=$(cat $tempfile | awk  '/[Ii][Mm][Gg] [Ss][Rr][Cc]/'| sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {print(substr ($0,length($0)-3 ,3 ))}')
 src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
-#src=$(cat $tempfile | awk  '/[Ii][Mm][Gg] [Ss][Rr][Cc]/'| sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {print(substr ($0,1,length($0)-5))}')
 img=$(echo $src.$ext)
 
 dest=$APOD_DIR/apod_$date.$ext
@@ -65,16 +63,12 @@ if [ $Xdim -eq $picdim ] ; then
 	identify -verbose $dest | grep mean > $APOD_DIR/mean.tmp
 	if [ $(cat $APOD_DIR/mean.tmp | wc -l ) -eq 1 ] ; then # Gray
 	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green=$red
 	  blue=$red
 	else
   	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  green=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  blue=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  blue=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	fi
 	rm $APOD_DIR/mean.tmp
 
@@ -83,28 +77,20 @@ elif [ $Xdim -gt $picdim ] ; then	# Höher als der Bildschirm
 	identify -verbose -crop 10x$picdimy+0+0 $dest | grep mean > $APOD_DIR/mean.tmp
 	identify -verbose -crop 10x$picdimy+0+$(expr $picdimx "-" 10) $dest | grep mean > $APOD_DIR/mean2.tmp
 	if [ $(cat $APOD_DIR/mean.tmp | wc -l ) -eq 1 ] ; then # Gray
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 	  green=$red
 	  blue=$red
 	  red2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  red2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
           green2=$red2
           blue2=$red2
 	else # RGB-Bild
   	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  green=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  blue=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  blue=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 
 	  red2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  red2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  green2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  blue2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  blue2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	fi
 	rm $APOD_DIR/mean.tmp
 	rm $APOD_DIR/mean2.tmp
@@ -113,27 +99,19 @@ elif [ $Xdim -lt $picdim ] ; then	# Breiter als der Bildschirm
 	identify -verbose -crop ${picdimx}x10+0+0 $dest | grep mean > $APOD_DIR/mean.tmp # Oberer-Rand
 	identify -verbose -crop ${picdimx}x10+0+$(expr $picdimy "-" 10) $dest | grep mean > $APOD_DIR/mean2.tmp #Unterer Rand
 	if [ $(cat $APOD_DIR/mean.tmp | wc -l ) -eq 1 ] ; then # Gray
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 	  green=$red
 	  blue=$red
-#	  red2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  red2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 	  green2=$red2
 	  blue2=$red2
 	else # RGB-Bild
-#	  red=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
   	  red=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  green=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  blue=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  blue=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 
-#	  red2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  red2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 1 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  green2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  green2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 2 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
-#	  blue2=$(echo "obase=16; $(printf "%.0f\n" $(cat $APOD_DIR/mean2.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,))" | \bc)
 	  blue2=$(printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean2.tmp | line 3 | tr -s ' ' | cut -d' ' -f3 | tr . ,)))
 	fi
 	rm $APOD_DIR/mean.tmp
