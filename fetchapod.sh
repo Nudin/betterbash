@@ -63,7 +63,8 @@ if [  "$test2" = "0" -o "$2" = "force" ]; then
 
 	dest=$(download)
 
-	Xdim=$(wmctrl -d | head -1 | cut -d' ' -f5 | tr 'x' '/' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)	#Display-Verhältniss*10
+#	Xdim=$(wmctrl -d | head -1 | cut -d' ' -f5 | tr 'x' '/' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)	#Display-Verhältniss*10
+	Xdim=$(xrandr | line 1 | cut -d' ' -f8-10 | tr -d , | sed 's/ x /\//g' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)
 	picdim=$(identify $dest | cut -d' ' -f 3 | tr 'x' '/' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)	#Bild-Verhältniss*10
 	picdimx=$(identify $dest | cut -d' ' -f 3 | cut -dx -f1)
 	picdimy=$(identify $dest | cut -d' ' -f 3 | cut -dx -f2)
