@@ -16,7 +16,7 @@ shopt -s cdspell hostcomplete histreedit histverify
 if [ $BASH_VERSINFO -eq 4 ] ; then
         shopt -s autocd checkjobs dirspell globstar
 fi
-CDPATH='$HOME'
+#CDPATH='$HOME' don't work well with autocd
 
 
 #========================================
@@ -69,7 +69,20 @@ alias vdir='vdir --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree -C'
-alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
+#alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
+# better would be to use libtrash
+rm()
+ {
+  if [ $# -gt 1 ] ; then
+  	rm $*
+  else
+	if [ -e $HOME/.local/share/Trash/files/$1 ] ; then
+		nr=$(expr $(ls a_[0-9] | tr '\n' '\t' | cut -f$(ls a_[0-9]|wc -l) | cut -d_ -f2) \+ 1)
+  		mv $HOME/.local/share/Trash/files/$1 $HOME/.local/share/Trash/files/$1_$nr
+	fi
+	mv --target-directory=$HOME/.local/share/Trash/files $1
+ fi
+ }
 
 #========================================
 # 	Complex overwriting
