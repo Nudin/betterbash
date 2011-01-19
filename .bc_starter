@@ -1,5 +1,5 @@
 defautscale=3 #Sacle that should be used as default
-scale = 20 #Scale used fpr pi, e, etc.
+scale = 20 #Scale used for pi, e, etc.
 pi=4*a(1)
 
 define mod(x,y) { auto tempmyscale, tempvar; tempmyscale=scale; scale = 0; tempvar=x%y; scale = tempmyscale; return tempvar}
