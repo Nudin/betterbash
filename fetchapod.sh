@@ -10,13 +10,8 @@
 # veröffentlichen
 # mehr
 
-## Settings: ##
-APOD_DIR=$HOME/apod
-gnote=1
-w3m=0
-links=1
-term=terminator
-gnotefile="71a2ba1e-fa32-4ea1-9275-57f5e976a9ca.note"
+## Read Settings: ##
+source ~/fetchapodrc
 
 # Function: Give out the line n
 line() {  head -$1  | tail -1; }
