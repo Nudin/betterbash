@@ -11,9 +11,9 @@
 # mehr
 
 APOD_DIR=$HOME/apod
-gnote=1
+gnote=0
 w3m=0
-links=1
+links=0
 term=terminator
 gnotefile="71a2ba1e-fa32-4ea1-9275-57f5e976a9ca.note"
 
@@ -43,7 +43,8 @@ if [  "$test2" = "0" -o "$2" = "force" ]; then				###
 rm $APOD_DIR/apod_*
 
 # Download
-curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html > $tempfile
+#curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html > $tempfile
+wget http://antwrp.gsfc.nasa.gov/apod/ap$date.html -O $tempfile
 
 ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
 # ext=$(cat $tempfile | awk  '/[Ii][Mm][Gg] [Ss][Rr][Cc]/'| sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {print(substr ($0,length($0)-3 ,3 ))}')
@@ -53,7 +54,8 @@ img=$(echo $src.$ext)
 
 dest=$APOD_DIR/apod_$date.$ext
 
-curl --silent $img > $dest
+#curl --silent $img > $dest
+wget $img -O $dest
 
 Xdim=$(wmctrl -d | head -1 | cut -d' ' -f5 | tr 'x' '/' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)	#Display-Verhältniss*10
 picdim=$(identify $dest | cut -d' ' -f 3 | tr 'x' '/' | sed 's/$/*100/g' | \bc -l | cut -d. -f1)	#Bild-Verhältniss*10
