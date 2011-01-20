@@ -1,0 +1,49 @@
+! German doublequotemark on [AltGr] + ö/ä
+keycode 47 = odiaeresis Odiaeresis doublelowquotemark singlelowquotemark doublelowquotemark singlelowquotemark
+keycode 48 = adiaeresis Adiaeresis leftdoublequotemark leftsinglequotemark leftdoublequotemark leftsinglequotemark
+! … on [AltGr] + .
+keycode 60 = period colon ellipsis division ellipsis division
+! – on [AltGr] + -
+keycode 61 = minus underscore endash abovedot endash abovedot
+! arrows with [numpad activ]; [shit] + 8/4/6/2
+keycode  80 = KP_Up KP_8 KP_Up KP_8 uparrow NoSymbol b
+keycode  85 = KP_Right KP_6 KP_Right KP_6 rightarrow NoSymbol f NoSymbol KP_Right KP_6 f
+keycode  83 = KP_Left KP_4 KP_Left KP_4 leftarrow NoSymbol d NoSymbol KP_Left KP_4 d
+keycode  88 = KP_Down KP_2 KP_Down KP_2 downarrow NoSymbol x NoSymbol KP_Down KP_2 x
+
+! The symbols ℕ/ℤ/ℝ/ℂ on [AltGr] + N/Z/R/C (Q on shift because of @)
+keycode  27 = r R Greek_rho Greek_RHO 0x100211d registered
+keycode  57 = n N Greek_nu Greek_NU 0x1002115 nabla
+keycode  29 = z Z Greek_upsilon Greek_UPSILON 0x1002124 yen
+keycode  24 = q Q semicolon colon at 0x100211A
+keycode  54 = c C Greek_psi Greek_PSI 0x1002102 copyright
+
+! Logic quantifiers (∀ ∃)
+keycode  38 = a A Greek_alpha Greek_ALPHA 0x1002200 0x1002203
+keycode  26 = e E Greek_epsilon Greek_EPSILON EuroSign 0x1002203
+
+! integral, Partial differential, sum, delta/laplace, nabla
+keycode  40 = d D Greek_delta Greek_DELTA 0x1002202 Greek_DELTA
+keycode  31 = i I Greek_iota Greek_IOTA integral idotless
+keycode  39 = s S Greek_sigma Greek_SIGMA Greek_SIGMA U1E9E
+keycode  57 = n N Greek_nu Greek_NU 0x1002115 nabla
+
+! Not equal
+keycode  15 = 6 ampersand 6 asciicircum 0x1002260 fiveeighths
+
+! infinity
+keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
+
+!!! For testing and debuging !!!
+!keycode 61 = minus underscore endash abovedot a A q Q z Z u U
+
+
+!!! ToDo:
+! Binary set and logic operators (∪ ∩ ∧ ∨): 0x1002227-0x100222a
+! Subset (⊂ ⊆): 0x1002282 0x1002286
+! Element (∈): 0x1002208
+! Mapsto (↦): 0x10021a6
+! Orthogonal (⊥): 0x10022a5
+! Douple-Arrows: 0x10021d0-0x10021d3
+! ALMOST EQUAL TO: 0x1002248
+! dager: 0x1002020
