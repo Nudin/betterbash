@@ -11,7 +11,7 @@
 # mehr
 
 ## Read Settings: ##
-source ~/fetchapodrc
+source ~/.fetchapodrc
 
 # Function: Give out the line n
 line() {  head -$1  | tail -1; }
