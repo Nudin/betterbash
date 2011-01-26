@@ -57,7 +57,7 @@ alias df='df -h'
 alias ls='ls -h --color=auto'
 alias grep='grep --color=auto'
 alias free="free -m"
-if  most --version 2>/dev/null ; then
+if  most 2>/dev/null ; then
 	alias man="man -P most"
 fi
 alias pidof='/sbin/pidof'
