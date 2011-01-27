@@ -20,10 +20,10 @@ line() {  head -$1  | tail -1; }
 download()
 {
 	# Download
-	curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html > $tempfile
+	curl --silent http://apod.nasa.gov/apod/ap$date.html > $tempfile
 
-	ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
-	src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/antwrp.gsfc.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
+	ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/apod.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
+	src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e 's/<IMG SRC=\"/http:\/\/apod.nasa.gov\/apod\//g' | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
 	img=$(echo $src.$ext)
 
 	dest=$APOD_DIR/apod_$date.$ext
@@ -164,7 +164,7 @@ fi
 #W3M
 if [ $w3m -eq 1 ] ; then
 	echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html | sed -n '/<b> Explanation:/,/<p> <center>/ p' | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	curl --silent http://apod.nasa.gov/apod/ap$date.html | sed -n '/<b> Explanation:/,/<p> <center>/ p' | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
 	echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 #	gnome-terminal -t APOD --geometry=100x10 --profile=test -e "w3m $APOD_DIR/apod_description.html"
 	terminator -b -p widget -T APOD -e "w3m $APOD_DIR/apod_description.html" &
@@ -178,7 +178,7 @@ fi
 if [ $links -eq 1 ] ; then
 	linksconfig='set terminal.xterm.transparency = 1 set document.colors.use_document_colors = 1 set ui.show_title_bar = 0 set ui.show_status_bar = 0 set ui.leds.enable = 0 set document.browse.links.active_link.enable_color = 1'
         echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent http://antwrp.gsfc.nasa.gov/apod/ap$date.html | sed -n '/<b> Explanation:/,/<p> <center>/ p' | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	curl --silent http://apod.nasa.gov/apod/ap$date.html | sed -n '/<b> Explanation:/,/<p> <center>/ p' | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
         echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 	if [ "$term" = "gnome" ] ; then
 		gnome-terminal -t APOD --geometry=100x10 --profile=test -e "links -eval "$linksconfig" $APOD_DIR/apod_description.html"
