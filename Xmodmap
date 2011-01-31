@@ -34,6 +34,9 @@ keycode  15 = 6 ampersand 6 asciicircum 0x1002260 fiveeighths
 ! infinity
 keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
 
+! dager †
+xmodmap -e "keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash"
+
 !!! For testing and debuging !!!
 !keycode 61 = minus underscore endash abovedot a A q Q z Z u U
 
@@ -46,4 +49,3 @@ keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
 ! Orthogonal (⊥): 0x10022a5
 ! Douple-Arrows: 0x10021d0-0x10021d3
 ! ALMOST EQUAL TO: 0x1002248
-! dager: 0x1002020
