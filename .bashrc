@@ -70,6 +70,13 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
+
+#========================================
+# 	Complex overwriting
+#========================================
+alias nano='$HOME/.nano_starter'
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
 rm()
  {
@@ -83,12 +90,6 @@ rm()
 	mv --target-directory=$HOME/.local/share/Trash/files $1
  fi
  }
-
-#========================================
-# 	Complex overwriting
-#========================================
-alias nano='$HOME/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
 
 
 #========================================
