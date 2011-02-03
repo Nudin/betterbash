@@ -35,7 +35,7 @@ keycode  15 = 6 ampersand 6 asciicircum 0x1002260 fiveeighths
 keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
 
 ! dager †
-xmodmap -e "keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash"
+keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 
 !!! For testing and debuging !!!
 !keycode 61 = minus underscore endash abovedot a A q Q z Z u U
