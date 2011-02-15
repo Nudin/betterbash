@@ -70,6 +70,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
+alias mplayer='mplayer -nolirc'
 
 #========================================
 # 	Complex overwriting
@@ -357,6 +358,7 @@ alias avidemux2="avidemux2_gtk"
 
 alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
 alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
+alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
 
 function rot13() {
 	if [ $# = 0 ] ; then
@@ -473,4 +475,5 @@ scp $1 $UNIUSR@$STAUFEN:$2
 tabmerge() { for ((i=1;i<=$(less $1 | wc -l);i++)); do  echo -n $(less $1 | line $i); echo -en \"	\"; echo $(less $2 | line $i); done }
 # Für Skript, hier eigentlich fehl am Platz
 printopt() { echo -e "$1\t$2" | fold -s -$(($COLUMNS-20)) | sed 's.^.\t\t.g' | tail -c +2 ; }
+
 
