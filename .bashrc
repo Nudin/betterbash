@@ -426,6 +426,7 @@ function evince() { command evince "$@" & }
 function xpdf() { command xpdf "$@" & }
 function gedit() { command gedit "$@" & }
 function eog() { command eog "$@" & }
+function giggle() { command giggle "$@" & }
 alias nautilus='nautilus . &'
 
 #========================================
