@@ -186,7 +186,7 @@ fi
 #W3M
 if [ $w3m -eq 1 ] ; then
 	echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
 	echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 #	gnome-terminal -t APOD --geometry=100x10 --profile=test -e "w3m $APOD_DIR/apod_description.html"
 	terminator -b -p widget -T APOD -e "w3m $APOD_DIR/apod_description.html" &
@@ -200,7 +200,7 @@ fi
 if [ $links -eq 1 ] ; then
 	linksconfig='set terminal.xterm.transparency = 1 set document.colors.use_document_colors = 1 set ui.show_title_bar = 0 set ui.show_status_bar = 0 set ui.leds.enable = 0 set document.browse.links.active_link.enable_color = 1'
         echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
         echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 	if [ "$term" = "gnome" ] ; then
 		gnome-terminal -t APOD --geometry=100x10 --profile=test -e "links -eval "$linksconfig" $APOD_DIR/apod_description.html"
