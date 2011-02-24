@@ -20,13 +20,13 @@ if [ $lang = "en" ] ; then
  url="http://apod.nasa.gov/apod/" 
  img_url=$url
  image_keyword="<IMG SRC=\""
- desc_keyword_start="<b> Explanation:"
+ desc_keyword_start="<b> Explanation: <\/b>"
  desc_keyword_end="<p> <center>"
 elif [ $lang = "de" ] ; then
  url="http://www.starobserver.org/"
  img_url=""
  image_keyword="<img src=\""
- desc_keyword_start="<b>Beschreibung:"
+ desc_keyword_start="<b>Beschreibung:<\/b>"
  desc_keyword_end="<p><b>Das Bild von morgen:"
 else
  echo "kommt noch"
@@ -180,13 +180,13 @@ fi
 #Gnote - not working if gnote is already running... :(
 if [ $gnote -eq 1 ] ; then
 	cat $APOD_DIR/notea > /home/michi/.gnote/$gnotefile # old: $HOME/Desktop/apod_description.html
-	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> /home/michi/.gnote/$gnotefile
+	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> /home/michi/.gnote/$gnotefile
 	cat $APOD_DIR/noteb >> /home/michi/.gnote/$gnotefile
 fi
 #W3M
 if [ $w3m -eq 1 ] ; then
 	echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
 	echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 #	gnome-terminal -t APOD --geometry=100x10 --profile=test -e "w3m $APOD_DIR/apod_description.html"
 	terminator -b -p widget -T APOD -e "w3m $APOD_DIR/apod_description.html" &
@@ -200,7 +200,7 @@ fi
 if [ $links -eq 1 ] ; then
 	linksconfig='set terminal.xterm.transparency = 1 set document.colors.use_document_colors = 1 set ui.show_title_bar = 0 set ui.show_status_bar = 0 set ui.leds.enable = 0 set document.browse.links.active_link.enable_color = 1'
         echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed -n '2,$ p' | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
+	curl --silent ${url}ap$date.html | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' >> $APOD_DIR/apod_description.html
         echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
 	if [ "$term" = "gnome" ] ; then
 		gnome-terminal -t APOD --geometry=100x10 --profile=test -e "links -eval "$linksconfig" $APOD_DIR/apod_description.html"
