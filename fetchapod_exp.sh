@@ -1,5 +1,7 @@
 #!/bin/bash
 # Todo:
+# Clean up the Code
+# Better backgroundcolor-support
 # (U)rxvt fixen
 # Andere Terminal supporten
 # Andere Nachrichtenkanäle supporten
@@ -25,7 +27,7 @@ elif [ $lang = "de" ] ; then
  img_url=""
  image_keyword="<img src=\""
  desc_keyword_start="<b>Beschreibung:"
- desc_keyword_end=" </p>"
+ desc_keyword_end="<p><b>Das Bild von morgen:"
 else
  echo "kommt noch"
 fi
@@ -39,11 +41,10 @@ download() #Download Page and image
 	# Download
 	curl --silent ${url}ap$date.html > $tempfile
 
-	ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
-	src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
+	ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | head -1 | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
+	src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | head -1 | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
 	img=$(echo $src.$ext)
-zenity --info --text $img
-exit
+
 	dest=$APOD_DIR/apod_$date.$ext
 
 	curl --silent $img > $dest
