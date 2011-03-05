@@ -82,7 +82,7 @@ alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 rm()
  {
   if [ $# -gt 1 ] ; then
-  	rm $*
+  	command rm $*
   else
 	if [ -e $HOME/.local/share/Trash/files/$1 ] ; then
 		nr=$(expr $(ls a_[0-9] | tr '\n' '\t' | cut -f$(ls a_[0-9]|wc -l) | cut -d_ -f2) \+ 1)
