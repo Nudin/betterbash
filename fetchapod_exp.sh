@@ -41,15 +41,15 @@ download() #Download Page and image
 	# Download
 	curl --silent ${url}ap$date.html > $tempfile
 
-	ext=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | head -1 | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,length($1)-3,3)) }')
-	src=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | head -1 | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | awk ' {print(substr ($1,1,length($1)-5))}' )
-	img=$(echo $src.$ext)
+	img=$(cat $tempfile | awk '/[Ii][Mm][Gg] [Ss][Rr][Cc]/' | head -1 | sed -e "s;${image_keyword};${img_url};g" | awk ' {split($0,arr,"\"") ; print $1}' | head -c -2)
+	ext=$(echo $img | tail -c 4 )	# We expact the extension to be 3 characters long at the mom.
 
 	dest=$APOD_DIR/apod_$date.$ext
 
 	curl --silent $img > $dest
 	echo $dest
 }
+# Set the Picture as background an set coulors
 set_apod()
 {
 	rm $APOD_DIR/apod_*
@@ -146,7 +146,47 @@ set_apod()
 		fi
 		echo "background image updated"
 	fi
-} # End 'set_apod()'
+} ### End 'set_apod()'
+
+# Extract the Description out of the file
+extract_description()
+{
+	sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d'
+}
+
+# Create an HTML-body and footer
+wrap_html()
+{
+	echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>'
+	cat
+	echo -e '</BODY> </HTML>'
+}
+# Run program 'APOD' in "widget-mode"
+widget()
+{
+	wmctrl -F -r APOD -e '0,900,900,600,200'	# Größe und Position setzten
+        wmctrl -F -r APOD -b add,skip_taskbar	# Nicht in die Taskleiste
+        wmctrl -F -r APOD -b add,below		# In Hintergrund & auf alle Desktops
+        wmctrl -F -r APOD -b add,sticky		# Auf alle Desktops
+}
+# Run a given command in wished terminal 
+run_in_term()
+{
+	if [ "$term" = "gnome" ] ; then
+		gnome-terminal -t APOD --geometry=100x10 --profile=test -e "$1" &
+	elif [ "$term" = "terminator" ] ; then
+		terminator -b -p widget -T APOD -e "$1" &
+	elif [ "$term" = "urxvt" ] ; then
+		urxvt -title APOD -e "$1" &
+	elif [ "$term" = "rxvt" ] ; then
+		rxvt ++scrollBar --inheritPixmap -title APOD -e "$1" &
+	else
+		echo "Sorry, not yet implemetated: $term"
+	fi
+}
+
+##################################################################
+################### Start of script ##############################
 
 # Check if apod_dir does exist, if not create
 if [ ! -d $APOD_DIR ] ; then
@@ -175,49 +215,28 @@ else
 	if [ $(wmctrl -l | grep APOD | wc -l ) -ne 0 ] ; then exit; fi
 fi
 
-#### Now lets show the text ###
+#### Now lets show the text ####
 
-#Gnote - not working if gnote is already running... :(
+# Gnote - not working if gnote is already running... :(
 if [ $gnote -eq 1 ] ; then
 	cat $APOD_DIR/notea > /home/michi/.gnote/$gnotefile # old: $HOME/Desktop/apod_description.html
-	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' | sed -e '$d' | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> /home/michi/.gnote/$gnotefile
+	cat $tempfile | extract_description | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> /home/michi/.gnote/$gnotefile
 	cat $APOD_DIR/noteb >> /home/michi/.gnote/$gnotefile
 fi
-#W3M
+# W3M
 if [ $w3m -eq 1 ] ; then
-	echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' >> $APOD_DIR/apod_description.html
-	echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
-#	gnome-terminal -t APOD --geometry=100x10 --profile=test -e "w3m $APOD_DIR/apod_description.html"
-	terminator -b -p widget -T APOD -e "w3m $APOD_DIR/apod_description.html" &
+	cat $tempfile | extract_description | wrap_html > $APOD_DIR/apod_description.html
+	run_in_term "w3m $APOD_DIR/apod_description.html" &
         while [ $(wmctrl -l | grep APOD | wc -l ) -eq 0 ] ; do sleep 0.3; done
-	wmctrl -F -r APOD -e '0,900,900,600,200'		# Größe und Position setzten
-        wmctrl -F -r APOD -b add,skip_taskbar	# Nicht in die Taskleiste
-        wmctrl -F -r APOD -b add,below		# In Hintergrund & auf alle Desktops
-        wmctrl -F -r APOD -b add,sticky		# Auf alle Desktops
+	widget	# run as widget
 fi
-#links
+# links
 if [ $links -eq 1 ] ; then
 	linksconfig='set terminal.xterm.transparency = 1 set document.colors.use_document_colors = 1 set ui.show_title_bar = 0 set ui.show_status_bar = 0 set ui.leds.enable = 0 set document.browse.links.active_link.enable_color = 1'
-        echo -e '<HTML>\n <HEAD><TITLE>APOD</TITLE></HEAD>\n <BODY>' > $APOD_DIR/apod_description.html
-	cat $tempfile | sed -n "/${desc_keyword_start}/,/${desc_keyword_end}/ p" | sed "s/${desc_keyword_start}//g" | sed -e '$d' >> $APOD_DIR/apod_description.html
-        echo -e '</BODY> </HTML>' >>  $APOD_DIR/apod_description.html
-	if [ "$term" = "gnome" ] ; then
-		gnome-terminal -t APOD --geometry=100x10 --profile=test -e "links -eval "$linksconfig" $APOD_DIR/apod_description.html"
-	elif [ "$term" = "terminator" ] ; then
-		terminator -b -p widget -T APOD -e "links -eval \"$linksconfig\" $APOD_DIR/apod_description.html" &
-	elif [ "$term" = "urxvt" ] ; then
-		urxvt -title APOD -e links -eval "$linksconfig" $APOD_DIR/apod_description.html &
-	elif [ "$term" = "rxvt" ] ; then
-		rxvt ++scrollBar --inheritPixmap -title APOD -e links -eval "$linksconfig" $APOD_DIR/apod_description.html &
-	else
-		echo "Sorry, not yet implemetated: $term"
-	fi
+	cat $tempfile | extract_description | wrap_html > $APOD_DIR/apod_description.html
+	run_in_term "links -eval \"$linksconfig\" $APOD_DIR/apod_description.html"
         while [ $(wmctrl -l | grep APOD | wc -l ) -eq 0 ] ; do sleep 0.3; done
 	if [ "$term" = "urxvt" ] ; then F=""; else F="-F" ; fi	# Fix for urxterm
-        wmctrl $F -r APOD -e '0,900,900,600,200'                # Größe und Position setzten
-        wmctrl $F -r APOD -b add,skip_taskbar	# Nicht in die Taskleiste
-        wmctrl $F -r APOD -b add,below		# In Hintergrund & auf alle Desktops
-        wmctrl $F -r APOD -b add,sticky		# Auf alle Desktops
+	widget	# run as widget
 fi
 
