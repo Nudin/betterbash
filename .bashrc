@@ -356,9 +356,10 @@ alias avidemux2="avidemux2_gtk"
 # alias mount_zip="sudo /sbin/modprobe ppa; sudo mount -t vfat /dev/sde4 /media/zip/"
 # alias umount_zip="sudo umount /media/zip/"
 
-alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
-alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
-alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
+alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
 
 function rot13() {
 	if [ $# = 0 ] ; then
