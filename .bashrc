@@ -17,7 +17,7 @@ if [ $BASH_VERSINFO -eq 4 ] ; then
         shopt -s autocd checkjobs dirspell globstar
 fi
 #CDPATH='$HOME' don't work well with autocd
-
+HISTCONTROL=ignoreboth
 
 #========================================
 #	ANSI-Colors for Bash
@@ -79,7 +79,7 @@ alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
-rm()
+delet()
  {
   if [ $# -gt 1 ] ; then
   	command rm $*
