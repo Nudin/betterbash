@@ -53,7 +53,7 @@ then # Datei ist Shell-Skript
   fi
 elif [ "$xmlhead" ]; then # Datei ist XML-Dati
     nano -Yhtml "$@"
-elif [ $(basename "$filename") = ".bashrc" ] ; then
+elif [ $(basename "${filename:-bla}") = ".bashrc" ] ; then
    if [ "$cursorposgiven" ]; then
        nano -Ysh "$@"
    else # Cursor auf erste nicht-Kommentarzeile setzen
