@@ -49,6 +49,34 @@ download() #Download Page and image
 	curl --silent $img > $dest
 	echo $dest
 }
+get_color() # wird noch nicht verwendet
+{
+printf "%02x" $(printf "%02.0f\n" $(cat $APOD_DIR/mean${1}.tmp | line $2 | tr -s ' ' | cut -d' ' -f3 | tr . ,))
+}
+get_colors() # wird noch nicht verwendet
+{
+	identify -verbose -crop 10x$picdimy+0+0 $dest | grep mean > $APOD_DIR/mean1.tmp
+	rechts_red=$(get_color 1 1)
+	rechts_red=$(get_color 1 2)
+	rechts_red=$(get_color 1 3)
+
+	identify -verbose -crop 10x$picdimy+$(expr $picdimx "-" 10)+0 $dest | grep mean > $APOD_DIR/mean2.tmp
+	rechts_red=$(get_color 2 1)
+	rechts_red=$(get_color 2 2)
+	rechts_red=$(get_color 2 3)
+
+	identify -verbose -crop ${picdimx}x10+0+0 $dest | grep mean > $APOD_DIR/mean3.tmp # Oberer-Rand
+	rechts_red=$(get_color 3 1)
+	rechts_red=$(get_color 3 2)
+	rechts_red=$(get_color 3 3)
+
+	identify -verbose -crop ${picdimx}x10+0+$(expr $picdimy "-" 10) $dest | grep mean > $APOD_DIR/mean4.tmp #Unterer Rand
+	rechts_red=$(get_color 4 1)
+	rechts_red=$(get_color 4 2)
+	rechts_red=$(get_color 4 3)
+
+	rm $APOD_DIR/mean*.tmp
+}
 # Set the Picture as background an set coulors
 set_apod()
 {
