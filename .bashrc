@@ -71,6 +71,8 @@ alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 alias mplayer='mplayer -nolirc'
+LESSOPEN="||/home/michi/Code/mylesspipe.sh %s"
+export LESS=' -R '
 
 #========================================
 # 	Complex overwriting
@@ -108,6 +110,7 @@ alias k='kill'
 alias l='less'
 alias m='man'
 alias n='nano'
+alias p='mplayer'
 alias q='exit'
 alias s='sudo'
 alias v='vlc'
@@ -325,6 +328,15 @@ function killps()                 # Kill by process name.
     done
 }
 #-----------------------------
+#       Web
+#-----------------------------
+TEXTBROWSER=w3m
+wp() { $TEXTBROWSER "http://de.wikipedia.org/w/index.php?title=Special:Search&search=$*" ; }
+google() { $TEXTBROWSER "http://www.google.de/search?q=$*" ;}
+frink_web() { $TEXTBROWSER "http://futureboy.us/fsp/frink.fsp?sourceid=Mozilla-search&fromVal=$*" ;}
+dings() { $TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?lang=de&noframes=1&query=$*&optpro=1" ;}
+
+#-----------------------------
 #	other
 #-----------------------------
 alias datum='date "+%d. %b %Y    %T"'
@@ -360,6 +372,7 @@ alias avidemux2="avidemux2_gtk"
 #alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
 #alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
 alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
+alias mpf="mplayer $(ll $(eval echo /proc/{$(pidof npviewer.bin | tr \  ,)}/fd/*) 2>- | grep '/tmp' | cut -d\  -f9)"
 
 function rot13() {
 	if [ $# = 0 ] ; then
@@ -474,7 +487,7 @@ scp $1 $UNIUSR@$STAUFEN:$2
 #export CVSROOT=:ext:michael@i18n.redhat.com:/usr/local/CVS
 
 
-tabmerge() { for ((i=1;i<=$(less $1 | wc -l);i++)); do  echo -n $(less $1 | line $i); echo -en \"	\"; echo $(less $2 | line $i); done }
+tabmerge() { for ((i=1;i<=$(cat $1 | wc -l);i++)); do  echo -n $(cat $1 | line $i); echo -en \"	\"; echo $(cat $2 | line $i); done }
 # Für Skript, hier eigentlich fehl am Platz
 printopt() { echo -e "$1\t$2" | fold -s -$(($COLUMNS-20)) | sed 's.^.\t\t.g' | tail -c +2 ; }
 
