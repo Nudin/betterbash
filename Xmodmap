@@ -54,6 +54,7 @@ keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 
 
 !!! ToDo:
+! Hacken
 ! Binary set and logic operators (∪ ∩ ∧ ∨): 0x1002227-0x100222a
 ! Subset (⊂ ⊆): 0x1002282 0x1002286
 ! Element (∈): 0x1002208
@@ -62,6 +63,7 @@ keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 ! Douple-Arrows: 0x10021d0-0x10021d3
 ! ALMOST EQUAL TO: 0x1002248; Not Equal To
 ! plusminus ? (composefähig)
-! × and ·
 ! permille: 0x1002030
 ! ∑√∝∡⅀
+
+
