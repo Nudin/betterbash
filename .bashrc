@@ -335,6 +335,10 @@ wp() { $TEXTBROWSER "http://de.wikipedia.org/w/index.php?title=Special:Search&se
 google() { $TEXTBROWSER "http://www.google.de/search?q=$*" ;}
 frink_web() { $TEXTBROWSER "http://futureboy.us/fsp/frink.fsp?sourceid=Mozilla-search&fromVal=$*" ;}
 dings() { $TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?lang=de&noframes=1&query=$*&optpro=1" ;}
+myip ()
+{
+elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
+}
 
 #-----------------------------
 #	other
@@ -371,8 +375,8 @@ alias avidemux2="avidemux2_gtk"
 #alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
 #alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
 #alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
-alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
-alias mpf="mplayer $(ll $(eval echo /proc/{$(pidof npviewer.bin | tr \  ,)}/fd/*) 2>- | grep '/tmp' | cut -d\  -f9)"
+#alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
+alias mpf='mplayer $(ls -lQ $(eval echo /proc/{$(pidof npviewer.bin | tr \  ,)\,}/fd/*) 2>/dev/null | grep "/tmp" | cut -d\" -f2)'
 
 function rot13() {
 	if [ $# = 0 ] ; then
@@ -395,9 +399,39 @@ function spwd() {
 function bpwd() {
 	echo "${PWD##*/}"
 }
-myip ()
+de-en()
 {
-elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
+if [ $TEXTBROWSER = "w3m" ] ; then # Bilder nerven nur
+	TEXTBROWSER="w3m -o imgdisplay=0 -o keymap_file=~/.w3m/keymap_hardexit"
+fi
+if [ $1 = "-e" ] ; then
+	shift
+	egrep --color=always -h -w -i -e "$*" /usr/share/dict/de-en.txt | head
+elif [ $1 = "-l" ] ; then
+	shift
+	$TEXTBROWSER "http://pda.leo.org/?lp=ende&search=$*"
+elif [ $1 = "-t" ] ; then
+	shift
+       	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*"
+elif [ $1 = "-m" ] ; then
+	shift
+	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
+elif [ $1 = "-d" ] ; then
+	shift
+	ding $*
+elif [ $1 = "-h" ] ; then
+	echo -e "Aufruf: de-en [-eltmd] <Suchwort>\n"
+	echo "Übersetzung de-en"
+	echo "Optionen:"
+	echo -e " -e\tEgrep von /usr/share/dict/de-en.txt (noch fehlerhaft)"
+	echo -e " -l\tdict.leo.org (pda-version)"
+	echo -e " -t\tdict.tu-chemnitz.de"
+	echo -e " -m\tdict.tu-chemnitz.de (pda-version) [default]"
+	echo -e " -d\tding"
+	return
+else # default: -m
+	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
+fi
 }
 
 #========================================
