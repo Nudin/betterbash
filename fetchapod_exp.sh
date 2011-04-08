@@ -247,9 +247,9 @@ fi
 
 # Gnote - not working if gnote is already running... :(
 if [ $gnote -eq 1 ] ; then
-	cat $APOD_DIR/notea > /home/michi/.gnote/$gnotefile # old: $HOME/Desktop/apod_description.html
-	cat $tempfile | extract_description | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> /home/michi/.gnote/$gnotefile
-	cat $APOD_DIR/noteb >> /home/michi/.gnote/$gnotefile
+	cat $APOD_DIR/notea > ${gnotedir}${gnotefile}
+	cat $tempfile | extract_description | tr '\n' '$' | sed 's/\$\$/§/g' | tr '$' ' ' | tr '§' '\n'  >> ${gnotedir}${gnotefile}
+	cat $APOD_DIR/noteb >> ${gnotedir}${gnotefile}
 fi
 # W3M
 if [ $w3m -eq 1 ] ; then
