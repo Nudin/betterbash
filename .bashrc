@@ -192,6 +192,30 @@ alias findbig='find . -type f -exec ls -s {} \; | sort -h -r | head -5'
 #-----------------------------
 #	rename
 #-----------------------------
+bulkmv()
+{
+
+if [ "$1" = "-w" ] ; then
+ for((i=2;i<=${#};i++)); do
+   file=$( eval echo \${$i} ) 
+   mv "$file" "$(echo $file | sed 's/__/ - /g' | sed 's/_/ /g')"
+ done
+else
+ for((i=3;i<=${#};i++)); do
+ file=$( eval echo \${$i} )
+  if [ "$1" = "-c" ] ; then
+    mv "$file" "$(echo $file | eval $2)"
+  elif [ "$1" = "-s" ] ; then
+    mv "$file" "$(echo $file | sed 's/$2/g')"
+  elif [ "$1" = "-ct" ] ; then
+    mv "$file" "$(echo $file | head -c -$2)"
+  elif [ "$1" = "-ch" ] ; then
+    mv "$file" "$(echo $file | tail -c +$(expr $2 \+ 1))"
+  fi
+ done
+fi
+}
+
 function lowercase()  # move filenames to lowercase
 {
     for file ; do
@@ -516,6 +540,7 @@ staufencp()
 {
 scp $1 $UNIUSR@$STAUFEN:$2
 }
+alias staufencmd='ssh -f -X -l $UNIUSR $STAUFEN'
 
 # SSH for Fedora:
 #export CVS_RSH=ssh
