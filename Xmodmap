@@ -11,6 +11,16 @@ keycode  85 = KP_Right KP_6 KP_Right KP_6 rightarrow NoSymbol f NoSymbol KP_Righ
 keycode  83 = KP_Left KP_4 KP_Left KP_4 leftarrow NoSymbol d NoSymbol KP_Left KP_4 d
 keycode  88 = KP_Down KP_2 KP_Down KP_2 downarrow NoSymbol x NoSymbol KP_Down KP_2 x
 
+! Supersript numbers and fractures
+keycode 10 = 1 exclam 1 exclam onesuperior exclamdown
+keycode 11 = 2 quotedbl 2 at twosuperior onehalf
+keycode 12 = 3 section 3 numbersign threesuperior onethird
+keycode 13 = 4 dollar 4 dollar foursuperior onequarter
+keycode 14 = 5 percent 5 percent fivesuperior onefifth
+! to be continued…
+
+! ### Math ###
+
 ! The symbols ℕ/ℤ/ℝ/ℂ on [AltGr] + N/Z/R/C (Q on shift because of @)
 keycode  27 = r R Greek_rho Greek_RHO 0x100211d registered
 keycode  57 = n N Greek_nu Greek_NU 0x1002115 nabla
@@ -36,6 +46,11 @@ keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
 
 ! dager †
 keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
+<<<<<<< HEAD
+=======
+
+! 
+>>>>>>> 1005f710de736ab6efe8568995bd5587c36f4959
 
 !!! For testing and debuging !!!
 !keycode 61 = minus underscore endash abovedot a A q Q z Z u U
@@ -48,4 +63,8 @@ keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 ! Mapsto (↦): 0x10021a6
 ! Orthogonal (⊥): 0x10022a5
 ! Douple-Arrows: 0x10021d0-0x10021d3
-! ALMOST EQUAL TO: 0x1002248
+! ALMOST EQUAL TO: 0x1002248; Not Equal To
+! plusminus ? (composefähig)
+! × and ·
+! permille: 0x1002030
+! ∑√∝∡⅀
