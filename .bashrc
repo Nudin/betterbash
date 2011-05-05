@@ -17,7 +17,7 @@ if [ $BASH_VERSINFO -eq 4 ] ; then
         shopt -s autocd checkjobs dirspell globstar
 fi
 #CDPATH='$HOME' don't work well with autocd
-
+HISTCONTROL=ignoreboth
 
 #========================================
 #	ANSI-Colors for Bash
@@ -71,6 +71,8 @@ alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 alias mplayer='mplayer -nolirc'
+LESSOPEN="||/home/michi/Code/mylesspipe.sh %s"
+export LESS=' -R '
 
 #========================================
 # 	Complex overwriting
@@ -79,10 +81,10 @@ alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
-rm()
+delet()
  {
   if [ $# -gt 1 ] ; then
-  	rm $*
+  	command rm $*
   else
 	if [ -e $HOME/.local/share/Trash/files/$1 ] ; then
 		nr=$(expr $(ls a_[0-9] | tr '\n' '\t' | cut -f$(ls a_[0-9]|wc -l) | cut -d_ -f2) \+ 1)
@@ -103,11 +105,13 @@ alias c='clear'
 alias d='date'
 alias e='echo'
 alias f='find'
+alias g='wget'
 alias h='htop'
 alias k='kill'
 alias l='less'
 alias m='man'
 alias n='nano'
+alias p='mplayer'
 alias q='exit'
 alias s='sudo'
 alias v='vlc'
@@ -188,6 +192,30 @@ alias findbig='find . -type f -exec ls -s {} \; | sort -h -r | head -5'
 #-----------------------------
 #	rename
 #-----------------------------
+bulkmv()
+{
+
+if [ "$1" = "-w" ] ; then
+ for((i=2;i<=${#};i++)); do
+   file=$( eval echo \${$i} ) 
+   mv "$file" "$(echo $file | sed 's/__/ - /g' | sed 's/_/ /g')"
+ done
+else
+ for((i=3;i<=${#};i++)); do
+ file=$( eval echo \${$i} )
+  if [ "$1" = "-c" ] ; then
+    mv "$file" "$(echo $file | eval $2)"
+  elif [ "$1" = "-s" ] ; then
+    mv "$file" "$(echo $file | sed 's/$2/g')"
+  elif [ "$1" = "-ct" ] ; then
+    mv "$file" "$(echo $file | head -c -$2)"
+  elif [ "$1" = "-ch" ] ; then
+    mv "$file" "$(echo $file | tail -c +$(expr $2 \+ 1))"
+  fi
+ done
+fi
+}
+
 function lowercase()  # move filenames to lowercase
 {
     for file ; do
@@ -325,6 +353,19 @@ function killps()                 # Kill by process name.
     done
 }
 #-----------------------------
+#       Web
+#-----------------------------
+TEXTBROWSER=w3m
+wp() { $TEXTBROWSER "http://de.wikipedia.org/w/index.php?title=Special:Search&search=$*" ; }
+google() { $TEXTBROWSER "http://www.google.de/search?q=$*" ;}
+frink_web() { $TEXTBROWSER "http://futureboy.us/fsp/frink.fsp?sourceid=Mozilla-search&fromVal=$*" ;}
+dings() { $TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?lang=de&noframes=1&query=$*&optpro=1" ;}
+myip ()
+{
+elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
+}
+
+#-----------------------------
 #	other
 #-----------------------------
 alias datum='date "+%d. %b %Y    %T"'
@@ -356,9 +397,11 @@ alias avidemux2="avidemux2_gtk"
 # alias mount_zip="sudo /sbin/modprobe ppa; sudo mount -t vfat /dev/sde4 /media/zip/"
 # alias umount_zip="sudo umount /media/zip/"
 
-alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
-alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
-alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
+#alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
+alias mpf='mplayer $(ls -lQ $(eval echo /proc/{$(pidof npviewer.bin | tr \  ,)\,}/fd/*) 2>/dev/null | grep "/tmp" | cut -d\" -f2)'
 
 function rot13() {
 	if [ $# = 0 ] ; then
@@ -381,9 +424,39 @@ function spwd() {
 function bpwd() {
 	echo "${PWD##*/}"
 }
-myip ()
+de-en()
 {
-elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
+if [ $TEXTBROWSER = "w3m" ] ; then # Bilder nerven nur
+	TEXTBROWSER="w3m -o imgdisplay=0 -o keymap_file=~/.w3m/keymap_hardexit"
+fi
+if [ $1 = "-e" ] ; then
+	shift
+	egrep --color=always -h -w -i -e "$*" /usr/share/dict/de-en.txt | head
+elif [ $1 = "-l" ] ; then
+	shift
+	$TEXTBROWSER "http://pda.leo.org/?lp=ende&search=$*"
+elif [ $1 = "-t" ] ; then
+	shift
+       	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*"
+elif [ $1 = "-m" ] ; then
+	shift
+	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
+elif [ $1 = "-d" ] ; then
+	shift
+	ding $*
+elif [ $1 = "-h" ] ; then
+	echo -e "Aufruf: de-en [-eltmd] <Suchwort>\n"
+	echo "Übersetzung de-en"
+	echo "Optionen:"
+	echo -e " -e\tEgrep von /usr/share/dict/de-en.txt (noch fehlerhaft)"
+	echo -e " -l\tdict.leo.org (pda-version)"
+	echo -e " -t\tdict.tu-chemnitz.de"
+	echo -e " -m\tdict.tu-chemnitz.de (pda-version) [default]"
+	echo -e " -d\tding"
+	return
+else # default: -m
+	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
+fi
 }
 
 #========================================
@@ -467,13 +540,14 @@ staufencp()
 {
 scp $1 $UNIUSR@$STAUFEN:$2
 }
+alias staufencmd='ssh -f -X -l $UNIUSR $STAUFEN'
 
 # SSH for Fedora:
 #export CVS_RSH=ssh
 #export CVSROOT=:ext:michael@i18n.redhat.com:/usr/local/CVS
 
 
-tabmerge() { for ((i=1;i<=$(less $1 | wc -l);i++)); do  echo -n $(less $1 | line $i); echo -en \"	\"; echo $(less $2 | line $i); done }
+tabmerge() { for ((i=1;i<=$(cat $1 | wc -l);i++)); do  echo -n $(cat $1 | line $i); echo -en \"	\"; echo $(cat $2 | line $i); done }
 # Für Skript, hier eigentlich fehl am Platz
 printopt() { echo -e "$1\t$2" | fold -s -$(($COLUMNS-20)) | sed 's.^.\t\t.g' | tail -c +2 ; }
 
