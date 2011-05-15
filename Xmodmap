@@ -10,6 +10,8 @@ keycode  80 = KP_Up KP_8 KP_Up KP_8 uparrow NoSymbol b
 keycode  85 = KP_Right KP_6 KP_Right KP_6 rightarrow NoSymbol f NoSymbol KP_Right KP_6 f
 keycode  83 = KP_Left KP_4 KP_Left KP_4 leftarrow NoSymbol d NoSymbol KP_Left KP_4 d
 keycode  88 = KP_Down KP_2 KP_Down KP_2 downarrow NoSymbol x NoSymbol KP_Down KP_2 x
+! numlock-key is now ^:
+keycode  77 = asciicircum Num_Lock
 
 ! Supersript numbers and fractures
 keycode 10 = 1 exclam 1 exclam onesuperior exclamdown
