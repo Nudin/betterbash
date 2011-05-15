@@ -48,11 +48,6 @@ keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
 
 ! dager †
 keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
-<<<<<<< HEAD
-=======
-
-! 
->>>>>>> 1005f710de736ab6efe8568995bd5587c36f4959
 
 !!! For testing and debuging !!!
 !keycode 61 = minus underscore endash abovedot a A q Q z Z u U
