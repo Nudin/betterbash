@@ -1,6 +1,6 @@
 # .bashrc
 
-# Source global definitions
+# Source global definition
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
@@ -202,11 +202,13 @@ if [ "$1" = "-w" ] ; then
  done
 else
  for((i=3;i<=${#};i++)); do
+ local IFS="
+"
  file=$( eval echo \${$i} )
   if [ "$1" = "-c" ] ; then
     mv "$file" "$(echo $file | eval $2)"
   elif [ "$1" = "-s" ] ; then
-    mv "$file" "$(echo $file | sed 's/$2/g')"
+    mv "$file" $(echo $file | sed "s/$2/g")
   elif [ "$1" = "-ct" ] ; then
     mv "$file" "$(echo $file | head -c -$2)"
   elif [ "$1" = "-ch" ] ; then
@@ -500,6 +502,8 @@ function xpdf() { command xpdf "$@" & }
 function gedit() { command gedit "$@" & }
 function eog() { command eog "$@" & }
 function giggle() { command giggle "$@" & }
+function chrome() { command google-chrome "$@" & }
+function incognito() { command google-chrome --incognito "$@" & }
 alias nautilus='nautilus . &'
 
 #========================================
