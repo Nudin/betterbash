@@ -7,13 +7,18 @@ keycode 60 = period colon ellipsis division ellipsis division
 keycode 61 = minus underscore endash abovedot endash abovedot
 ! ✓ on [AltGr] + #
 keycode  51 = numbersign apostrophe backslash bar 0x1002713 grave
+
 ! arrows with [numpad activ]; [shit] + 8/4/6/2
 keycode  80 = KP_Up KP_8 KP_Up KP_8 uparrow NoSymbol b
 keycode  85 = KP_Right KP_6 KP_Right KP_6 rightarrow NoSymbol f NoSymbol KP_Right KP_6 f
 keycode  83 = KP_Left KP_4 KP_Left KP_4 leftarrow NoSymbol d NoSymbol KP_Left KP_4 d
 keycode  88 = KP_Down KP_2 KP_Down KP_2 downarrow NoSymbol x NoSymbol KP_Down KP_2 x
-! numlock-key is now ^:
-keycode  77 = asciicircum Num_Lock
+! numlock-key is now ^: (until now pause ist new numlock)
+keycode  77 = asciicircum
+keycode 127 = Num_Lock Pause
+!remove Mod2 = asciicircum
+clear Mod2
+add Mod2 = Num_Lock
 
 ! Supersript numbers and fractures
 keycode 10 = 1 exclam 1 exclam onesuperior exclamdown
