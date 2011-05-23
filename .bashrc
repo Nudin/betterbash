@@ -71,7 +71,7 @@ alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 alias mplayer='mplayer -nolirc'
-LESSOPEN="||/home/michi/Code/mylesspipe.sh %s"
+LESSOPEN="|$HOME/git/betterbash/mylesspipe.sh %s"
 export LESS=' -R '
 
 #========================================
