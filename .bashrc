@@ -366,6 +366,7 @@ myip ()
 {
 elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
 }
+alias timeupdate='sudo ntpdate -u ptbtime1.ptb.de'
 
 #-----------------------------
 #	other
