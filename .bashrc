@@ -78,7 +78,8 @@ export LESS=' -R '
 # 	Complex overwriting
 #========================================
 alias nano='$HOME/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+ export BC_ENV_ARGS=$HOME/.bc_starter
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
 delet()
