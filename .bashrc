@@ -336,7 +336,7 @@ function ask()          # See 'killps' for example of use.
 #-----------------------------
 alias k9="kill -9"
 alias ka="killall"
-alias kfx="killall firefox"
+alias kfx="killall firefox xulrunner-bin"
 function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
 function killps()                 # Kill by process name.
 {
