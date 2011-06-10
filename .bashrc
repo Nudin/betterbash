@@ -71,7 +71,7 @@ alias egrep='egrep --color=auto'
 alias tree='tree -C'
 #alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 alias mplayer='mplayer -nolirc'
-LESSOPEN="||/home/michi/Code/mylesspipe.sh %s"
+LESSOPEN="|$HOME/git/betterbash/mylesspipe.sh %s"
 export LESS=' -R '
 
 #========================================
@@ -79,7 +79,8 @@ export LESS=' -R '
 #========================================
 g++() { command g++ $1 -o ${1/.cpp/}; mx ${1/.cpp/} ;}
 alias nano='$HOME/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq $HOME/.bc_starter; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+ export BC_ENV_ARGS=$HOME/.bc_starter
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
 delet()
@@ -336,7 +337,7 @@ function ask()          # See 'killps' for example of use.
 #-----------------------------
 alias k9="kill -9"
 alias ka="killall"
-alias kfx="killall firefox"
+alias kfx="killall firefox xulrunner-bin"
 function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
 function killps()                 # Kill by process name.
 {
@@ -367,6 +368,7 @@ myip ()
 {
 elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
 }
+alias timeupdate='sudo ntpdate -u ptbtime1.ptb.de'
 
 #-----------------------------
 #	other
@@ -480,7 +482,10 @@ alias kk='ll'
 # export PS1="[\\u|\\t \\W ]$ "
 # Colorised:
 #PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
-PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
+PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s")\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
 # Experimentell, mit Anzeige der RAMs
 # Anmerkung: das \[|\] ist ein Dirty-Hack
 #PS1='\0337\e[0;$(($LINES - 3))r\e[$(($LINES - 2));0H $(echo -n \[; free -o; echo -n \[)\[\0338\][\[\e[2;36m\]\u\[\e[0m\]\[|\]\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
