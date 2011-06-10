@@ -27,7 +27,8 @@
 
 
 if [ $# -ne 1 -o ! -f "$1" ] ; then
- echo -e "$red$bold Error: Bitte Datei angeben $reset"
+ echo -e '\e[31m\e[1m\tPropmt String Compiler \e[0m' 1>&2
+ echo -e 'Hint: press ctr+D to finish'
 fi
 
 generatedPS=$(cat $1 |
@@ -90,7 +91,6 @@ echo "$generatedPS"
 
 
 ## To fix/add: ##
-# - read from stdin
 # - interactive mode
 # - preview
 # - commands for \.-stuf?
