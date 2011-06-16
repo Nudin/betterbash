@@ -77,7 +77,7 @@ export LESS=' -R '
 #========================================
 # 	Complex overwriting
 #========================================
-g++() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
+#g++() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
 alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
  export BC_ENV_ARGS=$HOME/.bc_starter
