@@ -482,7 +482,7 @@ alias kk='ll'
 # export PS1="[\\u|\\t \\W ]$ "
 # Colorised:
 #PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
-PS1='[\[\e[2;36m\]\u\[\e[31m\]$(if [ $(uname -n) != "michi.schoenitzer.de" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
+export PS1='[\[\e[2;36m\]\u\[\e[31m\]$(if [ $(who -m | head -1 | grep $USER | cut -d \(  -f2 | tr -d \)) != ":0.0" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[2m\]$exitstatus\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
