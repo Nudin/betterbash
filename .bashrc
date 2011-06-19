@@ -19,7 +19,7 @@ fi
 #CDPATH='$HOME' don't work well with autocd
 HISTCONTROL=ignoreboth
 #load missing bash-completion-files on ubuntu
-if uname -a | grep Ubuntu ; then
+if uname -a | grep Ubuntu > /dev/null ; then
 	. /etc/bash_completion.d/git
 fi
 
