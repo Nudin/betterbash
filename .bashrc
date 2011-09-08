@@ -22,6 +22,8 @@ HISTCONTROL=ignoreboth
 if uname -a | grep Ubuntu > /dev/null ; then
 	. /etc/bash_completion.d/git
 fi
+# bashmarks
+source ~/.local/bin/bashmarks.sh
 
 #========================================
 #	ANSI-Colors for Bash
@@ -123,15 +125,15 @@ alias q='exit'
 alias s='sudo'
 alias v='vlc'
 alias x='exit'
-#alias w='wget'
+alias w='wget'
 alias y='yum'
 #-----------------------------
 #	Softwaremanagement
 #-----------------------------
-alias yumi="sudo yum install --color=auto"
-alias yumu="sudo yum update --skip-broken --color=auto"
-alias yumc="sudo yum clean all --color=auto"
-alias yum="sudo yum --color=auto"
+alias yumi="sudo nice yum install --color=auto"
+alias yumu="sudo nice yum update --skip-broken --color=auto"
+alias yumc="sudo nice yum clean all --color=auto"
+alias yum="sudo nice yum --color=auto"
 #-----------------------------
 #	Show files & dict.
 #-----------------------------
@@ -259,24 +261,24 @@ function swichfiles()  # Swap 2 filenames around, if they exist
 #-----------------------------
 #	Compression
 #-----------------------------
-compress()	# UNTESTET !!!
+compress()	# not tested enough
 {
-if [ $# -eq 0] ; then
+if [ $# -eq 0 ] ; then
  file='*'
  format=tar.gz
  tofile=${file}.$format
-elif [ $# -eq 1] ; then
+elif [ $# -eq 1 ] ; then
  file=$1
  format=tar.gz
  tofile=${file}.$format
-elif [ $# -eq 2] ; then
+elif [ $# -eq 2 ] ; then
  file=$1
  case $2 in
      *.tar.bz2)   format="tar.bz2";;
      *.tar.gz)    format="tar.gz" ;;
      *.bz2)       format="bz2"    ;;
-     *.rar)       format="rar"    ;;
      *.gz)        format="gz"     ;;
+     *.rar)       format="rar"    ;;
      *.tar)       format="tar"    ;;
      *.tbz2)      format="tbz2"   ;;
      *.tgz)       format="tgz"    ;;
@@ -286,23 +288,24 @@ elif [ $# -eq 2] ; then
      *)           echo "Format nicht unterstützt"; return ;;
  esac
  format_sed=$(echo $format | sed 's/\./\\\./g')
- if [ "$(echo $2 | sed \"s/\.\?$format//g\")" = "" ] ; then
+ s=$(echo $2 | sed "s/\.\?$format//g")
+ if [ "$s" = "" ] ; then
 	tofile=${file}.$format
  else
 	tofile=$2
  fi
 fi
 case $format in
-   *.tar.bz2)   tar cfvj $tofile $file ;;
-   *.tar.gz)    tar cfvz $tofile $file ;;
-   *.bz2)       bzip2 -c $file > $tofile ;;
-   *.rar)       rar a $tofile $file ;;
-   *.gz)        gzip -c $file > $tofile ;;
-   *.tar)       tar cfv $tofile $file ;;
-   *.tbz2)      tar cfvj $tofile $file ;;
-   *.tgz)       tar cfvz $tofile $file ;;
-   *.zip)       zip -r $tofile $file ;;
-   *.7z)        7za a $tofile $file ;;
+   tar.bz2)   tar cfvj $tofile $file ;;
+   tar.gz)    tar cfvz $tofile $file ;;
+   bz2)       bzip2 -c $file > $tofile ;;
+   rar)       rar a $tofile $file ;;
+   gz)        gzip -c $file > $tofile ;;
+   tar)       tar cfv $tofile $file ;;
+   tbz2)      tar cfvj $tofile $file ;;
+   tgz)       tar cfvz $tofile $file ;;
+   zip)       zip -r $tofile $file ;;
+   7z)        7za a $tofile $file ;;
 esac
 }
 function extract()      # Handy Extract Program.
