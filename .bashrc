@@ -18,9 +18,9 @@ if [ $BASH_VERSINFO -eq 4 ] ; then
 fi
 #CDPATH='$HOME' don't work well with autocd
 HISTCONTROL=ignoreboth
-#load missing bash-completion-files on ubuntu
+#load bash-completion on ubuntu
 if uname -a | grep Ubuntu > /dev/null ; then
-	. /etc/bash_completion.d/git
+	. /etc/bash_completion
 fi
 # bashmarks
 source ~/.local/bin/bashmarks.sh
@@ -66,7 +66,7 @@ alias free="free -m"
 if  most 2>/dev/null ; then
 	alias man="man -P most"
 fi
-alias pidof='/sbin/pidof'
+#alias pidof='/sbin/pidof'
 alias alsamixer='alsamixer -c 0'
 alias ping='ping -c 4'
 alias dir='dir --color=auto'
@@ -86,7 +86,7 @@ export LESS=' -R '
 gpp() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
 alias g++='gpp'
 alias nano='$HOME/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Delete KP_Separator"'
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Delete"'
  export BC_ENV_ARGS=$HOME/.bc_starter
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 # better would be to use libtrash
@@ -134,6 +134,7 @@ alias yumi="sudo nice yum install --color=auto"
 alias yumu="sudo nice yum update --skip-broken --color=auto"
 alias yumc="sudo nice yum clean all --color=auto"
 alias yum="sudo nice yum --color=auto"
+alias inst="sudo apt-get install"	# for ubuntu
 #-----------------------------
 #	Show files & dict.
 #-----------------------------
@@ -345,7 +346,7 @@ function ask()          # See 'killps' for example of use.
 #-----------------------------
 alias k9="kill -9"
 alias ka="killall"
-alias kfx="killall firefox xulrunner-bin"
+alias kfx="killall firefox xulrunner-bin firefox-bin"
 function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
 function killps()                 # Kill by process name.
 {
@@ -381,6 +382,8 @@ alias timeupdate='sudo ntpdate -u ptbtime1.ptb.de'
 #-----------------------------
 #	other
 #-----------------------------
+alias fast264='mplayer -lavdopts skiploopfilter=all'
+alias superfast264='mplayer -lavdopts skipframe=nonref:skiploopfilter=all'
 alias datum='date "+%d. %b %Y    %T"'
 alias reload='source $HOME/.bashrc'
 alias mx='chmod a+x'
@@ -414,7 +417,7 @@ alias avidemux2="avidemux2_gtk"
 #alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
 #alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
 #alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
-alias mpf='mplayer $(ls -lQ $(eval echo /proc/{$(pidof gtk-gnash npviewer.bin | tr \  ,)\,}/fd/*) 2>/dev/null | grep "/tmp" | cut -d\" -f2)'
+alias mpf='mplayer $(ls -lQ $(eval echo /proc/{$(pidof plugin-container gtk-gnash npviewer.bin | tr \  ,)\,}/fd/*) 2>/dev/null | grep "/tmp" | cut -d\" -f2)'
 
 function rot13() {
 	if [ $# = 0 ] ; then
@@ -492,7 +495,7 @@ alias kk='ll'
 # Colorised:
 #PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
 PROMPT_COMMAND='exitstatus=$?'
-export PS1='[\[\e[2;36m\]$(if [ $UID -eq 0 ] ; then echo \[\e[7m\]; fi)\u\[\e[31m\]$(usr="$(who -m | head -1 | grep $USER | cut -d \( -f2 | tr -d \))"; if [ "$usr" != ":0.0" -a "$usr" != "" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[31m\]${exitstatus/0/\[\e[0m\]\[\e[2m\]0}\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
+export PS1='[\[\e[2;36m\]$(if [ $UID -eq 0 ] ; then echo \[\e[7m\]; fi)\u\[\e[31m\]$(usr="$(who -m | head -1 | grep $USER | cut -d \( -f2 | tr -d \))"; if [ "$usr" != ":0.0" -a "$usr" != ":0" -a "$usr" != "" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[31m\]${exitstatus/0/\[\e[0m\]\[\e[2m\]0}\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -559,6 +562,10 @@ alias staufenssh='ssh -l $UNIUSR $STAUFEN'
 staufencp()
 {
 scp $1 $UNIUSR@$STAUFEN:$2
+}
+staufenget()
+{
+scp $UNIUSR@$STAUFEN:$1 $2
 }
 alias staufencmd='ssh -f -X -l $UNIUSR $STAUFEN'
 

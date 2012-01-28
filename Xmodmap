@@ -5,14 +5,21 @@ keycode 48 = adiaeresis Adiaeresis leftdoublequotemark leftsinglequotemark leftd
 keycode 60 = period colon ellipsis division ellipsis division
 ! – on [AltGr] + -
 keycode 61 = minus underscore endash abovedot endash abovedot
-! ✓ on [AltGr] + #
-keycode  51 = numbersign apostrophe backslash bar 0x1002713 grave
+! ✓ & ✔ on [AltGr] ([shift]) + #
+keycode  51 = numbersign apostrophe backslash bar 0x1002713 0x1002714
 
-! arrows with [numpad activ]; [shit] + 8/4/6/2
-keycode  80 = KP_Up KP_8 KP_Up KP_8 uparrow NoSymbol b
-keycode  85 = KP_Right KP_6 KP_Right KP_6 rightarrow NoSymbol f NoSymbol KP_Right KP_6 f
-keycode  83 = KP_Left KP_4 KP_Left KP_4 leftarrow NoSymbol d NoSymbol KP_Left KP_4 d
-keycode  88 = KP_Down KP_2 KP_Down KP_2 downarrow NoSymbol x NoSymbol KP_Down KP_2 x
+! INVERT NUMLOCK arrows with [numpad activ]; [shit] + 8/4/6/2
+keycode  79 = KP_7 KP_Home KP_Home KP_7 KP_Home KP_7 KP_Home KP_7
+keycode  80 = KP_8 KP_Up KP_Up KP_8 uparrow b B
+keycode  81 = KP_9 KP_Prior  KP_Prior KP_9 KP_Prior KP_9 KP_Prior KP_9
+keycode  83 = KP_4 KP_Left KP_Left KP_4 leftarrow d D
+keycode  84 = KP_5 KP_Begin KP_Begin KP_5 KP_Begin KP_5 KP_Begin KP_5
+keycode  85 = KP_6 KP_Right KP_Right KP_6 rightarrow f F
+keycode  87 = KP_1 KP_End KP_End KP_1 KP_End KP_1 KP_End KP_1
+keycode  88 = KP_2 KP_Down KP_Down KP_2 downarrow x X
+keycode  89 = KP_3 KP_Next KP_Next KP_3 KP_Next KP_3 KP_Next KP_3
+keycode  90 = KP_0 KP_Insert KP_Insert KP_0 KP_Insert KP_0 KP_Insert KP_0
+keycode  91 = KP_Separator KP_Delete KP_Delete KP_Separator KP_Delete KP_Separator KP_Delete KP_Separator
 ! numlock-key is now ^: (until now pause ist new numlock)
 keycode  77 = asciicircum
 keycode 127 = Num_Lock Pause
