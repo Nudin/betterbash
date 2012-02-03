@@ -208,7 +208,7 @@ bulkmv()
 if [ "$1" = "-w" ] ; then
  for((i=2;i<=${#};i++)); do
    file=$( eval echo \${$i} ) 
-   mv "$file" "$(echo $file | sed 's/__/ - /g' | sed 's/_/ /g')"
+   mv "$file" "$(echo $file | sed 's/^_*//; s/f_r/für/g; s/^___+//; s/__/ - /g; s/_/ /g')"
  done
 else
  for((i=3;i<=${#};i++)); do
