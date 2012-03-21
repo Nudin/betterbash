@@ -19,11 +19,18 @@ fi
 #CDPATH='$HOME' don't work well with autocd
 HISTCONTROL=ignoreboth
 #load bash-completion on ubuntu
-if uname -a | grep Ubuntu > /dev/null ; then
+if uname -r | grep Ubuntu > /dev/null ; then
+	export DISTRIBUTION=Ubuntu
 	. /etc/bash_completion
+elif uname -r | grep ARCH > /dev/null ; then
+	export DISTRIBUTION=Arch
+elif uname -r | grep fc > /dev/null ; then
+        export DISTRIBUTION=Fedora
 fi
 # bashmarks
-source ~/.local/bin/bashmarks.sh
+if [ -f ~/.local/bin/bashmarks.sh ] ; then
+   source ~/.local/bin/bashmarks.sh
+fi
 
 #========================================
 #	ANSI-Colors for Bash
@@ -130,11 +137,18 @@ alias y='yum'
 #-----------------------------
 #	Softwaremanagement
 #-----------------------------
-alias yumi="sudo nice yum install --color=auto"
-alias yumu="sudo nice yum update --skip-broken --color=auto"
-alias yumc="sudo nice yum clean all --color=auto"
-alias yum="sudo nice yum --color=auto"
-alias inst="sudo apt-get install"	# for ubuntu
+if [ "$DISTRIBUTION" = "Arch" ] ; then
+  alias inst="sudo \pacman --needed -S"
+  alias upgrade="yaourt -Syu"
+  alias pacman="sudo pacman"
+elif [ "$DISTRIBUTION" = "Ubuntu" ] ; then
+  alias inst="sudo apt-get install"
+elif [ "$DISTRIBUTION" = "Fedora" ] ; then
+  alias yumi="sudo nice yum install --color=auto"
+  alias yumu="sudo nice yum update --skip-broken --color=auto"
+  alias yumc="sudo nice yum clean all --color=auto"
+  alias yum="sudo nice yum --color=auto"
+fi
 #-----------------------------
 #	Show files & dict.
 #-----------------------------
