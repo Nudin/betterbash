@@ -575,11 +575,11 @@ UNIUSR="Michael.Schoenitzer"
 alias staufenssh='ssh -l $UNIUSR $STAUFEN'
 staufencp()
 {
-scp $1 $UNIUSR@$STAUFEN:$2
+scp $1 $UNIUSR@$STAUFEN:${2:-.}
 }
 staufenget()
 {
-scp $UNIUSR@$STAUFEN:$1 $2
+scp $UNIUSR@$STAUFEN:$1 ${2:-.}
 }
 alias staufencmd='ssh -f -X -l $UNIUSR $STAUFEN'
 
