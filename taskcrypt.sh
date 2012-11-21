@@ -3,6 +3,14 @@
 # PROBABLY BUGY!?
 #set -x
 
+# Print help-text
+printhelp()
+   {
+   echo "taskcrypt [id] <command> [id] [text]"
+   echo "Commands are: show, info, add, help"
+   # Need to be improved
+   }
+   
 # Ask user for Key (1-26)
 insertkey()
    {
@@ -39,28 +47,41 @@ decrypt()
    echo $* | tr "$s-za-$e$S-ZA-$E" "a-mn-zA-MN-Z"
    }
 
+
 ### Start of Script ###
 
 # User wants to add new task
 if [ "$1" = "add" ] ; then
-   cypher=$(eval crypt "\$$#")
+   cypher=$(crypt "${*/add /}")
    echo Verschlüsselt:
    echo "$cypher"
    task add +crypted "[C] $cypher"
 #User wants to read taskdescription
+elif [ "$1" = "show" ] ; then 
+   cypher=$(task info "$2" | grep Description | head -1 | tail -c +17)
+   dec=$(decrypt "$cypher")
+   echo -e "---\n$dec"
 elif [ "$2" = "show" ] ; then 
-   cypher=$(task "$1" | grep Description | head -1 | tail -c +17)
+   cypher=$(task info "$1" | grep Description | head -1 | tail -c +17)
    dec=$(decrypt "$cypher")
    echo -e "---\n$dec"
 #User wants to read full taskinfo
-elif [ "$2" = "info" ] ; then
-   cypher=$(task "$1" | grep Description | head -1 | tail -c +17)
+elif [ "$1" = "info" ] ; then
+   cypher=$(task info "$2" | grep Description | head -1 | tail -c +17)
    dec=$(decrypt "$cypher")
    task info $1 | sed "s/\[C\] $cypher/$dec/g"
-# only for tests
+elif [ "$2" = "info" ] ; then
+   cypher=$(task info "$1" | grep Description | head -1 | tail -c +17)
+   dec=$(decrypt "$cypher")
+   task info $1 | sed "s/\[C\] $cypher/$dec/g"
+# help
+elif [ "$1" = "help" ] ; then
+   printhelp
 else
-   cypher=$(crypt "test")
-   echo "$cypher"
-   decrypt "$cypher"
+   printhelp
+# only for tests
+   #cypher=$(crypt "test")
+   #echo "$cypher"
+   #decrypt "$cypher"
 fi
 
