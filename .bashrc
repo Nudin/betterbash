@@ -5,32 +5,40 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 #========================================
-#	PATH
-#========================================
-PATH=$PATH:/usr/games
-
-#========================================
 #	Bash-behavior
 #========================================
-shopt -s cdspell hostcomplete histreedit histverify
+shopt -s cdspell hostcomplete histreedit histverify checkwinsize
 if [ $BASH_VERSINFO -eq 4 ] ; then
         shopt -s autocd checkjobs dirspell globstar
 fi
 #CDPATH='$HOME' don't work well with autocd
-HISTCONTROL=ignoreboth
-#load bash-completion on ubuntu
+#Configure history
+HISTCONTROL=erasedups:ignorespace
+export HISTSIZE=50000
+export HISTFILESIZE=50000
+# Configure hh
+export HH_CONFIG=hicolor
+bind '"\e\C-r": "\C-a hh \C-j"'
+#load bash-completion on ubuntu, git-promt on arch
 if uname -r | grep Ubuntu > /dev/null ; then
 	export DISTRIBUTION=Ubuntu
-	. /etc/bash_completion
-elif uname -r | grep ARCH > /dev/null ; then
+	source /etc/bash_completion
+elif uname -r | grep -e ARCH -e grsec > /dev/null ; then
+    source /usr/share/git/completion/git-prompt.sh
 	export DISTRIBUTION=Arch
 elif uname -r | grep fc > /dev/null ; then
-        export DISTRIBUTION=Fedora
+    export DISTRIBUTION=Fedora
 fi
 # bashmarks
 if [ -f ~/.local/bin/bashmarks.sh ] ; then
    source ~/.local/bin/bashmarks.sh
 fi
+
+#start Mouse on konsole:
+alias mouse_on="sudo szstemctl start gpm"
+
+# Using this, aliases will work with sudo
+alias sudo='sudo '
 
 #========================================
 #	ANSI-Colors for Bash
@@ -53,6 +61,10 @@ fi
 
  reset='\e[0m'
 
+# === to set Window-title ===
+settitle() {
+    printf "\033]0;$1\007"
+}
 
 #========================================
 # 	Envoirements
@@ -60,56 +72,48 @@ fi
 export BROWSER="$HOME/Code/browserweiche.sh"
 # export JAVA_HOME="/usr/java/jdk1.6.0_03/bin/"
 export EDITOR="nano"
-
+export DIFFPROG=meld
 
 #========================================
 # Set default values for several commands
 #========================================
+# human readable sizes
 alias du='du -h --max-depth=1'
 alias df='df -h'
-alias ls='ls -h --color=auto'
-alias grep='grep --color=auto'
 alias free="free -m"
-if  most 2>/dev/null ; then
-	alias man="man -P most"
-fi
-#alias pidof='/sbin/pidof'
+# turn on color
+alias ls='ls -h --color=always'
+alias grep='grep --color=always'
+alias fgrep='fgrep --color=always'
+alias egrep='egrep --color=always'
+alias tree='tree -C'
+
+#eval $(dircolors -b)
+#if  most 2>/dev/null ; then
+#	alias man="man -P most"
+#fi
+
+# other
 alias alsamixer='alsamixer -c 0'
 alias ping='ping -c 4'
-alias dir='dir --color=auto'
-#dir() { ls -1F $@ |grep /$; }
-alias vdir='vdir --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias tree='tree -C'
-#alias rm='mv --target-directory=$HOME/.local/share/Trash/files'
 alias mplayer='mplayer -nolirc'
-LESSOPEN="|$HOME/git/betterbash/mylesspipe.sh %s"
+alias mpv='mpv --af=scaletempo'
+export LESSOPEN="|$HOME/git/betterbash/mylesspipe.sh %s"
 export LESS=' -R '
+alias vi='vim'
+alias iotop='sudo iotop'
+alias dmesg='sudo dmesg'
 
 #========================================
 # 	Complex overwriting
 #========================================
+dir() { ls -1F $@ |grep /$; }
 gpp() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
 alias g++='gpp'
 alias nano='$HOME/.nano_starter'
-alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Delete"'
- export BC_ENV_ARGS=$HOME/.bc_starter
+alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Separator"'
+export BC_ENV_ARGS=$HOME/.bc_starter
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
-# better would be to use libtrash
-delet()
- {
-  if [ $# -gt 1 ] ; then
-  	command rm $*
-  else
-	if [ -e $HOME/.local/share/Trash/files/$1 ] ; then
-		nr=$(expr $(ls a_[0-9] | tr '\n' '\t' | cut -f$(ls a_[0-9]|wc -l) | cut -d_ -f2) \+ 1)
-  		mv $HOME/.local/share/Trash/files/$1 $HOME/.local/share/Trash/files/$1_$nr
-	fi
-	mv --target-directory=$HOME/.local/share/Trash/files $1
- fi
- }
-
 
 #========================================
 # 	own functions/commands
@@ -140,7 +144,7 @@ alias y='yum'
 #-----------------------------
 if [ "$DISTRIBUTION" = "Arch" ] ; then
   alias inst="sudo \pacman --needed -S"
-  alias upgrade="yaourt -Syu"
+  alias upgrade="yaourt -Syua"
   alias pacman="sudo pacman"
 elif [ "$DISTRIBUTION" = "Ubuntu" ] ; then
   alias inst="sudo apt-get install"
@@ -154,7 +158,7 @@ fi
 #	Show files & dict.
 #-----------------------------
 alias LS='ls -l --group-directories-first'
-alias ll='ls -hl --color=auto'
+alias ll='ls -hl --color=always'
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
 alias lk='ls -lSr'         # sort by size, biggest last
@@ -169,7 +173,7 @@ alias bigest='\du -chs *|sort -hr|head -11'
 #-----------------------------
 #	cd
 #-----------------------------
-function mkcd { # Makes directory then moves into it
+mkcd() { # Makes directory then moves into it
     mkdir -p -v $1
     cd $1
 }
@@ -179,41 +183,7 @@ alias books='cd $HOME/E-Books'
 alias images='cd $HOME/Bilder'
 alias tv='cd $HOME/Videos/TV'
 alias localhost='cd /var/www'
-#-----------------------------
-#	find
-#-----------------------------
-# Find a file with a pattern in name:
-function ff() { find . -type f -iname '*'$*'*' -ls ; }
 
-# Find a file with pattern $1 in name and Execute $2 on it:
-function fe()
-{ find . -type f -iname '*'${1:-}'*' -exec ${2:-file} {} \;  ; }
-
-# Find a pattern in a set of files and highlight them:
-# (needs a recent version of egrep)
-function fstr()
-{
-    OPTIND=1
-    local case=""
-    local usage="fstr: find string in files.
-Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
-    while getopts :it opt
-    do
-        case "$opt" in
-        i) case="-i " ;;
-        *) echo "$usage"; return;;
-        esac
-    done
-    shift $(( $OPTIND - 1 ))
-    if [ "$#" -lt 1 ]; then
-        echo "$usage"
-        return;
-    fi
-    find . -type f -name "${2:-*}" -print0 | \
-    xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
-
-}
-alias findbig='find . -type f -exec ls -s {} \; | sort -h -r | head -5'
 #-----------------------------
 #	rename
 #-----------------------------
@@ -243,7 +213,7 @@ else
 fi
 }
 
-function lowercase()  # move filenames to lowercase
+lowercase()  # move filenames to lowercase
 {
     for file ; do
         filename=${file##*/}
@@ -262,7 +232,7 @@ function lowercase()  # move filenames to lowercase
     done
 }
 
-function swichfiles()  # Swap 2 filenames around, if they exist
+swichfiles()  # Swap 2 filenames around, if they exist
 {
     local TMPFILE=tmp.$$
 
@@ -324,7 +294,7 @@ case $format in
    7z)        7za a $tofile $file ;;
 esac
 }
-function extract()      # Handy Extract Program.
+extract()      # Handy Extract Program.
 {
      if [ -f $1 ] ; then
          case $1 in
@@ -348,7 +318,7 @@ function extract()      # Handy Extract Program.
 #-----------------------------
 #	Interaction
 #-----------------------------
-function ask()          # See 'killps' for example of use.
+ask()          # See 'killps' for example of use.
 {
     echo -n "$@" '[y/n] ' ; read ans
     case "$ans" in
@@ -362,8 +332,8 @@ function ask()          # See 'killps' for example of use.
 alias k9="kill -9"
 alias ka="killall"
 alias kfx="killall firefox xulrunner-bin firefox-bin"
-function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
-function killps()                 # Kill by process name.
+my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
+killps()                 # Kill by process name.
 {
     local pid pname sig="-TERM"   # Default signal.
     if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
@@ -397,44 +367,40 @@ alias timeupdate='sudo ntpdate -u ptbtime1.ptb.de'
 #-----------------------------
 #	other
 #-----------------------------
-alias fast264='mplayer -lavdopts skiploopfilter=all'
-alias superfast264='mplayer -lavdopts skipframe=nonref:skiploopfilter=all'
+#alias fast264='mplayer -lavdopts skiploopfilter=all'
+#alias superfast264='mplayer -lavdopts skipframe=nonref:skiploopfilter=all'
+alias addon-sdk="cd /opt/addon-sdk && source bin/activate; cd -"
 alias datum='date "+%d. %b %Y    %T"'
 alias reload='source $HOME/.bashrc'
 alias mx='chmod a+x'
-function repeat()       # Repeat n times command.
+repeat()       # Repeat n times command.
 {
     local i max
     max=$1; shift;
-    for ((i=1; i <= max ; i++)); do  # --> C-like syntax
+    for ((i=1; i <= max ; i++)); do
         eval "$@";
     done
 }
-alias path='echo -e ${PATH//:/\\n}'
-alias moto4lin="sudo chmod 777 /dev/ttyACM0; echo AT+MODE=8 > /dev/ttyACM0; sudo moto4lin"
-alias Bart='fortune simpsons'
 alias bart='fortune simpsons'
 line() {  head -$1  | tail -1; }
 
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 
-alias avidemux2="avidemux2_gtk"
-#	(un)mountig floppys
-# alias mount_floppy="sudo mount -t vfat /dev/fd0 /media/floppy"
-# alias umount_floppy="sudo umount /media/floppy/"
+mpf() {
+pids=$(pidof firefox chromium plugin-container gtk-gnash npviewer.bin | tr \  ,)
+#echo $pids
+files="$(ls -lQ $(eval echo /proc/{$pids\,}/fd/*) 2>/dev/null \
+	| grep '[^a-z]/tmp/'  | grep '(deleted)' \
+	| cut -d\" -f2)"
+#echo $files
+#mplayer $files "$@"
+\mpv --title="mpf" --af=scaletempo "$@" $files
+#mpv "$@" $files
+}
+svg2pdf() { inkscape -z -D --file=$1 --export-pdf=${1/.svg/.pdf}; }
 
-#	(un)mountig zip
-# alias mount_zip="sudo /sbin/modprobe ppa; sudo mount -t vfat /dev/sde4 /media/zip/"
-# alias umount_zip="sudo umount /media/zip/"
-
-#alias 'playflash=vlc $(ls -1t /tmp/Fl* | head -1)'
-#alias 'pf=vlc $(ls -1t /tmp/Fl* | head -1)'
-#alias 'mpf=mplayer -nolirc $(ls -1t /tmp/Fl* | head -1)'
-#alias 'mpf=mplayer /proc/$(pidof npviewer.bin | cut -d\  -f1)/fd/*'
-alias mpf='mplayer $(ls -lQ $(eval echo /proc/{$(pidof plugin-container gtk-gnash npviewer.bin | tr \  ,)\,}/fd/*) 2>/dev/null | grep "/tmp" | cut -d\" -f2)'
-
-function rot13() {
+rot13() {
 	if [ $# = 0 ] ; then
 		tr "[a-m][n-z][A-M][N-Z]" "[n-z][a-m][N-Z][A-M]"
 	else
@@ -442,7 +408,8 @@ function rot13() {
 	fi
 }
 
-function spwd() {
+
+spwd() {
         npwd=${PWD/$HOME/\/@}
         local IFS="/"
         set $npwd
@@ -453,42 +420,14 @@ function spwd() {
         fi
 }
 ## returns base pwd (last directory)
-function bpwd() {
+bpwd() {
 	echo "${PWD##*/}"
 }
-de-en()
-{
-if [ $TEXTBROWSER = "w3m" ] ; then # Bilder nerven nur
-	TEXTBROWSER="w3m -o imgdisplay=0 -o keymap_file=~/.w3m/keymap_hardexit"
-fi
-if [ $1 = "-e" ] ; then
-	shift
-	egrep --color=always -h -w -i -e "$*" /usr/share/dict/de-en.txt | head
-elif [ $1 = "-l" ] ; then
-	shift
-	$TEXTBROWSER "http://pda.leo.org/?lp=ende&search=$*"
-elif [ $1 = "-t" ] ; then
-	shift
-       	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*"
-elif [ $1 = "-m" ] ; then
-	shift
-	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
-elif [ $1 = "-d" ] ; then
-	shift
-	ding $*
-elif [ $1 = "-h" ] ; then
-	echo -e "Aufruf: de-en [-eltmd] <Suchwort>\n"
-	echo "Übersetzung de-en"
-	echo "Optionen:"
-	echo -e " -e\tEgrep von /usr/share/dict/de-en.txt (noch fehlerhaft)"
-	echo -e " -l\tdict.leo.org (pda-version)"
-	echo -e " -t\tdict.tu-chemnitz.de"
-	echo -e " -m\tdict.tu-chemnitz.de (pda-version) [default]"
-	echo -e " -d\tding"
-	return
-else # default: -m
-	$TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?query=$*&mini=1"
-fi
+# convert a file form iso-8859-1 to utf-8
+iso2utf8() {
+  name=${1%.*}
+  ext=${1##*.}
+  iconv -f iso-8859-1 -t utf-8 "$1" > "${name}.utf8.${ext}"
 }
 
 #========================================
@@ -509,8 +448,28 @@ alias kk='ll'
 # export PS1="[\\u|\\t \\W ]$ "
 # Colorised:
 #PS1='[\[\e[2;36m\]\u\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
-PROMPT_COMMAND='exitstatus=$?'
-export PS1='[\[\e[2;36m\]$(if [ $UID -eq 0 ] ; then echo \[\e[7m\]; fi)\u\[\e[31m\]$(usr="$(who -m | head -1 | grep $USER | cut -d \( -f2 | tr -d \))"; if [ "$usr" != ":0.0" -a "$usr" != ":0" -a "$usr" != "" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[31m\]${exitstatus/0/\[\e[0m\]\[\e[2m\]0}\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
+PROMPT_COMMAND="exitstatus=\$?;$PROMPT_COMMAND" #;history -a; history -r
+#export PS1='[\[\e[2;36m\]$(if [ $UID -eq 0 ] ; then echo \[\e[7m\]; fi)\u\[\e[31m\]$(usr="$(who -m | head -1 | grep $USER | cut -d \( -f2 | tr -d \))"; if [ "$usr" != ":0.0" -a "$usr" != ":0" -a "$usr" != "" ] ; then echo @\h; fi)\[\e[0m\]|\[\e[31m\]${exitstatus/0/\[\e[0m\]\[\e[2m\]0}\[\e[0m\]|\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]$(spwd)\[\e[0;35m\]$(__git_ps1 " %s" 2>/dev/null)\[\e[0m\] ]\[\e[2;31m\]\$\[\e[0m\] '
+reset_='\['$reset'\]'
+inv_='\['$inv'\]'
+lightcyan_='\[\e[2;36m\]'
+red_='\['$red'\]'
+lightgreen_='\[\e[2;32m\]'
+yellow_='\['$yellow'\]'
+purple_='\['$purple'\]'
+boldred_='\[\e[1;31m\]'
+isssh() {
+  usr="$(who -m | head -1 | grep $USER | cut -d \( -f2 | tr -d \))"
+  [ "$usr" != ":0.0" -a "$usr" != ":0" -a "$usr" != "" ]
+  }
+PS1="[$lightcyan_\$(if [ \$UID -eq 0 ] ; then echo $inv_; fi)\u$reset_\
+\$(if isssh ; then echo -e '@$boldred_\h$reset_'; fi)\
+|\
+$red_\${exitstatus/0/$reset_\\[\\e[2m\\]0}$reset_|\
+$lightgreen_\t$reset_ \
+$yellow_\$(spwd)$reset_\
+$purple_\$(__git_ps1 \" %s\" 2>/dev/null)$reset_\
+ ]$red_\$$reset_ "
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -519,51 +478,30 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 #PS1='\0337\e[0;$(($LINES - 3))r\e[$(($LINES - 2));0H $(echo -n \[; free -o; echo -n \[)\[\0338\][\[\e[2;36m\]\u\[\e[0m\]\[|\]\[\e[2;32m\]\t\[\e[0m\] \[\e[33m\]\W\[\e[0m\] ]\[\e[2;31m\]$\[\e[0m\] '
 
 
-#start Mouse on konsole:
-alias mouse_on="sudo  /sbin/service gpm start"
-
-alias mount_all='sudo mount -a'
-alias umount_media='sudo umount /media/Medien'
-
-
 #========================================
 # 	Run several stuff in background
 #========================================
-function soffice() { command soffice "$@" & }
-function firefox() { command firefox "$@" & }
-function evince() { command evince "$@" & }
-function xpdf() { command xpdf "$@" & }
-function gedit() { command gedit "$@" & }
-function eog() { command eog "$@" & }
-function giggle() { command giggle "$@" & }
-function chrome() { command google-chrome "$@" & }
-function incognito() { command google-chrome --incognito "$@" & }
-alias nautilus='nautilus . &'
+soffice()	{ command soffice "$@" & }
+firefox()	{ command firefox "$@" & }
+evince()	{ command evince "$@" & }
+xpdf()	{ command xpdf "$@" & }
+gedit()	{ command gedit "$@" & }
+#pluma()	{ command pluma "$@" & }
+eog()	{ command eog "$@" & }
+eom()	{ command eom "$@" & }
+giggle()	{ command giggle "$@" & }
+chrome()	{ command google-chrome "$@" & }
+incognito()	{ command google-chrome --incognito "$@" & }
+#alias nautilus='nautilus . &'
 
 #========================================
 # 	Stuff for several Programms
 #========================================
-#	BOINC
-#alias boinc='boinc_client --dir $HOME/.BOINC'
-#alias boinc_client='boinc_client --dir $HOME/.BOINC'
-#alias boincmgr='cd $HOME/.BOINC;boincmgr'
-
 #	libtrash
 # export LD_PRELOAD=/usr/local/lib/libtrash.so 
 # alias trash_on="export TRASH_OFF=NO" 
 # alias trash_off="export TRASH_OFF=YES"
 # alias firefox="LD_PRELOAD= firefox"
-
-#	Jrman
-#export PATH=$PATH:/usr/local/jrman-0_4/bin
-#export JRMAN_HOME=/usr/local/jrman-0_4
-
-#	Tor
-tor()
-{
-sudo /sbin/service privoxy start
-sudo /sbin/service tor start
-}
 
 
 #========================================
@@ -574,6 +512,7 @@ sudo /sbin/service tor start
 STAUFEN="staufen.cip.physik.uni-muenchen.de"
 UNIUSR="Michael.Schoenitzer"
 alias staufenssh='ssh -l $UNIUSR $STAUFEN'
+alias usmssh="ssh -l bachstud7 -X cranach.usm.uni-muenchen.de"
 staufencp()
 {
 scp $1 $UNIUSR@$STAUFEN:${2:-.}
@@ -584,13 +523,10 @@ scp $UNIUSR@$STAUFEN:$1 ${2:-.}
 }
 alias staufencmd='ssh -f -X -l $UNIUSR $STAUFEN'
 
-# SSH for Fedora:
-#export CVS_RSH=ssh
-#export CVSROOT=:ext:michael@i18n.redhat.com:/usr/local/CVS
-
 
 tabmerge() { for ((i=1;i<=$(cat $1 | wc -l);i++)); do  echo -n $(cat $1 | line $i); echo -en \"	\"; echo $(cat $2 | line $i); done }
 # Für Skript, hier eigentlich fehl am Platz
 printopt() { echo -e "$1\t$2" | fold -s -$(($COLUMNS-20)) | sed 's.^.\t\t.g' | tail -c +2 ; }
 
 
+alias chromium='cgexec -g memory,cpuset:chrome /usr/bin/chromium'
