@@ -17,7 +17,7 @@ bc:
 
 themes:
 	mkdir -p ~/.vim/colors/
-	wget https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O ~/.vim/colors/badwolf.vim 
+	wget -nv https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O ~/.vim/colors/badwolf.vim 
 
 vim: themes
 	$(INST) .vimrc ~/.vimrc
