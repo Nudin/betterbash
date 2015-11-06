@@ -68,7 +68,7 @@ settitle() {
 #========================================
 # 	Envoirements
 #========================================
-export BROWSER="$HOME/Code/browserweiche.sh"
+export BROWSER="$HOME/.browserweiche.sh"
 export EDITOR="nano"
 export DIFFPROG=meld
 
@@ -91,7 +91,7 @@ alias alsamixer='alsamixer -c 0'
 alias ping='ping -c 4'
 alias mplayer='mplayer -nolirc'
 alias mpv='mpv --af=scaletempo'
-export LESSOPEN="|$HOME/git/betterbash/mylesspipe.sh %s"
+export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
 alias vi='vim'
 alias iotop='sudo iotop'
@@ -105,7 +105,7 @@ gpp() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmo
 alias g++='gpp'
 alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Separator"'
-export BC_ENV_ARGS=$HOME/.bc_starter
+export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 
 #========================================
