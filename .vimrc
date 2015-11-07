@@ -64,6 +64,12 @@ set foldmethod=indent
 set foldlevelstart=10
 set foldnestmax=10
 
+" at least 10 lines of context above/below cursor
+set scrolloff=10
+
+" Scroll text without cursor
+noremap <C-j> j<C-e>
+noremap <C-k> k<C-y>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
