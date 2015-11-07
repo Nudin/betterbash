@@ -69,7 +69,7 @@ settitle() {
 # 	Envoirements
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
-export EDITOR="nano"
+export EDITOR="vim"
 export DIFFPROG=meld
 
 #========================================
