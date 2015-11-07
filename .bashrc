@@ -168,12 +168,6 @@ mkcd() {
     mkdir -p -v $1
     cd $1
 }
-alias texte='cd $HOME/Eigene Texte'
-alias downloads='cd $HOME/Downloads'
-alias books='cd $HOME/E-Books'
-alias images='cd $HOME/Bilder'
-alias tv='cd $HOME/Videos/TV'
-alias localhost='cd /var/www'
 
 #-----------------------------
 #	rename files
