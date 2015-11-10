@@ -1,0 +1,36 @@
+### Behavior ###
+ontop
+stop-screensaver
+quiet
+really-quiet
+
+cache-default=500000
+
+### Audio ###
+#mixer-channel=Master
+audio-channels=6
+# Fix A/V sync problems. *
+mc=0.2
+autosync=30
+
+
+### Video ###
+#framedrop="1" # For slow machines
+vd-lavc-threads=3
+
+
+### Subtitles ###
+slang=de,ger,en,eng
+sub-auto=fuzzy
+osd-font=/usr/share/fonts/TTF/DejaVuSerifCondensed.ttf
+
+sub-scale=0.5
+#sub-pos="100"
+
+
+### OSD ###
+osd-scale=0.5
+osd-bar-align-y=0.8
+osd-bar-w=75
+osd-bar-h=2
+osd-border-size=0.7

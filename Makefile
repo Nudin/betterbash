@@ -1,6 +1,7 @@
-INST = cp
+# alternatively use ln -s to symlink the files instead of copying them
+INST = cp -rf
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv
 
 nano:
 	$(INST) nano/.nanorc ~/.nanorc
@@ -30,3 +31,6 @@ lesspipe:
 
 xmodmap:
 	$(INST) xmodmap ~/.Xmodmap
+
+mpv:
+	$(INST) mpv ~/.mpv
