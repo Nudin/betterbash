@@ -30,7 +30,7 @@ lesspipe:
 	$(INST) lesspipe.sh ~/.lesspipe.sh
 
 xmodmap:
-	$(INST) xmodmap ~/.Xmodmap
+	$(INST) Xmodmap ~/.Xmodmap
 
 mpv:
 	$(INST) mpv ~/.mpv
