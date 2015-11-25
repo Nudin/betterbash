@@ -386,3 +386,5 @@ incognito()	{ command google-chrome --incognito "$@" & }
 # 	OHTER STUFF
 #========================================
 alias chromium='cgexec -g memory,cpuset:chrome /usr/bin/chromium'
+
+source ${HOME}/.bashrc.${HOSTNAME}
