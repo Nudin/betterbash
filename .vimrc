@@ -18,7 +18,8 @@ if &t_Co > 2 || has("gui_running")
   syntax on
 endif
 set showmatch	" highlight matching [{()}]
-colorscheme badwolf
+" colorscheme badwolf
+colorscheme wasabi256
 
 " Enable Mouse
 if has('mouse')
@@ -54,6 +55,10 @@ else
   set undofile		" keep an undo file (undo changes after closing)
 endif
 
+" encoding
+set encoding=utf-8
+setglobal fileencoding=utf-8
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
@@ -80,3 +85,4 @@ let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
 nnoremap <C-l> :TlistToggle<CR>
 
+au BufRead /tmp/mutt-* set tw=72
