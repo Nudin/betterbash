@@ -96,6 +96,8 @@ export LESS=' -R '
 alias vi='vim'
 alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
+alias route='sudo route -n'
+alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 
 #========================================
 # 	Complex overwriting
@@ -107,6 +109,7 @@ alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Separator"'
 export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
+alias mutt='echo -e "\e]0;mutt\a";mutt'
 
 #========================================
 # 	own functions/commands
