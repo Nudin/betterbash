@@ -25,10 +25,12 @@ bind '"\e\C-r": "\C-a hh \C-j"'
 # Edit PATH
 export PATH=$PATH:~/.cabal/bin/
 
+if [ -f /etc/bash_completion ] ; then
+	source /etc/bash_completion
+fi
 #load bash-completion on ubuntu, git-promt on arch
 if uname -r | grep Ubuntu > /dev/null ; then
 	export DISTRIBUTION=Ubuntu
-	source /etc/bash_completion
 elif uname -r | grep -e ARCH -e grsec > /dev/null ; then
     source /usr/share/git/completion/git-prompt.sh
 	export DISTRIBUTION=Arch
