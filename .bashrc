@@ -36,6 +36,8 @@ elif uname -r | grep fc > /dev/null ; then
     export DISTRIBUTION=Fedora
 fi
 
+export TERM=xterm-256color
+
 # Using this, aliases will work with sudo
 alias sudo='sudo '
 
@@ -71,6 +73,7 @@ settitle() {
 export BROWSER="$HOME/.browserweiche.sh"
 export EDITOR="vim"
 export DIFFPROG=meld
+export GPG_TTY=`tty`
 
 #========================================
 # Set default values for several commands
