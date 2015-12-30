@@ -25,10 +25,12 @@ bind '"\e\C-r": "\C-a hh \C-j"'
 # Edit PATH
 export PATH=$PATH:~/.cabal/bin/
 
+if [ -f /etc/bash_completion ] ; then
+	source /etc/bash_completion
+fi
 #load bash-completion on ubuntu, git-promt on arch
 if uname -r | grep Ubuntu > /dev/null ; then
 	export DISTRIBUTION=Ubuntu
-	source /etc/bash_completion
 elif uname -r | grep -e ARCH -e grsec > /dev/null ; then
     source /usr/share/git/completion/git-prompt.sh
 	export DISTRIBUTION=Arch
@@ -99,6 +101,8 @@ export LESS=' -R '
 alias vi='vim'
 alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
+alias route='sudo route -n'
+alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 
 #========================================
 # 	Complex overwriting
@@ -110,6 +114,7 @@ alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Separator"'
 export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
+alias mutt='echo -e "\e]0;mutt\a";mutt'
 
 #========================================
 # 	own functions/commands
@@ -386,3 +391,5 @@ incognito()	{ command google-chrome --incognito "$@" & }
 # 	OHTER STUFF
 #========================================
 alias chromium='cgexec -g memory,cpuset:chrome /usr/bin/chromium'
+
+source ${HOME}/.bashrc.${HOSTNAME}
