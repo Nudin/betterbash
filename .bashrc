@@ -84,16 +84,16 @@ export GPG_TTY=`tty`
 alias du='du -h --max-depth=1'
 alias df='df -h'
 alias free="free -m"
-# turn on color
+# turn on color and make grep silent
 alias ls='ls -h --color=always'
-alias grep='grep --color=always'
-alias fgrep='fgrep --color=always'
-alias egrep='egrep --color=always'
+alias grep='grep -s --color=always'
+alias fgrep='fgrep -s  --color=always'
+alias egrep='egrep -s --color=always'
 alias tree='tree -C'
 
 # other
 alias alsamixer='alsamixer -c 0'
-alias ping='ping -c 4'
+alias ping='ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
 alias mpv='mpv --af=scaletempo'
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
@@ -383,8 +383,7 @@ pluma()	{ command pluma "$@" & }
 eog()	{ command eog "$@" & }
 eom()	{ command eom "$@" & }
 giggle()	{ command giggle "$@" 2> /dev/null & }
-chrome()	{ command google-chrome "$@" & }
-incognito()	{ command google-chrome --incognito "$@" & }
+incognito()	{ command chromium --incognito "$@" & }
 
 
 #========================================
