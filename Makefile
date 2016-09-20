@@ -24,15 +24,18 @@ themes:
 	wget -nv  https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim -O ~/.vim/colors/wasabi256.vim
  
 vimplugins:
-	git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline
-	git clone git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-	git clone git://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
-	git clone https://github.com/nvie/vim-flake8.git ~/.vim/bundle/flake8
-	git clone git://github.com/tpope/vim-fugitive.git ~/.vim/bundle/fugitive
-	git clone git://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/gitgutter
-	git clone https://github.com/simnalamburt/vim-mundo.git ~/.vim/bundle/mundo
-	git clone git://github.com/tpope/vim-sleuth.git ~/.vim/bundle/sleuth
-	git clone https://github.com/guns/xterm-color-table.vim.git ~/.vim/bundle/xterm-color-table
+	mkdir -p ~/.vim/autoload
+	mkdir -p ~/.vim/bundle
+	curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim	
+	test -e ~/.vim/bundle/lightline || git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline
+	test -e ~/.vim/bundle/nerdtree || git clone git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+	test -e ~/.vim/bundle/tabular || git clone git://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
+	test -e ~/.vim/bundle/flake8 || git clone https://github.com/nvie/vim-flake8.git ~/.vim/bundle/flake8
+	test -e ~/.vim/bundle/fugitive || git clone git://github.com/tpope/vim-fugitive.git ~/.vim/bundle/fugitive
+	test -e ~/.vim/bundle/gitgutter || git clone git://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/gitgutter
+	test -e ~/.vim/bundle/mundo || git clone https://github.com/simnalamburt/vim-mundo.git ~/.vim/bundle/mundo
+	test -e ~/.vim/bundle/sleuth || git clone git://github.com/tpope/vim-sleuth.git ~/.vim/bundle/sleuth
+	test -e ~/.vim/bundle/xterm-color-table || git clone https://github.com/guns/xterm-color-table.vim.git ~/.vim/bundle/xterm-color-table
 
 vim: themes vimplugins
 	$(INST) .vimrc ~/.vimrc

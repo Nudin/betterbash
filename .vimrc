@@ -99,7 +99,7 @@ let mapleader=","
 nnoremap <leader>s :mksession<CR>
 
 " spellchecking
-set spell spelllang=en,de,dewp
+silent! set spell spelllang=en,de,dewp
 map <F5> :setlocal spell! spelllang=en_us<CR>
 map <F6> :setlocal spell! spelllang=de<CR>
 map <BS> hx
