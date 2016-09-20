@@ -19,8 +19,8 @@ export HISTSIZE=50000
 export HISTFILESIZE=50000
 
 # Configure hh
-export HH_CONFIG=hicolor
-bind '"\e\C-r": "\C-a hh \C-j"'
+#export HH_CONFIG=hicolor
+#bind '"\e\C-r": "\C-a hh \C-j"'
 
 # Edit PATH
 export PATH=$PATH:~/.cabal/bin/
@@ -73,7 +73,7 @@ settitle() {
 # 	Envoirements
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
-export EDITOR="vim"
+export EDITOR="nvim"
 export DIFFPROG=meld
 export GPG_TTY=`tty`
 
@@ -85,20 +85,22 @@ alias du='du -h --max-depth=1'
 alias df='df -h'
 alias free="free -m"
 # turn on color and make grep silent
-alias ls='ls -h --color=always'
-alias grep='grep -s --color=always'
-alias fgrep='fgrep -s  --color=always'
-alias egrep='egrep -s --color=always'
+alias ls='ls -h --color=auto'
+alias grep='grep -s --color=auto'
+alias fgrep='fgrep -s  --color=auto'
+alias egrep='egrep -s --color=auto'
 alias tree='tree -C'
 
 # other
 alias alsamixer='alsamixer -c 0'
-alias ping='ping -c 4 -i 0.3'
+alias ping='LANG=en ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
-alias mpv='mpv --af=scaletempo'
+#alias mpv='mpv --af=scaletempo'
+mpv() {  --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
 alias vi='vim'
+alias vim='nvim'
 alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
 alias route='sudo route -n'
@@ -156,7 +158,7 @@ fi
 #	Show files & dict.
 #-----------------------------
 alias LS='ls -l --group-directories-first'
-alias ll='ls -hl --color=always'
+alias ll='ls -hl --color=auto'
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
 alias lk='ls -lSr'         # sort by size, biggest last
@@ -328,6 +330,7 @@ yellow_='\['$yellow'\]'
 purple_='\['$purple'\]'
 boldred_='\[\e[1;31m\]'
 light_='\[\e[2m\]'
+tcwhite_='\['"$(echo -e '\x1b[38;2;230;230;230m')"'\]'
 exitstatuscolor() {
    if [ $exitstatus -eq 0 ] ; then
      echo -e "$light"
@@ -338,7 +341,7 @@ exitstatuscolor() {
 PROMPT_COMMAND="exitstatus=\$?;$PROMPT_COMMAND"
 PROMPT_DIRTRIM=2
 
-if [ $UID -eq 0 ] ; then echo invifroot_="$inv_"; fi
+if [ $UID -eq 0 ] ; then invifroot_="$inv_"; fi
 
 # Test if user is loged in via ssh
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
@@ -351,20 +354,20 @@ else
 fi
 
 if [ "$SESSION_TYPE" == "remote/ssh" ]; then
- PS1="[$lightcyan_$invifroot_\u$reset_\
+ PS1="$reset_[$lightcyan_$invifroot_\u$reset_\
 @$boldred_\h$reset_|\
 \[\$(exitstatuscolor)\]\$exitstatus$reset_|\
 $lightgreen_\t$reset_ \
 $yellow_\w$reset_\
 $purple_\$(__git_ps1 \" %s\" 2>/dev/null)$reset_\
- ]$red_\$$reset_ "
+ ]$red_\$$reset_$tcwhite_ "
 else
- PS1="[$lightcyan_$invifroot_\u$reset_|\
+ PS1="$reset_[$lightcyan_$invifroot_\u$reset_|\
 \[\$(exitstatuscolor)\]\$exitstatus$reset_|\
 $lightgreen_\t$reset_ \
 $yellow_\w$reset_\
 $purple_\$(__git_ps1 \" %s\" 2>/dev/null)$reset_\
- ]$red_\$$reset_ "
+ ]$red_\$$reset_$tcwhite_ "
 fi
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
@@ -390,5 +393,9 @@ incognito()	{ command chromium --incognito "$@" & }
 # 	OHTER STUFF
 #========================================
 alias chromium='cgexec -g memory,cpuset:chrome /usr/bin/chromium'
+export TCLLIBPATH=~/.local/share/tkthemes
 
-source ${HOME}/.bashrc.${HOSTNAME}
+if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
+        source ${HOME}/.bashrc.${HOSTNAME}
+fi
+
