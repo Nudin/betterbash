@@ -23,8 +23,18 @@ themes:
 	wget -nv https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O ~/.vim/colors/badwolf.vim 
 	wget -nv  https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim -O ~/.vim/colors/wasabi256.vim
  
+vimplugins:
+	git clone https://github.com/itchyny/lightline.vim ~/.vim/bundle/lightline
+	git clone git://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+	git clone git://github.com/godlygeek/tabular.git ~/.vim/bundle/tabular
+	git clone https://github.com/nvie/vim-flake8.git ~/.vim/bundle/flake8
+	git clone git://github.com/tpope/vim-fugitive.git ~/.vim/bundle/fugitive
+	git clone git://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/gitgutter
+	git clone https://github.com/simnalamburt/vim-mundo.git ~/.vim/bundle/mundo
+	git clone git://github.com/tpope/vim-sleuth.git ~/.vim/bundle/sleuth
+	git clone https://github.com/guns/xterm-color-table.vim.git ~/.vim/bundle/xterm-color-table
 
-vim: themes
+vim: themes vimplugins
 	$(INST) .vimrc ~/.vimrc
 
 browserweiche:
