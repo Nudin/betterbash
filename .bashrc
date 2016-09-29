@@ -73,7 +73,9 @@ settitle() {
 # 	Envoirements
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
-export EDITOR="nvim"
+if hash nvim 2> /dev/null;
+  export EDITOR="nvim"
+fi
 export DIFFPROG=meld
 export GPG_TTY=`tty`
 
@@ -100,7 +102,9 @@ mpv() {  --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
 alias vi='vim'
-alias vim='nvim'
+if hash nvim 2> /dev/null;
+  alias vim='nvim'
+if
 alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
 alias route='sudo route -n'
