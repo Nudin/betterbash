@@ -20,9 +20,7 @@ set wildmenu " Autocompletion
 set updatetime=250  " Decrease updatetime from 4s to 250ms
 
 " Syntax-Highlight
-if &t_Co > 2 || has("gui_running")
-  syntax on
-endif
+syntax on
 set showmatch	" highlight matching [{()}]
 colorscheme badwolf
 
@@ -37,9 +35,11 @@ endif
 
 " Indent
 set autoindent
-set si
-set tabstop=2
-set softtabstop=2
+set smartindent
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set smarttab
 
 " Search
 set incsearch
@@ -56,12 +56,11 @@ set clipboard=unnamed
 set pastetoggle=<F11>
 
 " backup files
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  set undofile		" keep an undo file (undo changes after closing)
-endif
+set undodir=~/.vim/.undo//,.,/tmp
+set backupdir=~/.vim/.backup//,.,/tmp
+set directory=~/.vim/.swp//,.,/tmp
+set backup		" keep a backup file (restore to previous version)
+set undofile	" keep an undo file (undo changes after closing)
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start

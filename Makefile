@@ -36,9 +36,13 @@ vimplugins:
 	test -e ~/.vim/bundle/mundo || git clone https://github.com/simnalamburt/vim-mundo.git ~/.vim/bundle/mundo
 	test -e ~/.vim/bundle/sleuth || git clone git://github.com/tpope/vim-sleuth.git ~/.vim/bundle/sleuth
 	test -e ~/.vim/bundle/xterm-color-table || git clone https://github.com/guns/xterm-color-table.vim.git ~/.vim/bundle/xterm-color-table
+	test -e ~/.vim/bundle/mru || git clone https://github.com/vim-scripts/mru.vim.git ~/.vim/bundle/mru
 
 vim: themes vimplugins
-	$(INST) .vimrc ~/.vimrc
+	mkdir ~/.vim
+	mkdir ~/.vim/.backup ~/.vim/.swp ~/.vim/.undo
+	$(INST) .vimrc ~/.vim/vimrc
+	ln -s ~/.vim/vimrc ~/.vim/init.vim
 
 browserweiche:
 	$(INST) browserweiche.sh ~/.browserweiche.sh
