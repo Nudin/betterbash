@@ -28,6 +28,7 @@ themes:
 vimplugins:
 	mkdir -p ~/.vim/autoload
 	mkdir -p ~/.vim/bundle
+	mkdir -p ~/.vim/ftplugin
 	curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim	
 	$(call clonevimplugin,lightline,https://github.com/itchyny/lightline.vim)
 	$(call clonevimplugin,nerdtree,git://github.com/scrooloose/nerdtree.git)
