@@ -43,6 +43,8 @@ vimplugins:
 	$(call clonevimplugin,YouCompleteMe,https://github.com/Valloric/YouCompleteMe)
 	cd ~/.vim/bundle/YouCompleteMe; git submodule update --init --recursive
 	~/.vim/bundle/YouCompleteMe/install.py --racer-completer
+	$(call clonevimplugin,vimwiki,https://github.com/vimwiki/vimwiki.git)
+	cp vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
 
 vim: themes vimplugins
 	mkdir -p ~/.vim

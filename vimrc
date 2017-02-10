@@ -55,6 +55,10 @@ set laststatus=2
 set clipboard=unnamed
 set pastetoggle=<F11>
 
+" Split right & down
+set splitright
+set splitbelow
+
 " backup files
 set undodir=~/.vim/.undo//,.,/tmp
 set backupdir=~/.vim/.backup//,.,/tmp
@@ -99,6 +103,7 @@ nnoremap <leader>s :mksession<CR>
 
 " spellchecking
 silent! set spell spelllang=en,de,dewp
+set spellfile=~/.config/nvim/spell/mine.utf-8.add
 map <F5> :setlocal spell! spelllang=en_us<CR>
 map <F6> :setlocal spell! spelllang=de<CR>
 map <BS> hx
@@ -111,6 +116,18 @@ highlight ColorColumn ctermbg=234
 " gundo/mundo
 "nnoremap <leader>u :GundoToggle<CR>
 nnoremap <leader>u :MundoToggle<CR>
+
+" vimwiki
+let g:vimwiki_list = [{
+      \ 'path': '~/.vimwiki/',
+      \              "template_path": "~/.vimwiki/templates",
+      \               "css_name": "mystyle.css",
+      \               'auto_toc': 1,
+      \               'list_margin': 4},
+      \               {}]
+let g:vimwiki_use_mouse = 1
+let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓' " ' ○◐●✓'
+let g:vimwiki_toc_header = 'Inhalt'
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
@@ -136,3 +153,18 @@ if has('nvim')
     autocmd FileType python map <buffer> <F8> :call Flake8_toggle()<CR>
   augroup END
 endif
+
+" tagbar
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits,traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
