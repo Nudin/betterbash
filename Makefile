@@ -41,6 +41,7 @@ vimplugins:
 	$(call clonevimplugin,rust,git://github.com/rust-lang/rust.vim.git)
 	$(call clonevimplugin,xterm-color-table,https://github.com/guns/xterm-color-table.vim.git)
 	$(call clonevimplugin,mru,https://github.com/vim-scripts/mru.vim.git)
+	$(call clonevimplugin,calendar,https://github.com/mattn/calendar-vim.git)
 	$(call clonevimplugin,YouCompleteMe,https://github.com/Valloric/YouCompleteMe)
 	cd ~/.vim/bundle/YouCompleteMe; git submodule update --init --recursive
 	~/.vim/bundle/YouCompleteMe/install.py --racer-completer
