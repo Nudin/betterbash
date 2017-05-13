@@ -98,7 +98,7 @@ alias alsamixer='alsamixer -c 0'
 alias ping='LANG=en ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
 #alias mpv='mpv --af=scaletempo'
-mpv() {  --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
+mpv() { command mpv --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
 alias vi='vim'
