@@ -46,6 +46,7 @@ vimplugins:
 	$(call clonevimplugin,floobits-neovim,https://github.com/Floobits/floobits-neovim.git)
 	$(call clonevimplugin,ale,https://github.com/w0rp/ale.git)
 	cp vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
+	cp haskell.vim ~/.vim/ftplugin/haskell.vim
 
 vim: themes vimplugins
 	mkdir -p ~/.vim

@@ -10,3 +10,4 @@ set titlestring=VimWiki
 :command! W w | execute "Gcommit -a -m 'update'" | Gpush | GitGutter
 :command! WQ w | execute "Gcommit -a -m 'update'" | Gpush | q
 
+let g:gitgutter_sign_column_always = 1
