@@ -18,6 +18,7 @@ set ruler
 set cursorline
 set wildmenu " Autocompletion
 set updatetime=250  " Decrease updatetime from 4s to 250ms
+set fillchars+=vert:\│ " nice line for vsplit
 
 " Syntax-Highlight
 syntax on
@@ -46,6 +47,7 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
+set inccommand=nosplit " live search and replace; neovim only
 
 " History
 set history=50		" keep 50 lines of command line history
@@ -112,6 +114,33 @@ map <BS> hx
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=234
 
+" SETUP TERMINAL
+highlight TermCursor ctermfg=red guifg=red
+tnoremap <Leader><ESC> <C-\><C-n>
+
+" Window navigation function
+" Make ctrl-h/j/k/l move between windows and auto-insert in terminals
+func! s:mapMoveToWindowInDirection(direction)
+    func! s:maybeInsertMode(direction)
+        stopinsert
+        execute "wincmd" a:direction
+
+        if &buftype == 'terminal'
+            startinsert!
+        endif
+    endfunc
+
+    execute "tnoremap" "<silent>" "<M-" . a:direction . ">"
+                \ "<C-\\><C-n>"
+                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+    execute "nnoremap" "<silent>" "<M-" . a:direction . ">"
+                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+endfunc
+for dir in ["h", "j", "l", "k"]
+    call s:mapMoveToWindowInDirection(dir)
+endfor
+
+
 "===== PLUGINS =====
 " gundo/mundo
 "nnoremap <leader>u :GundoToggle<CR>
@@ -169,3 +198,4 @@ let g:tagbar_type_rust = {
         \'i:impls,trait implementations',
     \]
     \}
+
