@@ -157,6 +157,7 @@ let g:vimwiki_list = [{
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓' " ' ○◐●✓'
 let g:vimwiki_toc_header = 'Inhalt'
+let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.wiki\)*'
 
 " Tlist plugin
 let Tlist_Compact_Format = 1

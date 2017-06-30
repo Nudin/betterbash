@@ -1,0 +1,3 @@
+[submodule "privateconf"]
+	path = privateconf
+	url = git@gitlab.com:Nudin/privateconf.git
