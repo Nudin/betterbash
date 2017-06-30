@@ -3,7 +3,7 @@ INST = cp -rf
 
 clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh
 
 nano:
 	$(INST) nano/.nanorc ~/.nanorc
@@ -65,3 +65,13 @@ xmodmap:
 
 mpv:
 	$(INST) mpv ~/.mpv
+
+mutt:
+	$(INST) privateconf/.muttrc ~/.muttrc
+	$(INST) privateconf/.mutt ~/.mutt
+
+ssh:
+	$(INST) privateconf/.ssh ~/.ssh
+
+imapfilter:
+	$(INST) privateconf/.imapfilter ~/.imapfilter
