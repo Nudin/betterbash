@@ -28,6 +28,9 @@ export PATH=$PATH:~/.cabal/bin/
 if [ -f /etc/bash_completion ] ; then
 	source /etc/bash_completion
 fi
+if [ -f /usr/share/git/completion/git-prompt.sh ] ; then
+  source /usr/share/git/completion/git-prompt.sh
+fi
 #load bash-completion on ubuntu, git-promt on arch
 if uname -r | grep Ubuntu > /dev/null ; then
 	export DISTRIBUTION=Ubuntu

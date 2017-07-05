@@ -12,11 +12,15 @@ audio-channels=6
 # Fix A/V sync problems. *
 mc=0.2
 autosync=30
+# Max volume
+volume-max=100
 
 
 ### Video ###
-#framedrop="1" # For slow machines
+#framedrop=decoder+vo # For slow machines
+hwdec=vaapi-copy	 	 # Hardware-acceleration for intel gpu
 vd-lavc-threads=3
+vo=opengl-hq
 
 
 ### Subtitles ###
@@ -29,8 +33,9 @@ sub-scale=0.5
 
 
 ### OSD ###
-osd-scale=0.5
+osd-scale=0.3
 osd-bar-align-y=0.8
 osd-bar-w=75
-osd-bar-h=2
+osd-bar-h=1.5
 osd-border-size=0.7
+osd-color='#D0FFFFFF'
