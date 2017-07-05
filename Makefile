@@ -48,7 +48,7 @@ vimplugins:
 	$(call clonevimplugin,ale,https://github.com/w0rp/ale.git)
 	$(INST) vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
 	$(INST) haskell.vim ~/.vim/ftplugin/haskell.vim
-	$(INST) dewp.utf-8.spl /home/michi/.local/share/nvim/site/spell/dewp.utf-8.spl
+	$(INST) dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
 
 vim: themes vimplugins
 	mkdir -p ~/.vim
