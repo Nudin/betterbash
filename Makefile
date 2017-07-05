@@ -29,6 +29,7 @@ vimplugins:
 	mkdir -p ~/.vim/autoload
 	mkdir -p ~/.vim/bundle
 	mkdir -p ~/.vim/ftplugin
+	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim	
 	$(call clonevimplugin,lightline,https://github.com/itchyny/lightline.vim)
 	$(call clonevimplugin,nerdtree,git://github.com/scrooloose/nerdtree.git)
@@ -45,8 +46,9 @@ vimplugins:
 	$(call clonevimplugin,vimwiki,https://github.com/vimwiki/vimwiki.git)
 	$(call clonevimplugin,floobits-neovim,https://github.com/Floobits/floobits-neovim.git)
 	$(call clonevimplugin,ale,https://github.com/w0rp/ale.git)
-	cp vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
-	cp haskell.vim ~/.vim/ftplugin/haskell.vim
+	$(INST) vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
+	$(INST) haskell.vim ~/.vim/ftplugin/haskell.vim
+	$(INST) dewp.utf-8.spl /home/michi/.local/share/nvim/site/spell/dewp.utf-8.spl
 
 vim: themes vimplugins
 	mkdir -p ~/.vim
