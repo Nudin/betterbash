@@ -1,0 +1,29 @@
+[user]
+	email = michael@schoenitzer.de
+	name = Michael F. Schönitzer
+	signingkey = E58D0685
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 950x697+0+256
+	file-view-vpane-position = 450
+	history-view-vpane-position = 205
+	main-window-view = HistoryView
+[push]
+	default = simple
+	followTags = true
+[color]
+	ui = auto
+[alias]
+	ucommit = reset HEAD~
+	undo = reset --hard HEAD
+	stash-all = stash save --include-untracked
+	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+[merge]
+	conflictstyle = diff3
+	tool = meld
+[commit]
+	gpgSign = true
+[transfer]
+	fsckobjects = true
+[fetch]
+	fsckobjects = false
