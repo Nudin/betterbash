@@ -1,5 +1,5 @@
 # alternatively use ln -s to symlink the files instead of copying them
-INST = cp -rf
+INST = cp -l
 
 clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
 
@@ -66,14 +66,18 @@ xmodmap:
 	$(INST) Xmodmap ~/.Xmodmap
 
 mpv:
-	$(INST) mpv ~/.mpv
+	mkdir -p ~/.mpv/lua-settings/
+	$(INST) mpv/config ~/.mpv/config
+	$(INST) mpv/input.conf ~/.mpv/input.conf
+	$(INST) mpv/lua-settings/osc.conf ~/.mpv/lua-settings/osc.conf
 
 mutt:
+	mkdir -p ~/.mutt
 	$(INST) privateconf/.muttrc ~/.muttrc
-	$(INST) privateconf/.mutt ~/.mutt
+	$(INST) privateconf/.mutt/* ~/.mutt/
 
 ssh:
-	$(INST) privateconf/.ssh ~/.ssh
+	$(INST) privateconf/.ssh/config ~/.ssh/config
 
 imapfilter:
-	$(INST) privateconf/.imapfilter ~/.imapfilter
+	$(INST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
