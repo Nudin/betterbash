@@ -1,7 +1,7 @@
 [user]
 	email = michael@schoenitzer.de
 	name = Michael F. Schönitzer
-	signingkey = E58D0685
+	#signingkey = E58D0685
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 950x697+0+256
@@ -22,7 +22,7 @@
 	conflictstyle = diff3
 	tool = meld
 [commit]
-	gpgSign = true
+	#gpgSign = true
 [transfer]
 	fsckobjects = true
 [fetch]

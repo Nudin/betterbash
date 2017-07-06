@@ -153,6 +153,11 @@ Plug 'vimwiki/vimwiki'              " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
 Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 Plug 'majutsushi/tagbar'
+Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
+  Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
+endif
 call plug#end()
 
 " mundo
@@ -193,3 +198,6 @@ let g:tagbar_type_rust = {
     \]
     \}
 
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
