@@ -1,8 +1,3 @@
-"Pathogen
-filetype off " Pathogen needs to run before plugin indent on
-call pathogen#infect()
-call pathogen#helptags() " generate helptags for everything in 'runtimepath'
-
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -142,6 +137,25 @@ endfor
 
 
 "===== PLUGINS =====
+call plug#begin('~/.vim/plugged')
+Plug 'itchyny/lightline.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'godlygeek/tabular'
+Plug 'nvie/vim-flake8'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'simnalamburt/vim-mundo'
+Plug 'tpope/vim-sleuth'
+Plug 'rust-lang/rust.vim'
+Plug 'guns/xterm-color-table.vim'
+Plug 'vim-scripts/mru.vim'
+Plug 'mattn/calendar-vim'
+Plug 'vimwiki/vimwiki'
+Plug 'Floobits/floobits-neovim'
+Plug 'w0rp/ale'
+Plug 'majutsushi/tagbar'
+call plug#end()
+
 " gundo/mundo
 "nnoremap <leader>u :GundoToggle<CR>
 nnoremap <leader>u :MundoToggle<CR>

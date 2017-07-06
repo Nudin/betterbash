@@ -30,22 +30,7 @@ vimplugins:
 	mkdir -p ~/.vim/bundle
 	mkdir -p ~/.vim/ftplugin
 	mkdir -p ~/.local/share/nvim/site/spell/
-	curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim	
-	$(call clonevimplugin,lightline,https://github.com/itchyny/lightline.vim)
-	$(call clonevimplugin,nerdtree,git://github.com/scrooloose/nerdtree.git)
-	$(call clonevimplugin,tabular,git://github.com/godlygeek/tabular.git)
-	$(call clonevimplugin,flake8,https://github.com/nvie/vim-flake8.git)
-	$(call clonevimplugin,fugitive,git://github.com/tpope/vim-fugitive.git)
-	$(call clonevimplugin,gitgutter,git://github.com/airblade/vim-gitgutter.git)
-	$(call clonevimplugin,mundo,https://github.com/simnalamburt/vim-mundo.git)
-	$(call clonevimplugin,sleuth,git://github.com/tpope/vim-sleuth.git)
-	$(call clonevimplugin,rust,git://github.com/rust-lang/rust.vim.git)
-	$(call clonevimplugin,xterm-color-table,https://github.com/guns/xterm-color-table.vim.git)
-	$(call clonevimplugin,mru,https://github.com/vim-scripts/mru.vim.git)
-	$(call clonevimplugin,calendar,https://github.com/mattn/calendar-vim.git)
-	$(call clonevimplugin,vimwiki,https://github.com/vimwiki/vimwiki.git)
-	$(call clonevimplugin,floobits-neovim,https://github.com/Floobits/floobits-neovim.git)
-	$(call clonevimplugin,ale,https://github.com/w0rp/ale.git)
+	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	$(INST) vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
 	$(INST) haskell.vim ~/.vim/ftplugin/haskell.vim
 	$(INST) dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
