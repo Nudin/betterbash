@@ -36,6 +36,7 @@ vimplugins:
 	$(INST) vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
 	$(INST) haskell.vim ~/.vim/ftplugin/haskell.vim
 	$(INST) dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
+	$(INST) privateconf/.floorc.json ~/.floorc.json
 
 vim: themes vimplugins
 	mkdir -p ~/.vim
