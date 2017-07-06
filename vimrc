@@ -141,23 +141,21 @@ call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular'
-Plug 'nvie/vim-flake8'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'simnalamburt/vim-mundo'
-Plug 'tpope/vim-sleuth'
+Plug 'tpope/vim-fugitive'           " Git wrapper
+Plug 'airblade/vim-gitgutter'       " Show changes to last commit in gutter
+Plug 'simnalamburt/vim-mundo'       " Global tree-structure undo
+Plug 'tpope/vim-sleuth'             " Set shiftwidth/expandtabs automatically
 Plug 'rust-lang/rust.vim'
-Plug 'guns/xterm-color-table.vim'
+Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'              " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 Plug 'majutsushi/tagbar'
 call plug#end()
 
-" gundo/mundo
-"nnoremap <leader>u :GundoToggle<CR>
+" mundo
 nnoremap <leader>u :MundoToggle<CR>
 
 " vimwiki
@@ -178,25 +176,6 @@ let Tlist_Compact_Format = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_On_Select = 1
 nnoremap <C-l> :TlistToggle<CR>
-
-" Flake8
-"let g:flake8_show_in_gutter=0
-"let g:flake8_show_in_file=1
-"if has('nvim')
-"  function! Flake8_toggle()
-"    let g:flake8_show_quickfix=1
-"    call Flake8()
-"    let g:flake8_show_quickfix=0
-"  endfunction
-"  let g:flake8_show_quickfix=0
-"  augroup autoflake
-"    autocmd BufWritePost *.py call Flake8()
-"    autocmd BufReadPost *.py call Flake8()
-"    "autocmd TextChanged,TextChangedI <buffer> silent call Flake8()
-"    "autocmd FileType python :autocmd! autoflake InsertEnter,InsertLeave,TextChanged <buffer> silent call Flake8() 
-"    autocmd FileType python map <buffer> <F8> :call Flake8_toggle()<CR>
-"  augroup END
-"endif
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
