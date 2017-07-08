@@ -77,8 +77,13 @@ settitle() {
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
 if hash nvim 2> /dev/null; then
+  if [[ "$EDITOR" =~ "termedit.py" ]] ; then
+    alias nvim="$EDITOR"
+  fi
   export EDITOR="nvim"
+  alias vim='nvim'
 fi
+alias vi='vim'
 export DIFFPROG=meld
 export GPG_TTY=`tty`
 
@@ -104,10 +109,6 @@ alias mplayer='mplayer -nolirc'
 mpv() { command mpv --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
-alias vi='vim'
-if hash nvim 2> /dev/null; then
-  alias vim='nvim'
-fi
 alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
 alias route='sudo route -n'

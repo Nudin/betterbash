@@ -157,6 +157,7 @@ Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
   Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
+  Plug 'rliang/termedit.nvim'
 endif
 call plug#end()
 
