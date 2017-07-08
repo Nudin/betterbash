@@ -43,7 +43,7 @@ set ignorecase
 set smartcase
 set hlsearch
 if has('nvim')  " neovimonly
-set inccommand=nosplit " live search and replace; neovim only
+  set inccommand=nosplit " live search and replace; neovim only
 endif
 
 " History
