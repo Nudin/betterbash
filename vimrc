@@ -162,7 +162,7 @@ endif
 if has('nvim')  " neovimonly
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
   Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
-  Plug 'rliang/termedit.nvim'
+  Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
 endif
 call plug#end()
 
