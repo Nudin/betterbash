@@ -42,7 +42,9 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
+if has('nvim')  " neovimonly
 set inccommand=nosplit " live search and replace; neovim only
+endif
 
 " History
 set history=50		" keep 50 lines of command line history
@@ -149,12 +151,14 @@ Plug 'rust-lang/rust.vim'
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'vimwiki/vimwiki'              " Wiki for Vim
+Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
-Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 Plug 'majutsushi/tagbar'
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
-if has('nvim')
+if has('nvim') || v:version > 800
+  Plug 'w0rp/ale'                     " Asynchronous Lint Engine
+endif
+if has('nvim')  " neovimonly
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
   Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
 endif
@@ -198,6 +202,3 @@ let g:tagbar_type_rust = {
     \]
     \}
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
