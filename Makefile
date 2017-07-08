@@ -72,3 +72,8 @@ imapfilter:
 
 git:
 	$(INST) .gitconfig ~/.gitconfig
+
+### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
+### This is not run by all!
+hook:
+	cp post-merge-hook .git/hooks/post-merge
