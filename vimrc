@@ -153,7 +153,7 @@ Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
 Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 " == Pluging not compatible with vim 7
 if has('nvim') || v:version > 800
