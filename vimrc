@@ -155,6 +155,7 @@ Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
+" == Pluging not compatible with vim 7
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 endif
