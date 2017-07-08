@@ -1,5 +1,5 @@
 # alternatively use ln -s to symlink the files instead of copying them
-INST = cp -l
+INST = cp -l $(INSTFLAGS)
 
 clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
 
