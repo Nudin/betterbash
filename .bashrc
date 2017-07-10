@@ -113,11 +113,12 @@ alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
 alias route='sudo route -n'
 alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
+alias hl="grep --color=yes -e '^' -e "
 
 #========================================
 # 	Complex overwriting
 #========================================
-dir() { ls -1F $@ |grep /$; }
+dir() { ls -1F "$@" |grep /$; }
 gpp() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
 alias g++='gpp'
 alias nano='$HOME/.nano_starter'
