@@ -112,35 +112,38 @@ let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=234
 
 " SETUP TERMINAL
-highlight TermCursor ctermfg=red guifg=red
-tnoremap <Leader><ESC> <C-\><C-n>
+if has('nvim')
+  highlight TermCursor ctermfg=red guifg=red
+  tnoremap <Leader><ESC> <C-\><C-n>
 
-" Window navigation function
-" Make ctrl-h/j/k/l move between windows and auto-insert in terminals
-func! s:mapMoveToWindowInDirection(direction)
-    func! s:maybeInsertMode(direction)
-        stopinsert
-        execute "wincmd" a:direction
+  " Window navigation function
+  " Make ctrl-h/j/k/l move between windows and auto-insert in terminals
+  func! s:mapMoveToWindowInDirection(direction)
+      func! s:maybeInsertMode(direction)
+          stopinsert
+          execute "wincmd" a:direction
 
-        if &buftype == 'terminal'
-            startinsert!
-        endif
-    endfunc
+          if &buftype == 'terminal'
+              startinsert!
+          endif
+      endfunc
 
-    execute "tnoremap" "<silent>" "<M-" . a:direction . ">"
-                \ "<C-\\><C-n>"
-                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
-    execute "nnoremap" "<silent>" "<M-" . a:direction . ">"
-                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
-endfunc
-for dir in ["h", "j", "l", "k"]
-    call s:mapMoveToWindowInDirection(dir)
-endfor
+      execute "tnoremap" "<silent>" "<M-" . a:direction . ">"
+                  \ "<C-\\><C-n>"
+                  \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+      execute "nnoremap" "<silent>" "<M-" . a:direction . ">"
+                  \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+  endfunc
+  for dir in ["h", "j", "l", "k"]
+      call s:mapMoveToWindowInDirection(dir)
+  endfor
+endif
 
 
 "===== PLUGINS =====
 call plug#begin('~/.vim/plugged')
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'        " Statusline
+"Plug 'vim-airline/vim-airline'     " More powerfull alternative to airline
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-fugitive'           " Git wrapper
@@ -155,6 +158,7 @@ Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
+Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
 " == Pluging not compatible with vim 7
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
@@ -181,6 +185,10 @@ let g:vimwiki_use_mouse = 1
 let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓' " ' ○◐●✓'
 let g:vimwiki_toc_header = 'Inhalt'
 let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.wiki\)\='
+nmap <M--> <Plug>VimwikiDecrementListItem
+vmap <M--> <Plug>VimwikiDecrementListItem
+nmap <M-+> <Plug>VimwikiIncrementListItem
+vmap <M-+> <Plug>VimwikiIncrementListItem
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
