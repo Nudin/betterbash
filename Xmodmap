@@ -27,6 +27,10 @@ keycode 127 = Num_Lock Pause
 clear Mod2
 add Mod2 = Num_Lock
 
+! Use Menue-Key as second Alt-key
+keycode 135 = Alt_R
+add Mod1 = Alt_R
+
 ! Replace Insert-key with another delete key
 keycode 118 = Delete
 
