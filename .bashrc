@@ -126,6 +126,7 @@ alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode
 export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 alias mutt='echo -e "\e]0;mutt\a";mutt'
+alias vimwiki="vim ~/.vimwiki/index.wiki"
 
 #========================================
 # 	own functions/commands
