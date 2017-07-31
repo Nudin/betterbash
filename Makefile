@@ -28,13 +28,13 @@ themes:
 vimplugins:
 	mkdir -p ~/.vim/autoload
 	mkdir -p ~/.vim/bundle
-	mkdir -p ~/.vim/ftplugin
+	mkdir -p ~/.vim/after/ftplugin
 	mkdir -p ~/.vim/syntax
 	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
-	$(INST) vimwiki.vim ~/.vim/ftplugin/vimwiki.vim
-	$(INST) haskell.vim ~/.vim/ftplugin/haskell.vim
+	$(INST) vimwiki.vim ~/.vim/after/ftplugin/vimwiki.vim
+	$(INST) haskell.vim ~/.vim/after/ftplugin/haskell.vim
 	$(INST) dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
 	$(INST) privateconf/.floorc.json ~/.floorc.json
 

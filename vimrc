@@ -159,6 +159,9 @@ Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
+Plug 'dpelle/vim-LanguageTool'      " Check grammar with languagetool
+Plug 'jamessan/vim-gnupg'
+Plug 'godlygeek/tabular'
 " == Pluging not compatible with vim 7
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
