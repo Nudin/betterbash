@@ -11,3 +11,5 @@ set titlestring=VimWiki
 :command! WQ w | execute "Gcommit -a -m 'update'" | Gpush | q
 
 let g:gitgutter_sign_column_always = 1
+
+set nowrap

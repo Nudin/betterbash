@@ -114,7 +114,7 @@ highlight ColorColumn ctermbg=234
 " SETUP TERMINAL
 if has('nvim')
   highlight TermCursor ctermfg=red guifg=red
-  tnoremap <Leader><ESC> <C-\><C-n>
+  tnoremap <ESC><ESC> <C-\><C-n>
 
   " Window navigation function
   " Make ctrl-h/j/k/l move between windows and auto-insert in terminals
@@ -162,6 +162,7 @@ Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
 Plug 'dpelle/vim-LanguageTool'      " Check grammar with languagetool
 Plug 'jamessan/vim-gnupg'
 Plug 'godlygeek/tabular'
+Plug 'Nudin/vim-sparql'
 " == Pluging not compatible with vim 7
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
