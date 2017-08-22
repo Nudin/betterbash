@@ -116,6 +116,9 @@ if has('nvim')
   highlight TermCursor ctermfg=red guifg=red
   tnoremap <ESC><ESC> <C-\><C-n>
 
+  command Vterm 80vsplit | terminal
+  command Term 10split | terminal
+
   " Window navigation function
   " Make ctrl-h/j/k/l move between windows and auto-insert in terminals
   func! s:mapMoveToWindowInDirection(direction)
