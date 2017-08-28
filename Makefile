@@ -55,9 +55,15 @@ xmodmap:
 
 mpv:
 	mkdir -p ~/.mpv/lua-settings/
+	mkdir -p ~/.config/mpv/scripts
+	mkdir -p ~/.config/mpv/bin
 	$(INST) mpv/config ~/.mpv/config
 	$(INST) mpv/input.conf ~/.mpv/input.conf
 	$(INST) mpv/lua-settings/osc.conf ~/.mpv/lua-settings/osc.conf
+	$(INST) mpv/scripts/* ~/.config/mpv/scripts
+	$(INST) mpv/delogo ~/.config/mpv/bin/delogo
+	chmod +x ~/.config/mpv/bin/delogo
+.PHONY: mpv
 
 mutt:
 	mkdir -p ~/.mutt

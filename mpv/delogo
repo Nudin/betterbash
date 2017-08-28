@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+#	MPV: No Logo
+#	ernesto Bazzano © AGPLv3+
+
+SEG=3
+ENTRADA="$1"
+
+# capturas de panalla
+ffmpegthumbnailer -i "$ENTRADA" -s 0 -t "15%" -o /tmp/15.png
+ffmpegthumbnailer -i "$ENTRADA" -s 0 -t "75%" -o /tmp/75.png
+
+
+ALTO=$(convert /tmp/15.png info: | cut -d" " -f3|cut -dx -f2)
+H=$((ALTO/4))
+DATA=$(composite /tmp/15.png /tmp/75.png -compose Screen - \
+| convert - -threshold 15%  -negate -morphology Thinning:-1 Skeleton -fill red -draw "color 1,1 floodfill" -draw "rectangle 0,$H 10000,$(($H*3))"  -threshold 10% -format "%@" info:)
+
+W=$(($(echo $DATA | cut -dx -f1)+$SEG+$SEG))
+H=$(($(echo $DATA | cut -dx -f2 | cut -d+ -f1)+$SEG+$SEG))
+X=$(($(echo $DATA | cut -d+ -f2)-$SEG))
+Y=$(($(echo $DATA | cut -d+ -f3)-$SEG))
+
+echo "[delogo=x=$X:y=$Y:w=$W:h=$H]"
