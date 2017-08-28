@@ -157,12 +157,13 @@ Plug 'rust-lang/rust.vim'
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
+Plug 'Nudin/vimwiki', { 'branch': 'wontdo' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
 Plug 'dpelle/vim-LanguageTool'      " Check grammar with languagetool
+Plug 'sbdchd/neoformat'             " Pretty formatting code
 Plug 'jamessan/vim-gnupg'
 Plug 'godlygeek/tabular'
 Plug 'Nudin/vim-sparql'

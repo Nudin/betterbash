@@ -10,9 +10,11 @@ nano:
 	$(INST) nano/.nano_starter ~/.nano_starter
 	mkdir -p ~/.nano
 	$(INST) -r nano/syntaxhighlighting/* ~/.nano
+.PHONY: nano
 
 w3m:
 	$(INST) w3m/keymap_hardexit ~/.w3m/keymap_hardexit
+.PHONY: w3m
 
 bashrc:
 	$(INST) .bashrc ~/.bashrc
