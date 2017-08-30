@@ -1,0 +1,27 @@
+$include /etc/inputrc
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+
+# Color and mark completion list
+set colored-stats On
+set mark-symlinked-directories On
+set colored-completion-prefix On
+set menu-complete-display-prefix On
+set visible-stats On
+
+# Ignore case for completion
+set completion-ignore-case On
+set completion-map-case On
+#set completion-prefix-display-length 10 # incompatible with colored-completion-prefix
+#set show-all-if-ambiguous On
+#set show-all-if-unmodified On
+set completion-query-items 80
+set skip-completed-text On
+
+set blink-matching-paren On
+
+set enable-bracketed-paste On
+
+"\es":"\C-asudo \C-e"
+
+
