@@ -153,11 +153,10 @@ Plug 'tpope/vim-fugitive'           " Git wrapper
 Plug 'airblade/vim-gitgutter'       " Show changes to last commit in gutter
 Plug 'simnalamburt/vim-mundo'       " Global tree-structure undo
 Plug 'tpope/vim-sleuth'             " Set shiftwidth/expandtabs automatically
-Plug 'rust-lang/rust.vim'
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'Nudin/vimwiki', { 'branch': 'wontdo' }    " Wiki for Vim
+Plug 'Nudin/vimwiki', { 'branch': 'beta' }    " Wiki for Vim
 Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
@@ -165,9 +164,15 @@ Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
 Plug 'dpelle/vim-LanguageTool'      " Check grammar with languagetool
 Plug 'sbdchd/neoformat'             " Pretty formatting code
 Plug 'jamessan/vim-gnupg'
-Plug 'godlygeek/tabular'
+Plug 'EinfachToll/DidYouMean'       " asks for the right file to open
+Plug 'tpope/vim-obsession'          " autosave sessions
+Plug 'mhinz/vim-startify'           " start page
+"""" Language specific plugins
+Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
-" == Pluging not compatible with vim 7
+Plug 'neovimhaskell/haskell-vim'
+Plug 'pbrisbin/vim-syntax-shakespeare'
+"""" Pluging not compatible with vim 7""""
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 endif
@@ -177,6 +182,20 @@ if has('nvim')  " neovimonly
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
 endif
 call plug#end()
+
+" lightline & obsession
+set noshowmode   " disable -- insert -- text
+let g:lightline = {
+      \ 'active': {
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'obsession' ] ]
+      \ },
+      \ 'component': {
+      \   'obsession': '%{ObsessionStatus("S", "")}'
+      \ },
+      \ }
+
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
@@ -197,6 +216,7 @@ nmap <M--> <Plug>VimwikiDecrementListItem
 vmap <M--> <Plug>VimwikiDecrementListItem
 nmap <M-+> <Plug>VimwikiIncrementListItem
 vmap <M-+> <Plug>VimwikiIncrementListItem
+let g:vimwiki_additional_bullet_types = { '→':0 }
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
