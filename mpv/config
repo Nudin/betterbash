@@ -13,7 +13,7 @@ audio-channels=6
 mc=0.2
 autosync=30
 # Max volume
-volume-max=100
+#volume-max=100
 
 
 ### Video ###
