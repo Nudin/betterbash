@@ -19,9 +19,12 @@ set completion-query-items 80
 set skip-completed-text On
 
 set blink-matching-paren On
+set mark-modified-lines On
 
 set enable-bracketed-paste On
 
 "\es":"\C-asudo \C-e"
+
+"\e[Z": menu-complete
 
 

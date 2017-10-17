@@ -8,7 +8,7 @@ cache-default=500000
 
 ### Audio ###
 #mixer-channel=Master
-audio-channels=6
+#audio-channels=6
 # Fix A/V sync problems. *
 mc=0.2
 autosync=30
@@ -25,7 +25,7 @@ vo=opengl-hq
 
 ### Subtitles ###
 slang=de,ger,en,eng
-sub-auto=fuzzy
+sub-auto=all
 osd-font=/usr/share/fonts/TTF/DejaVuSerifCondensed.ttf
 
 sub-scale=0.5
