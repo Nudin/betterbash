@@ -167,11 +167,15 @@ Plug 'jamessan/vim-gnupg'
 Plug 'EinfachToll/DidYouMean'       " asks for the right file to open
 Plug 'tpope/vim-obsession'          " autosave sessions
 Plug 'mhinz/vim-startify'           " start page
+Plug 'tpope/vim-repeat'
+Plug 'vim-utils/vim-man'
+Plug 'Nudin/ToggleClip'
 """" Language specific plugins
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'pbrisbin/vim-syntax-shakespeare'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 """" Pluging not compatible with vim 7""""
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
@@ -181,6 +185,11 @@ if has('nvim')  " neovimonly
   Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
 endif
+""" Colorschemes
+Plug 'iCyMind/NeoSolarized'
+Plug 'joshdick/onedark.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'KeitaNakamura/neodark.vim'
 call plug#end()
 
 " lightline & obsession
@@ -189,10 +198,11 @@ let g:lightline = {
       \ 'active': {
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype', 'obsession' ] ]
+      \              [ 'clip', 'fileformat', 'fileencoding', 'filetype', 'obsession' ] ]
       \ },
       \ 'component': {
-      \   'obsession': '%{ObsessionStatus("S", "")}'
+      \   'obsession': '%{ObsessionStatus("S", "")}',
+      \   'clip': '%{ToggleClip#getstatus()}'
       \ },
       \ }
 
@@ -209,11 +219,11 @@ let g:vimwiki_list = [{
       \               'list_margin': 4},
       \               {}]
 let g:vimwiki_use_mouse = 1
-let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓' " ' ○◐●✓'
+let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓'
 let g:vimwiki_toc_header = 'Inhalt'
 let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.wiki\)\='
 nmap <M--> <Plug>VimwikiDecrementListItem
-vmap <M--> <Plug>VimwikiDecrementListItem
+vmap <M--> <Plug>VimwikiDecrementListItm
 nmap <M-+> <Plug>VimwikiIncrementListItem
 vmap <M-+> <Plug>VimwikiIncrementListItem
 let g:vimwiki_additional_bullet_types = { '→':0 }
@@ -240,3 +250,9 @@ let g:tagbar_type_rust = {
     \]
     \}
 
+" Grepper
+nnoremap <leader>g :Grepper<cr>
+nnoremap <leader>G :Grepper -cword -noprompt<cr>
+let g:grepper               = {}
+let g:grepper.tools         = ['rg', 'git', 'grep', 'ag', 'rg']
+let g:grepper.simple_prompt = 1
