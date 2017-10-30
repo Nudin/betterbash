@@ -41,6 +41,17 @@ elif uname -r | grep fc > /dev/null ; then
     export DISTRIBUTION=Fedora
 fi
 
+# Set up fzf
+if [ -f /usr/share/fzf/key-bindings.bash ] ; then
+  source /usr/share/fzf/key-bindings.bash
+fi
+if [ -f /usr/share/fzf/completion.bash ] ; then
+  source /usr/share/fzf/completion.bash 
+fi
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+bind -x '"\C-p": vim $(fzf);'
+
 export TERM=xterm-256color
 
 # Using this, aliases will work with sudo
