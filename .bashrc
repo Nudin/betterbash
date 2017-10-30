@@ -76,6 +76,9 @@ settitle() {
 # 	Envoirements
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
+export DIFFPROG=meld
+export GPG_TTY=`tty`
+# Set editor
 if hash nvim 2> /dev/null; then
   if [[ "$EDITOR" =~ "termedit.py" ]] ; then
     alias nvim="$EDITOR"
@@ -84,8 +87,6 @@ if hash nvim 2> /dev/null; then
   alias vim='nvim'
 fi
 alias vi='vim'
-export DIFFPROG=meld
-export GPG_TTY=`tty`
 
 #========================================
 # Set default values for several commands
@@ -100,24 +101,32 @@ alias grep='grep -s --color=auto'
 alias fgrep='fgrep -s  --color=auto'
 alias egrep='egrep -s --color=auto'
 alias tree='tree -C'
-
+# start with sudo
+alias iotop='sudo iotop'
+alias dmesg='sudo dmesg'
+alias route='sudo route -n'
 # other
 alias alsamixer='alsamixer -c 0'
 alias ping='LANG=en ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
-#alias mpv='mpv --af=scaletempo'
-mpv() { command mpv --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
+alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
+
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
-alias iotop='sudo iotop'
-alias dmesg='sudo dmesg'
-alias route='sudo route -n'
-alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 alias hl="grep --color=yes -e '^' -e "
+alias datum='date "+%d. %b %Y    %T"'
+alias reload='source $HOME/.bashrc'
+alias mx='chmod a+x'
+line() {  head -$1  | tail -1; }
+
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+alias vimwiki="vim ~/.vimwiki/index.wiki"
 
 #========================================
 # 	Complex overwriting
 #========================================
+mpv() { command mpv --af=scaletempo "$@" 2>&1 | grep -v 'libva info'; }
 dir() { ls -1F "$@" |grep /$; }
 gpp() { if [ ${#} -ne 1 ] ; then g++ $*; else command g++ $1 -o ${1/.cpp/}; chmod +x ${1/.cpp/} ; fi ;}
 alias g++='gpp'
@@ -126,11 +135,7 @@ alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode
 export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
 alias mutt='echo -e "\e]0;mutt\a";mutt'
-alias vimwiki="vim ~/.vimwiki/index.wiki"
 
-#========================================
-# 	own functions/commands
-#========================================
 #-----------------------------
 #	Onekeys
 #-----------------------------
@@ -158,11 +163,6 @@ if [ "$DISTRIBUTION" = "Arch" ] ; then
   alias pacman="sudo pacman"
 elif [ "$DISTRIBUTION" = "Ubuntu" ] ; then
   alias apt-get="sudo apt-get"
-elif [ "$DISTRIBUTION" = "Fedora" ] ; then
-  alias yumi="sudo nice yum install --color=auto"
-  alias yumu="sudo nice yum update --skip-broken --color=auto"
-  alias yumc="sudo nice yum clean all --color=auto"
-  alias yum="sudo nice yum --color=auto"
 fi
 #-----------------------------
 #	Show files & dict.
@@ -241,34 +241,13 @@ wp() { $TEXTBROWSER "http://de.wikipedia.org/w/index.php?title=Special:Search&se
 google() { $TEXTBROWSER "http://www.google.de/search?q=$*" ;}
 frink_web() { $TEXTBROWSER "http://futureboy.us/fsp/frink.fsp?sourceid=Mozilla-search&fromVal=$*" ;}
 dings() { $TEXTBROWSER "http://dict.tu-chemnitz.de/dings.cgi?lang=de&noframes=1&query=$*&optpro=1" ;}
-myip ()
-{
-elinks -dump http://checkip.dyndns.org:8245/ | grep "Current IP Address" | cut -d":" -f2 | cut -d" " -f2
-}
+
+myip () { curl http://api.ipify.org/; echo; }
 alias timeupdate='sudo ntpdate -u ptbtime1.ptb.de'
 
 #-----------------------------
 #	other
 #-----------------------------
-#alias fast264='mplayer -lavdopts skiploopfilter=all'
-#alias superfast264='mplayer -lavdopts skipframe=nonref:skiploopfilter=all'
-alias addon-sdk="cd /opt/addon-sdk && source bin/activate; cd -"
-alias datum='date "+%d. %b %Y    %T"'
-alias reload='source $HOME/.bashrc'
-alias mx='chmod a+x'
-repeat()       # Repeat n times command.
-{
-    local i max
-    max=$1; shift;
-    for ((i=1; i <= max ; i++)); do
-        eval "$@";
-    done
-}
-line() {  head -$1  | tail -1; }
-
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
-
 # color man
 man() {
     env LESS_TERMCAP_mb=$'\E[01;31m' \
@@ -280,13 +259,6 @@ man() {
     LESS_TERMCAP_us=$'\E[04;31;5;2;146m' \
     man "$@"
 }
-mpf() {
-pids=$(pidof firefox chromium plugin-container gtk-gnash npviewer.bin | tr \  ,)
-files="$(ls -lQ $(eval echo /proc/{$pids\,}/fd/*) 2>/dev/null \
-	| grep '[^a-z]/tmp/'  | grep '(deleted)' \
-	| cut -d\" -f2)"
-\mpv --title="mpf" --af=scaletempo "$@" $files
-}
 svg2pdf() { inkscape -z -D --file=$1 --export-pdf=${1/.svg/.pdf}; }
 
 rot13() {
@@ -297,21 +269,6 @@ rot13() {
 	fi
 }
 
-
-spwd() {
-        npwd=${PWD/$HOME/\/@}
-        local IFS="/"
-        set $npwd
-        if test $# -le 3 ; then
-                echo "${npwd/\/@/~}"
-        else
-                eval echo \"..\${$(($# - 1))/\/@/~}/\${$#}\"
-        fi
-}
-## returns base pwd (last directory)
-bpwd() {
-	echo "${PWD##*/}"
-}
 # convert a file form iso-8859-1 to utf-8
 iso2utf8() {
   name=${1%.*}
@@ -387,16 +344,16 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 #========================================
 # 	Run several stuff in background
 #========================================
-soffice()	{ command soffice "$@" & }
-firefox()	{ command firefox "$@" & }
-evince()	{ command evince "$@" & }
-xpdf()	{ command xpdf "$@" & }
-gedit()	{ command gedit "$@" & }
-pluma()	{ command pluma "$@" & }
-eog()	{ command eog "$@" & }
-eom()	{ command eom "$@" & }
-giggle()	{ command giggle "$@" 2> /dev/null & }
-incognito()	{ command chromium --incognito "$@" & }
+soffice()   { command soffice "$@" & }
+firefox()   { command firefox "$@" & }
+evince()    { command evince "$@" & }
+xpdf()      { command xpdf "$@" & }
+gedit()     { command gedit "$@" & }
+pluma()     { command pluma "$@" & }
+eog()       { command eog "$@" & }
+eom()       { command eom "$@" & }
+giggle()    { command giggle "$@" 2> /dev/null & }
+incognito() { command chromium --incognito "$@" & }
 
 
 #========================================
