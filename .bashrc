@@ -122,6 +122,7 @@ alias ping='LANG=en ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
 alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 
+#========================================
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
 alias hl="grep --color=yes -e '^' -e "
@@ -133,6 +134,7 @@ line() {  head -$1  | tail -1; }
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias vimwiki="vim ~/.vimwiki/index.wiki"
+alias vimrc="vim ~/.vim/vimrc"
 
 #========================================
 # 	Complex overwriting
@@ -377,3 +379,5 @@ if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
         source ${HOME}/.bashrc.${HOSTNAME}
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

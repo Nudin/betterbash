@@ -170,12 +170,17 @@ Plug 'mhinz/vim-startify'           " start page
 Plug 'tpope/vim-repeat'
 Plug 'vim-utils/vim-man'
 Plug 'Nudin/ToggleClip'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+Plug 'jiangmiao/auto-pairs' " to test #356
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'editorconfig/editorconfig-vim'
 """" Language specific plugins
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'pbrisbin/vim-syntax-shakespeare'
-Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+Plug 'vim-scripts/ditaa'
 """" Pluging not compatible with vim 7""""
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
