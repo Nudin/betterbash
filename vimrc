@@ -171,6 +171,7 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-utils/vim-man'
 Plug 'Nudin/ToggleClip'
 """" Language specific plugins
+Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
