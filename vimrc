@@ -177,6 +177,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'bfredl/nvim-miniyank'
 """" Language specific plugins
+Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
