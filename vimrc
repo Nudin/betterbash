@@ -175,6 +175,7 @@ Plug 'jiangmiao/auto-pairs' " to test #356
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'bfredl/nvim-miniyank'
 """" Language specific plugins
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
@@ -259,5 +260,10 @@ let g:tagbar_type_rust = {
 nnoremap <leader>g :Grepper<cr>
 nnoremap <leader>G :Grepper -cword -noprompt<cr>
 let g:grepper               = {}
-let g:grepper.tools         = ['rg', 'git', 'grep', 'ag', 'rg']
+let g:grepper.tools         = ['rg', 'git', 'grep', 'ag']
 let g:grepper.simple_prompt = 1
+
+" nvim-miniyank
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+map <leader>n <Plug>(miniyank-cycle)
