@@ -88,10 +88,10 @@ nnoremap ø O<Esc>j
 nnoremap <C-o> o<Esc>k
 
 " Save
-:command W w
-:command Q q
-:command Wq wq
-:command WQ wq
+command! W w
+command! Q q
+command! Wq wq
+command! WQ wq
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
@@ -116,8 +116,8 @@ if has('nvim')
   highlight TermCursor ctermfg=red guifg=red
   tnoremap <ESC><ESC> <C-\><C-n>
 
-  command Vterm 80vsplit | terminal
-  command Term 10split | terminal
+  command! Vterm 80vsplit | terminal
+  command! Term 10split | terminal
 
   " Window navigation function
   " Make ctrl-h/j/k/l move between windows and auto-insert in terminals
@@ -142,6 +142,8 @@ if has('nvim')
   endfor
 endif
 
+" When writing vimrc automatically reload it
+autocmd! bufwritepost vimrc source %
 
 "===== PLUGINS =====
 call plug#begin('~/.vim/plugged')
@@ -191,6 +193,7 @@ if has('nvim')  " neovimonly
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
   Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
+  Plug 'kassio/neoterm'
 endif
 """ Colorschemes
 Plug 'iCyMind/NeoSolarized'
