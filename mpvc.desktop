@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[de_DE]=/usr/share/icons/HighContrast/256x256/categories/applications-multimedia.png
+Name[de_DE]=MPVC
+Exec=mate-terminal --profile=mpvc --zoom=0.7 --hide-menubar --geometry=50x10-0-0 --command=./Code/multimedia/mpvc
+Name=MPVC
+Icon=/usr/share/icons/HighContrast/256x256/categories/applications-multimedia.png

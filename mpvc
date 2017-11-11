@@ -1,0 +1,140 @@
+#!/bin/bash
+
+#set -x
+
+settitle () 
+{ 
+  printf "\033]0;%s\007" "$1"
+}
+
+statusline() {
+  num=$(pidof nq | wc -w)
+  (( num=(num+1)/2 ))
+  speed=$(cat "$NQDIR/speed")
+  mode=$(cat "$NQDIR/mode")
+  echo -ne "\e[45m\e[s\e[1;1H\e[2K"
+  echo -ne "Queue: $num\t"
+  echo -ne "Speed: $speed\t"
+  echo -ne "Mode: $mode"
+  echo -ne "\e[u\e[0m"; 
+}
+
+loopstatusline() {
+  while :; do
+    statusline
+    sleep 0.5
+  done
+}
+
+setnqdir() {
+  NQDIR=$(mktemp -d "/tmp/mpvc-$$-XXX")
+  export NQDIR
+}
+
+speaken() {
+  #nq bash -c 'xsel --clipboard --output | picospeaker -l en-US -p 1 -r 50'
+  filename=$(mktemp -u "/tmp/mpvc-$$-XXX.wav")
+  pico2wave -l en-US --wave=${filename} "$(xsel --clipboard --output)"
+  echo "${filename}"
+}
+
+speakde() {
+  #nq bash -c 'xsel --clipboard --output | picospeaker -l de-DE -p 1 -r 50'
+  filename=$(mktemp -u "/tmp/mpvc-$$-XXX.wav")
+  pico2wave -l de-DE --wave=${filename} "$(xsel --clipboard --output)"
+  echo "${filename}"
+}
+
+# Set our own window in the foreground
+tmptitle="$0$RANDOM"
+settitle "$(basename "$tmptitle")"
+sleep 0.1
+wmctrl -r "$(basename "$tmptitle")" -b add,above
+settitle "$(basename "$0")"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export INPUTRC="$DIR/mpvc.inputrc"
+
+setnqdir
+speed=${1:-1}
+mode=n
+option=""
+winpos_video="500--500+0"
+winpos_audio="50--50+0"
+echo -n "$speed" > $NQDIR/speed
+echo -n "$mode" > $NQDIR/mode
+loopstatusline &
+sleep 0.1
+echo
+while true; do
+  echo -n "$speed" > $NQDIR/speed
+  echo -n "$mode" > $NQDIR/mode
+  if ! read -r -e -p"> " line ; then
+    break
+  else
+    statusline
+    history -s -- "$line"
+  fi
+  if [[ "$line" == "" ]] ; then
+    continue
+  # set speed
+  elif [[ $line =~ ^[0-9]+([.,][0-9]+)?$ ]] ; then
+    speed=${line/,/.}
+  # option for mpv given
+  elif [[ $line =~ ^-+.+$ ]]; then
+    option=$line
+  # n -> "normal" mode = no fullscreen mode
+  elif [[ "$line" =~ ^[nN]$ ]] ; then
+    mode=n
+    fs=""
+  # f -> enable fullscreen mode
+  elif [[ "$line" =~ ^[fF]$ ]] ; then
+    mode=fs
+    fs="-fs --fs-screen=0"
+  # q -> quit
+  elif [[ "$line" =~ ^[qQ]$ ]] ; then
+    exit
+  # c -> Clear screen
+  elif [[ "$line" =~ ^[cC]$ ]] ; then
+    echo -e "\033[1J"
+    echo -e "\033[1H"
+    statusline
+    history -c
+  # r -> reset pulseaudio
+  elif [[ "$line" =~ ^[rR]$ ]] ; then
+    /usr/bin/pasuspender /bin/true
+  # e -> new queue
+  elif [[ "$line" =~ ^[eE]$ ]] ; then
+    setnqdir
+  # k -> Kill all mpv-Instances
+  elif [[ "$line" =~ ^[kK]$ ]] ; then
+    killall mpv
+  else
+    # en -> Read English text from clipboard
+    if [[ "$line" =~ ^[eE][nN]$ ]] ; then
+      line=$(speaken)
+    # de -> Read German text from clipboard
+    elif [[ "$line" =~ ^[dD][eE]$ ]] ; then
+      line=$(speakde)
+    fi
+    # Cut of quotation marks
+    if [[ "$line" =~ ^[\"\'].*[\"\']$ ]] ; then
+      line="${line:1:-1}"
+    fi
+    if [[ "${line,,}" =~ .*(ogg|mp3|wav)$ ]]; then
+      winpos=$winpos_audio
+    else
+      winpos=$winpos_video
+    fi
+    nq -q mpv --speed="$speed" \
+      --af=scaletempo=stride=30:overlap=.50:search=16 \
+      --geometry=$winpos \
+      --force-window \
+      "$fs" \
+      "$option" \
+      "$line"
+    #if : ; then
+    #  xdotool windowminimize $(wmctrl -lp | grep $! | cut -f1 -d\ )
+    #fi
+  fi
+done
