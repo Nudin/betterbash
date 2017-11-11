@@ -50,6 +50,7 @@ if [ -f /usr/share/fzf/completion.bash ] ; then
 fi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 bind -x '"\C-p": vim $(fzf);'
 
 export TERM=xterm-256color
@@ -378,6 +379,3 @@ export TCLLIBPATH=~/.local/share/tkthemes
 if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
         source ${HOME}/.bashrc.${HOSTNAME}
 fi
-
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
