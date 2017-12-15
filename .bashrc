@@ -379,3 +379,5 @@ export TCLLIBPATH=~/.local/share/tkthemes
 if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
         source ${HOME}/.bashrc.${HOSTNAME}
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
