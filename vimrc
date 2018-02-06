@@ -14,8 +14,11 @@ set showcmd
 set ruler
 set cursorline
 set wildmenu " Autocompletion
+set wildmode=longest:full
+set wildignore+=*.a,*.o,*.hi
+set wildignore+=*.pdf,*.gz,*.aux,*.out,*.nav,*.snm,*.vrb
 set updatetime=250  " Decrease updatetime from 4s to 250ms
-set fillchars+=vert:\│ " nice line for vsplit
+set fillchars+=vert:\│,fold:— " nice line for vsplit and folds
 
 " Syntax-Highlight
 syntax on
@@ -95,6 +98,10 @@ command! Q q
 command! Wq wq
 command! WQ wq
 
+" Wrap current paragraph
+imap <C-q> <Esc>gqipA
+nmap <C-q> gqip$
+
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
@@ -105,13 +112,15 @@ nnoremap <leader>s :mksession<CR>
 " spellchecking
 silent! set spell spelllang=en,de,dewp
 set spellfile=~/.config/nvim/spell/mine.utf-8.add
-map <F5> :setlocal spell! spelllang=en_us<CR>
-map <F6> :setlocal spell! spelllang=de<CR>
+map <F6> :setlocal spell! spelllang=en_us<CR>
+map <F7> :setlocal spell! spelllang=de<CR>
 map <BS> hx
 
 " grey background after char 80
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=234
+
+iabbrev retunr return
 
 " SETUP TERMINAL
 if has('nvim')
@@ -180,6 +189,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'bfredl/nvim-miniyank'
+Plug 'vim-scripts/transpose-words'
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
@@ -218,6 +228,8 @@ let g:lightline = {
       \ },
       \ }
 
+" ale
+let g:ale_c_gcc_options = '-std=gnu11 -Wall'
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
@@ -227,6 +239,12 @@ let g:vimwiki_list = [{
       \ 'path': '~/.vimwiki/',
       \              "template_path": "~/.vimwiki/templates",
       \               "css_name": "mystyle.css",
+      \               'auto_toc': 1,
+      \               'list_margin': 4},
+      \               {
+      \ 'path': '~/.vimwiki/blog',
+      \ 'path_html': '~/.blog_html',
+      \ "template_path": "~/.blog_html/templates",
       \               'auto_toc': 1,
       \               'list_margin': 4},
       \               {}]
@@ -239,6 +257,7 @@ vmap <M--> <Plug>VimwikiDecrementListItm
 nmap <M-+> <Plug>VimwikiIncrementListItem
 vmap <M-+> <Plug>VimwikiIncrementListItem
 let g:vimwiki_additional_bullet_types = { '→':0 }
+command! UploadBlog !rsync -r /home/michi/.blog_html/ schoenitzer.de:/var/www/blog
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
@@ -273,3 +292,10 @@ let g:grepper.simple_prompt = 1
 map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)
 map <leader>n <Plug>(miniyank-cycle)
+
+" vim-latex
+let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_ShowErrorContext = 0
+let g:Tex_GotoError = 0
+
