@@ -22,6 +22,8 @@ hwdec=vaapi-copy	 	 # Hardware-acceleration for intel gpu
 vd-lavc-threads=3
 vo=opengl-hq
 
+# Limit youtube-dl to max resolution of 1080p
+ytdl-format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'
 
 ### Subtitles ###
 slang=de,ger,en,eng
