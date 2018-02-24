@@ -123,6 +123,13 @@ alias ping='LANG=en ping -c 4 -i 0.3'
 alias mplayer='mplayer -nolirc'
 alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 
+alias gdb="gdb -q"
+alias dgb="gdb -q"
+alias gbd="gdb -q"
+if hash colour-valgrind 2> /dev/null; then
+  alias valgrind="colour-valgrind"
+fi
+
 #========================================
 export LESSOPEN="|$HOME/.lesspipe.sh %s"
 export LESS=' -R '
