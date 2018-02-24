@@ -13,6 +13,7 @@ nano:
 .PHONY: nano
 
 w3m:
+	mkdir -p ~/.w3m
 	$(INST) w3m/keymap_hardexit ~/.w3m/keymap_hardexit
 .PHONY: w3m
 
@@ -79,6 +80,7 @@ ssh:
 	$(INST) privateconf/.ssh/config ~/.ssh/config
 
 imapfilter:
+	mkdir -p ~/.imapfilter
 	$(INST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
 
 git:
