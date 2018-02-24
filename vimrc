@@ -190,6 +190,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'bfredl/nvim-miniyank'
 Plug 'vim-scripts/transpose-words'
+Plug 'junegunn/goyo.vim'
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
@@ -299,3 +300,15 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ShowErrorContext = 0
 let g:Tex_GotoError = 0
 
+" Goyo
+let g:goyo_width = 120
+let g:goyo_height = '100%'
+function! s:goyo_enter()
+  set nospell
+endfunction
+
+function! s:goyo_leave()
+  set spell
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
