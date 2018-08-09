@@ -388,3 +388,8 @@ if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+wttr()
+{
+    curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-Munich}"
+}

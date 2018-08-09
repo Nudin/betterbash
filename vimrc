@@ -20,14 +20,16 @@ set wildignore+=*.pdf,*.gz,*.aux,*.out,*.nav,*.snm,*.vrb
 set updatetime=250  " Decrease updatetime from 4s to 250ms
 set fillchars+=vert:\│,fold:— " nice line for vsplit and folds
 
-" Syntax-Highlight
+" Syntax-Highlight and colors
 syntax on
 set showmatch	" highlight matching [{()}]
-colorscheme badwolf
+set t_Co=256
+"set termguicolors
+set background=dark
 
-if !has('gui_running')
-  set t_Co=256
-endif
+" grey background after char 80
+let &colorcolumn=join(range(81,999),",")
+highlight ColorColumn ctermbg=234
 
 " Enable Mouse
 if has('mouse')
@@ -110,15 +112,15 @@ let mapleader=","
 nnoremap <leader>s :mksession<CR>
 
 " spellchecking
-silent! set spell spelllang=en,de,dewp
+if has('nvim')
+    silent! set spell spelllang=en,de,dewp
+else
+    silent! set spell spelllang=en,de
+endif
 set spellfile=~/.config/nvim/spell/mine.utf-8.add
 map <F6> :setlocal spell! spelllang=en_us<CR>
 map <F7> :setlocal spell! spelllang=de<CR>
 map <BS> hx
-
-" grey background after char 80
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=234
 
 iabbrev retunr return
 
@@ -170,6 +172,10 @@ Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
 Plug 'Nudin/vimwiki', { 'branch': 'beta' }    " Wiki for Vim
+"Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
+"Plug 'tbabej/taskwiki'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'farseer90718/vim-taskwarrior'
 Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
@@ -213,7 +219,10 @@ Plug 'iCyMind/NeoSolarized'
 Plug 'joshdick/onedark.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'KeitaNakamura/neodark.vim'
+Plug 'sjl/badwolf'
 call plug#end()
+
+colorscheme badwolf
 
 " lightline & obsession
 set noshowmode   " disable -- insert -- text
@@ -231,24 +240,30 @@ let g:lightline = {
 
 " ale
 let g:ale_c_gcc_options = '-std=gnu11 -Wall'
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'python': ['black', 'isort'],
+\}
+let g:ale_fix_on_save = 1
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
 
 " vimwiki
-let g:vimwiki_list = [{
-      \ 'path': '~/.vimwiki/',
-      \              "template_path": "~/.vimwiki/templates",
-      \               "css_name": "mystyle.css",
-      \               'auto_toc': 1,
-      \               'list_margin': 4},
-      \               {
-      \ 'path': '~/.vimwiki/blog',
-      \ 'path_html': '~/.blog_html',
-      \ "template_path": "~/.blog_html/templates",
-      \               'auto_toc': 1,
-      \               'list_margin': 4},
-      \               {}]
+let g:vimwiki_list = [
+      \ {
+      \         'path': '~/.vimwiki/',
+      \         'template_path': '~/.vimwiki/templates',
+      \         'css_name': 'mystyle.css',
+      \         'auto_toc': 1,
+      \         'list_margin': 4},
+      \ {
+      \         'path': '~/.vimwiki/blog',
+      \         'path_html': '~/.blog_html',
+      \         'template_path': '~/.blog_html/templates',
+      \         'auto_toc': 1,
+      \         'list_margin': 4},
+      \ ]
 let g:vimwiki_use_mouse = 1
 let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓'
 let g:vimwiki_toc_header = 'Inhalt'
@@ -257,8 +272,8 @@ nmap <M--> <Plug>VimwikiDecrementListItem
 vmap <M--> <Plug>VimwikiDecrementListItm
 nmap <M-+> <Plug>VimwikiIncrementListItem
 vmap <M-+> <Plug>VimwikiIncrementListItem
-let g:vimwiki_additional_bullet_types = { '→':0 }
-command! UploadBlog !rsync -r /home/michi/.blog_html/ schoenitzer.de:/var/www/blog
+let g:vimwiki_additional_bullet_types = [ '→' ]
+"command! UploadBlog !rsync -r /home/michi/.blog_html/ schoenitzer.de:/var/www/blog
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
@@ -300,15 +315,21 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ShowErrorContext = 0
 let g:Tex_GotoError = 0
 
+" languagetool
+let g:languagetool_jar="/home/michi/.vim/LanguageTool-4.0/languagetool-commandline.jar"
+
 " Goyo
 let g:goyo_width = 120
 let g:goyo_height = '100%'
 function! s:goyo_enter()
   set nospell
+  set linebreak
+  set wrap
 endfunction
 
 function! s:goyo_leave()
   set spell
+  set nowrap
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
