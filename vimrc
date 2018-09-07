@@ -171,7 +171,7 @@ Plug 'tpope/vim-sleuth'             " Set shiftwidth/expandtabs automatically
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'Nudin/vimwiki', { 'branch': 'beta' }    " Wiki for Vim
+Plug 'Nudin/vimwiki', { 'branch': 'individualli-new' }    " Wiki for Vim
 "Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'tbabej/taskwiki'
 Plug 'powerman/vim-plugin-AnsiEsc'
@@ -197,6 +197,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'bfredl/nvim-miniyank'
 Plug 'vim-scripts/transpose-words'
 Plug 'junegunn/goyo.vim'
+Plug 'inkarkat/vim-SpellCheck'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'reedes/vim-wordy'
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'

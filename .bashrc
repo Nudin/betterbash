@@ -206,8 +206,8 @@ alias bigest='\du -chs *|sort -hr|head -11'
 #-----------------------------
 # Makes directory then moves into it
 mkcd() {
-    mkdir -p -v $1
-    cd $1
+    mkdir -p -v "$@"
+    cd "$1"
 }
 
 #-----------------------------
