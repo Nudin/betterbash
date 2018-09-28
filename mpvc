@@ -4,6 +4,13 @@
 
 clear
 
+function finish {
+  kill %1
+  exit
+}
+trap finish EXIT
+
+
 settitle () 
 { 
   printf "\033]0;%s\007" "$1"
@@ -14,11 +21,11 @@ statusline() {
   (( num=(num+1)/2 ))
   speed=$(cat "$NQDIR/speed")
   mode=$(cat "$NQDIR/mode")
-  echo -ne "\e[45m\e[s\e[1;1H\e[2K"
+  echo -ne "\e[45m\e7\e[1;1H\e[2K"
   echo -ne "Queue: $num\t"
   echo -ne "Speed: $speed\t"
   echo -ne "Mode: $mode"
-  echo -ne "\e[u\e[0m"; 
+  echo -ne "\e8\e[0m"; 
 }
 
 loopstatusline() {
@@ -95,7 +102,6 @@ while true; do
     fs="-fs --fs-screen=0"
   # q -> quit
   elif [[ "$line" =~ ^[qQ]$ ]] ; then
-    kill %1
     echo -e "\033[1J"
     echo -e "\033[1H"
     exit
