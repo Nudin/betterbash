@@ -73,7 +73,7 @@ mpv:
 
 mutt:
 	mkdir -p ~/.mutt
-	$(INST) privateconf/.muttrc ~/.muttrc
+	$(INST) .muttrc ~/.muttrc
 	$(INST) privateconf/.mutt/* ~/.mutt/
 
 ssh:
