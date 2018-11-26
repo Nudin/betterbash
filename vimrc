@@ -270,7 +270,7 @@ let g:vimwiki_list = [
       \         'list_margin': 4},
       \ ]
 let g:vimwiki_use_mouse = 1
-"let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓'
+let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓'
 let g:vimwiki_toc_header = 'Inhalt'
 let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.wiki\)\='
 nmap <M--> <Plug>VimwikiDecrementListItem
@@ -301,6 +301,15 @@ let g:tagbar_type_rust = {
         \'i:impls,trait implementations',
     \]
     \}
+let g:tagbar_type_vimwiki = {
+          \   'ctagstype':'vimwiki'
+          \ , 'kinds':['h:header']
+          \ , 'sro':'&&&'
+          \ , 'kind2scope':{'h':'header'}
+          \ , 'sort':0
+          \ , 'ctagsbin':'~/bin/vwtags.py'
+          \ , 'ctagsargs': 'default'
+          \ }
 
 " Grepper
 nnoremap <leader>g :Grepper<cr>
