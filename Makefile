@@ -3,7 +3,7 @@ INST = cp -l $(INSTFLAGS)
 
 clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin
 
 nano:
 	$(INST) nano/.nanorc ~/.nanorc
@@ -82,6 +82,9 @@ ssh:
 imapfilter:
 	mkdir -p ~/.imapfilter
 	$(INST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
+
+listadmin:
+	$(INST) privateconf/.listadmin.ini ~/.listadmin.ini
 
 git:
 	$(INST) .gitconfig ~/.gitconfig
