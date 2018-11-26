@@ -51,7 +51,9 @@ fi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-bind -x '"\C-p": vim $(fzf);'
+if [[ "$-" =~ "i" ]]; then
+  bind -x '"\C-p": vim $(fzf);'
+fi
 
 export TERM=xterm-256color
 
