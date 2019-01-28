@@ -1,35 +1,37 @@
+SHELL := /bin/bash -O extglob
 # alternatively use ln -s to symlink the files instead of copying them
-INST = cp -l $(INSTFLAGS)
-
-clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
+OINST = cp -l $(INSTFLAGS)
+define INST
+  $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
+endef
 
 all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin
 
 nano:
-	$(INST) nano/.nanorc ~/.nanorc
-	$(INST) nano/.nano_starter ~/.nano_starter
-	mkdir -p ~/.nano
-	$(INST) -r nano/.nano/* ~/.nano
+	$(call INST,nano)
 .PHONY: nano
 
 w3m:
-	mkdir -p ~/.w3m
-	$(INST) w3m/.w3m/keymap_hardexit ~/.w3m/keymap_hardexit
+	$(call INST,w3m)
 .PHONY: w3m
 
 bashrc:
-	$(INST) bash/.bashrc ~/.bashrc
+	$(call INST,bash)
+.PHONY: bash
 
 inputrc:
-	$(INST) readline/.inputrc ~/.inputrc
+	$(call INST,readline)
+.PHONY: readline
 
 bc:
-	$(INST) bc/.bcrc ~/.bcrc
+	$(call INST,bc)
+.PHONY: bc
 
 themes:
 	mkdir -p ~/.vim/colors/
 	curl -s https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim > ~/.vim/colors/badwolf.vim
 	curl -s https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim > ~/.vim/colors/wasabi256.vim
+.PHONY: themes
  
 vimplugins:
 	mkdir -p ~/.vim/autoload
@@ -39,55 +41,59 @@ vimplugins:
 	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
-	$(INST) vim/.vim/after/ftplugin/vimwiki.vim ~/.vim/after/ftplugin/vimwiki.vim
-	$(INST) vim/.vim/after/ftplugin/haskell.vim ~/.vim/after/ftplugin/haskell.vim
-	$(INST) vim/.local/share/nvim/site/spell/dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
-	$(INST) privateconf/.floorc.json ~/.floorc.json
+	$(call INST,vim)
+	$(OINST privateconf/.floorc.json ~/.floorc.json)
+.PHONY: vimplugins
 
 vim: themes vimplugins
 	mkdir -p ~/.vim
 	mkdir -p ~/.vim/.backup ~/.vim/.swp ~/.vim/.undo
-	$(INST) vim/.vim/vimrc ~/.vim/vimrc
+	$(call INST,vim)
 	test -e ~/.vim/init.vim || ln -s ~/.vim/vimrc ~/.vim/init.vim
+.PHONY: vim
 
 browserweiche:
-	$(INST) browserweiche/.browserweiche.sh ~/.browserweiche.sh
+	$(call INST,browserweiche)
+.PHONY: browserweiche
 
 lesspipe:
-	$(INST) less/.lesspipe.sh ~/.lesspipe.sh
+	$(call INST,less)
+.PHONY: lesspipe
 
 xmodmap:
-	$(INST) xmodmap/.Xmodmap ~/.Xmodmap
+	$(call INST,xmodmap)
+.PHONY: xmodmap
 
 mpv:
 	mkdir -p ~/.mpv/lua-settings/
 	mkdir -p ~/.config/mpv/scripts
 	mkdir -p ~/.config/mpv/bin
-	$(INST) mpv/config ~/.mpv/config
-	$(INST) mpv/input.conf ~/.mpv/input.conf
-	$(INST) mpv/lua-settings/osc.conf ~/.mpv/lua-settings/osc.conf
-	$(INST) mpv/scripts/* ~/.config/mpv/scripts
-	$(INST) mpv/delogo ~/.config/mpv/bin/delogo
+	$(call INST,mpv)
 	chmod +x ~/.config/mpv/bin/delogo
 .PHONY: mpv
 
 mutt:
 	mkdir -p ~/.mutt
-	$(INST) mutt/.muttrc ~/.muttrc
-	$(INST) privateconf/.mutt/* ~/.mutt/
+	$(call INST,mutt)
+	$(OINST privateconf/.mutt/* ~/.mutt/)
+.PHONY: mutt
 
 ssh:
-	$(INST) privateconf/.ssh/config ~/.ssh/config
+	$(OINST privateconf/.ssh/config ~/.ssh/config)
+.PHONY: ssh
 
 imapfilter:
 	mkdir -p ~/.imapfilter
-	$(INST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
+	$(OINST privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua)
+.PHONY: imapfilter
 
 listadmin:
-	$(INST) privateconf/.listadmin.ini ~/.listadmin.ini
+	$(OINST privateconf/.listadmin.ini ~/.listadmin.ini)
+.PHONY: listadmin
 
 git:
-	$(INST) git/.gitconfig ~/.gitconfig
+	$(call INST,git)
+.PHONY: git
 
 ### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
 ### This is not run by all!
