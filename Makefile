@@ -9,22 +9,22 @@ nano:
 	$(INST) nano/.nanorc ~/.nanorc
 	$(INST) nano/.nano_starter ~/.nano_starter
 	mkdir -p ~/.nano
-	$(INST) -r nano/syntaxhighlighting/* ~/.nano
+	$(INST) -r nano/.nano/* ~/.nano
 .PHONY: nano
 
 w3m:
 	mkdir -p ~/.w3m
-	$(INST) w3m/keymap_hardexit ~/.w3m/keymap_hardexit
+	$(INST) w3m/.w3m/keymap_hardexit ~/.w3m/keymap_hardexit
 .PHONY: w3m
 
 bashrc:
-	$(INST) .bashrc ~/.bashrc
+	$(INST) bash/.bashrc ~/.bashrc
 
 inputrc:
-	$(INST) .inputrc ~/.inputrc
+	$(INST) readline/.inputrc ~/.inputrc
 
 bc:
-	$(INST) .bcrc ~/.bcrc
+	$(INST) bc/.bcrc ~/.bcrc
 
 themes:
 	mkdir -p ~/.vim/colors/
@@ -39,25 +39,25 @@ vimplugins:
 	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
-	$(INST) vimwiki.vim ~/.vim/after/ftplugin/vimwiki.vim
-	$(INST) haskell.vim ~/.vim/after/ftplugin/haskell.vim
-	$(INST) dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
+	$(INST) vim/.vim/after/ftplugin/vimwiki.vim ~/.vim/after/ftplugin/vimwiki.vim
+	$(INST) vim/.vim/after/ftplugin/haskell.vim ~/.vim/after/ftplugin/haskell.vim
+	$(INST) vim/.local/share/nvim/site/spell/dewp.utf-8.spl ~/.local/share/nvim/site/spell/dewp.utf-8.spl
 	$(INST) privateconf/.floorc.json ~/.floorc.json
 
 vim: themes vimplugins
 	mkdir -p ~/.vim
 	mkdir -p ~/.vim/.backup ~/.vim/.swp ~/.vim/.undo
-	$(INST) vimrc ~/.vim/vimrc
+	$(INST) vim/.vim/vimrc ~/.vim/vimrc
 	test -e ~/.vim/init.vim || ln -s ~/.vim/vimrc ~/.vim/init.vim
 
 browserweiche:
-	$(INST) browserweiche.sh ~/.browserweiche.sh
+	$(INST) browserweiche/.browserweiche.sh ~/.browserweiche.sh
 
 lesspipe:
-	$(INST) lesspipe.sh ~/.lesspipe.sh
+	$(INST) less/.lesspipe.sh ~/.lesspipe.sh
 
 xmodmap:
-	$(INST) Xmodmap ~/.Xmodmap
+	$(INST) xmodmap/.Xmodmap ~/.Xmodmap
 
 mpv:
 	mkdir -p ~/.mpv/lua-settings/
@@ -73,7 +73,7 @@ mpv:
 
 mutt:
 	mkdir -p ~/.mutt
-	$(INST) .muttrc ~/.muttrc
+	$(INST) mutt/.muttrc ~/.muttrc
 	$(INST) privateconf/.mutt/* ~/.mutt/
 
 ssh:
@@ -87,7 +87,7 @@ listadmin:
 	$(INST) privateconf/.listadmin.ini ~/.listadmin.ini
 
 git:
-	$(INST) .gitconfig ~/.gitconfig
+	$(INST) git/.gitconfig ~/.gitconfig
 
 ### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
 ### This is not run by all!
