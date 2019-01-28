@@ -171,7 +171,7 @@ Plug 'tpope/vim-sleuth'             " Set shiftwidth/expandtabs automatically
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
 Plug 'mattn/calendar-vim'
-Plug 'Nudin/vimwiki', { 'branch': 'configurable_lists' }    " Wiki for Vim
+Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'tbabej/taskwiki'
 Plug 'powerman/vim-plugin-AnsiEsc'
@@ -269,16 +269,23 @@ let g:vimwiki_list = [
       \         'auto_toc': 1,
       \         'list_margin': 4},
       \ ]
+let automatic_nested_syntaxes = 1
 let g:vimwiki_use_mouse = 1
 "let g:vimwiki_listsyms = ' ▁▂▃▄▅▆▇✓'
 let g:vimwiki_toc_header = 'Inhalt'
 let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.wiki\)\='
+let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,form,fieldset,legend,input'
 nmap <M--> <Plug>VimwikiDecrementListItem
 vmap <M--> <Plug>VimwikiDecrementListItm
 nmap <M-+> <Plug>VimwikiIncrementListItem
 vmap <M-+> <Plug>VimwikiIncrementListItem
 "let g:vimwiki_additional_bullet_types = [ '→' ]
 "command! UploadBlog !rsync -r /home/michi/.blog_html/ schoenitzer.de:/var/www/blog
+
+" Calendar
+let g:calendar_monday = 1
+let g:calendar_wruler = 'So Mo Di Mi Do Fr Sa'
+let g:calendar_number_of_months = 5
 
 " Tlist plugin
 let Tlist_Compact_Format = 1
