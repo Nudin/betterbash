@@ -47,4 +47,17 @@ set reverse_alias = yes
 source $alias_file
 
 ### Set up mail ###
-source "~/.mutt/accounts"
+#source "~/.mutt/accounts"
+#source ~/.mutt/offlineimap
+source ~/.mutt/isync
+
+# SMTP (send)
+set my_name = "Michael F. Schönitzer"
+set realname = "Michael F. Schönitzer"
+set from = "michael@schoenitzer.de"
+set imap_pass = ""
+
+set hostname="mnet-online.de"
+set smtp_url="smtps://m.schoenitzer@maxi-dsl.de:$imap_pass@mail.mnet-online.de"
+set use_from = yes
+set ssl_force_tls = yes
