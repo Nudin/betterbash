@@ -51,7 +51,9 @@ fi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-bind -x '"\C-p": vim $(fzf);'
+if [[ "$-" =~ "i" ]]; then
+  bind -x '"\C-p": vim $(fzf);'
+fi
 
 export TERM=xterm-256color
 
@@ -155,7 +157,7 @@ alias nano='$HOME/.nano_starter'
 alias bc='xmodmap -e "keycode 91 = period period" && bc -lq; xmodmap -e "keycode 91 = KP_Separator KP_Separator"'
 export BC_ENV_ARGS=$HOME/.bcrc
 alias shred='echo "Zyclen:"; read n; shred -n $n -u'
-alias mutt='echo -e "\e]0;mutt\a";mutt'
+alias mutt='echo -e "\e]0;mutt\a";neomutt'
 
 #-----------------------------
 #	Onekeys

@@ -1,0 +1,63 @@
+### General Behaviour ###
+set fast_reply = yes # Don't ask for stuff
+set include = yes # Include msg in reply
+set use_from = yes
+
+set beep_new = yes
+set editor = nvim
+
+set sleep_time = 0 # be fast
+set timeout = 120
+
+alternative_order text/plain text/html application/vnd.msword application/msword
+
+### Colors ###
+source ~/.mutt/colors.linux
+color indicator black green
+
+### Set up pager ###
+set pager_context = 5
+set pager_stop = yes
+bind pager <up> previous-line #scroll inside the message rather than the index
+bind pager <down> next-line
+set markers = no
+set smart_wrap
+set text_flowed = yes
+
+### Set up index view ###
+set sort = reverse-threads
+set sort_aux = last-date-received
+
+set menu_scroll # Don't jump when scrolling in message list
+set menu_context = 7
+
+#set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
+# better but works only with neomutt:
+set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
+
+### Caches ###
+set header_cache = /tmp/mutt-cache/headers
+set message_cachedir = /tmp/mutt-cache/messages
+set maildir_header_cache_verify = no
+
+### Contacts ###
+set alias_file = "~/.mutt/aliases"
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+
+### Set up mail ###
+#source "~/.mutt/accounts"
+#source ~/.mutt/offlineimap
+source ~/.mutt/isync
+
+# SMTP (send)
+set my_name = "Michael F. Schönitzer"
+set realname = "Michael F. Schönitzer"
+set from = "michael@schoenitzer.de"
+set imap_pass = ""
+
+set hostname="mnet-online.de"
+set smtp_url="smtps://m.schoenitzer@maxi-dsl.de:$imap_pass@mail.mnet-online.de"
+set use_from = yes
+set ssl_force_tls = yes
