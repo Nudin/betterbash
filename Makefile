@@ -3,7 +3,7 @@ INST = cp -l $(INSTFLAGS)
 
 clonevimplugin = test -e ~/.vim/bundle/$(1) || git clone $(2) ~/.vim/bundle/$(1)
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin
 
 nano:
 	$(INST) nano/.nanorc ~/.nanorc
@@ -28,8 +28,8 @@ bc:
 
 themes:
 	mkdir -p ~/.vim/colors/
-	wget -nv https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim -O ~/.vim/colors/badwolf.vim 
-	wget -nv  https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim -O ~/.vim/colors/wasabi256.vim
+	curl -s https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim > ~/.vim/colors/badwolf.vim
+	curl -s https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim > ~/.vim/colors/wasabi256.vim
  
 vimplugins:
 	mkdir -p ~/.vim/autoload
@@ -73,7 +73,7 @@ mpv:
 
 mutt:
 	mkdir -p ~/.mutt
-	$(INST) privateconf/.muttrc ~/.muttrc
+	$(INST) .muttrc ~/.muttrc
 	$(INST) privateconf/.mutt/* ~/.mutt/
 
 ssh:
@@ -82,6 +82,9 @@ ssh:
 imapfilter:
 	mkdir -p ~/.imapfilter
 	$(INST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
+
+listadmin:
+	$(INST) privateconf/.listadmin.ini ~/.listadmin.ini
 
 git:
 	$(INST) .gitconfig ~/.gitconfig
