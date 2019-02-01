@@ -42,7 +42,7 @@ vimplugins:
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
 	$(call INST,vim)
-	$(OINST) privateconf/.floo/.floorc.json ~/.floorc.json
+	$(OINST) privateconf/floo/.floorc.json ~/.floorc.json
 .PHONY: vimplugins
 
 vim: themes vimplugins
