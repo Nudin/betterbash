@@ -1,6 +1,6 @@
 SHELL := /bin/bash -O extglob
 # alternatively use ln -s to symlink the files instead of copying them
-OINST = cp -l $(INSTFLAGS)
+OINST = cp -lr $(INSTFLAGS)
 define INST
   $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
 endef
@@ -42,7 +42,7 @@ vimplugins:
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
 	$(call INST,vim)
-	$(OINST privateconf/.floorc.json ~/.floorc.json)
+	$(OINST) privateconf/.floorc.json ~/.floorc.json
 .PHONY: vimplugins
 
 vim: themes vimplugins
@@ -75,20 +75,20 @@ mpv:
 mutt:
 	mkdir -p ~/.mutt
 	$(call INST,mutt)
-	$(OINST privateconf/.mutt/* ~/.mutt/)
+	$(OINST) privateconf/.mutt/* ~/.mutt/
 .PHONY: mutt
 
 ssh:
-	$(OINST privateconf/.ssh/config ~/.ssh/config)
+	$(OINST) privateconf/.ssh/config ~/.ssh/config
 .PHONY: ssh
 
 imapfilter:
 	mkdir -p ~/.imapfilter
-	$(OINST privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua)
+	$(OINST) privateconf/.imapfilter/config.lua ~/.imapfilter/config.lua
 .PHONY: imapfilter
 
 listadmin:
-	$(OINST privateconf/.listadmin.ini ~/.listadmin.ini)
+	$(OINST) privateconf/.listadmin.ini ~/.listadmin.ini
 .PHONY: listadmin
 
 git:
