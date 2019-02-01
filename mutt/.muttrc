@@ -31,9 +31,9 @@ set sort_aux = last-date-received
 set menu_scroll # Don't jump when scrolling in message list
 set menu_context = 7
 
-#set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
+set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
 # better but works only with neomutt:
-set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
+#set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
 
 ### Caches ###
 set header_cache = /tmp/mutt-cache/headers
@@ -47,17 +47,6 @@ set reverse_alias = yes
 source $alias_file
 
 ### Set up mail ###
-#source "~/.mutt/accounts"
-#source ~/.mutt/offlineimap
-source ~/.mutt/isync
-
-# SMTP (send)
-set my_name = "Michael F. Schönitzer"
-set realname = "Michael F. Schönitzer"
-set from = "michael@schoenitzer.de"
-set imap_pass = ""
-
-set hostname="mnet-online.de"
-set smtp_url="smtps://m.schoenitzer@maxi-dsl.de:$imap_pass@mail.mnet-online.de"
-set use_from = yes
-set ssl_force_tls = yes
+set ssl_force_tls = yes # force TLS for all conections
+#set mail_check = 120
+source "~/.mutt/accounts"
