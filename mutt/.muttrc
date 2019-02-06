@@ -1,5 +1,5 @@
 ### General Behaviour ###
-set fast_reply = yes # Don't ask for stuff
+set fast_reply = yes # Don't ask for stuff when replying
 set include = yes # Include msg in reply
 set use_from = yes
 
@@ -8,8 +8,11 @@ set editor = nvim
 
 set sleep_time = 0 # be fast
 set timeout = 120
+set send_charset="us-ascii:utf-8"
 
-alternative_order text/plain text/html application/vnd.msword application/msword
+set signature = ~/.mutt/signature
+
+source ~/.mutt/gpg.rc
 
 ### Colors ###
 source ~/.mutt/colors.linux
@@ -23,6 +26,12 @@ bind pager <down> next-line
 set markers = no
 set smart_wrap
 set text_flowed = yes
+set pager_index_lines = 10 # show index above pager
+# View HTML Mails
+auto_view text/html
+alternative_order text/plain text/html
+set mailcap_path 	= ~/.mutt/mailcap
+macro attach 'V' "<pipe-entry>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 
 ### Set up index view ###
 set sort = reverse-threads
@@ -34,6 +43,8 @@ set menu_context = 7
 set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
 # better but works only with neomutt:
 #set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
+
+source ~/.mutt/sidebar
 
 ### Caches ###
 set header_cache = /tmp/mutt-cache/headers
@@ -48,5 +59,4 @@ source $alias_file
 
 ### Set up mail ###
 set ssl_force_tls = yes # force TLS for all conections
-#set mail_check = 120
 source "~/.mutt/accounts"
