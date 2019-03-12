@@ -5,7 +5,7 @@
 # --------------------------------------------------------------------------
 
 # Should the Sidebar be shown?
-set sidebar_visible = no
+set sidebar_visible = yes
 
 # How wide should the Sidebar be in screen columns?
 # Note: Some characters, e.g. Chinese, take up two columns each.
@@ -27,7 +27,7 @@ set sidebar_indent_string = '  '
 
 # Make the Sidebar only display mailboxes that contain new, or flagged,
 # mail.
-set sidebar_new_mail_only = yes
+set sidebar_new_mail_only = no
 
 # Any mailboxes that are whitelisted will always be visible, even if the
 # sidebar_new_mail_only option is enabled.
@@ -41,7 +41,7 @@ set sidebar_next_new_wrap = no
 # The character to use as the divider between the Sidebar and the other Mutt
 # panels.
 # Note: Only the first character of this string is used.
-set sidebar_divider_char = '|'
+set sidebar_divider_char = '│'
 
 # Enable extended buffy mode to calculate total, new, and flagged
 # message counts for each mailbox.

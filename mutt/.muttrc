@@ -44,6 +44,9 @@ set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
 # better but works only with neomutt:
 #set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
 
+bind generic p noop
+macro index § "|mbsync -a\n<sync-mailbox>"
+
 source ~/.mutt/sidebar
 
 ### Caches ###
