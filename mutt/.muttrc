@@ -52,10 +52,14 @@ set message_cachedir = /tmp/mutt-cache/messages
 set maildir_header_cache_verify = no
 
 ### Contacts ###
-set alias_file = "~/.mutt/aliases"
-set sort_alias = alias
-set reverse_alias = yes
-source $alias_file
+#set alias_file = "~/.mutt/aliases"
+#set sort_alias = alias
+#set reverse_alias = yes
+#source $alias_file
+# Use khard for contacts
+set query_command= "khard email --parsable %s"
+bind editor <Tab> complete-query
+bind editor ^T    complete
 
 ### Set up mail ###
 set ssl_force_tls = yes # force TLS for all conections
