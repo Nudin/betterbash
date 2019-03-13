@@ -63,6 +63,9 @@ set maildir_header_cache_verify = no
 set query_command= "khard email --parsable %s"
 bind editor <Tab> complete-query
 bind editor ^T    complete
+macro index,pager A \
+    "<pipe-message>khard add-email<return>" \
+    "add the sender email address to khard"
 
 ### Set up mail ###
 set ssl_force_tls = yes # force TLS for all conections
