@@ -1,0 +1,28 @@
+[calendars]
+
+[[calendar_local]]
+path = ~/.calendars/*
+type = discover
+color = dark green
+
+[[contacts_local]]
+path = ~/.contacts/4bd3f6c2-6bd1-7462-cd7a-9cfe98dabc39
+type = birthdays
+color = dark red
+
+[locale]
+timeformat = %H:%M
+dateformat = %Y-%m-%d
+longdateformat = %Y-%m-%d
+datetimeformat = %Y-%m-%d %H:%M
+longdatetimeformat = %Y-%m-%d %H:%M
+
+[highlight_days]
+
+[default]
+highlight_event_days = True
+show_all_days = False
+timedelta = 14d
+
+[view]
+dynamic_days = True
