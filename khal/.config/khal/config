@@ -5,6 +5,11 @@ path = ~/.calendars/*
 type = discover
 color = dark green
 
+[[calendar_wikimuc]]
+path = ~/.calendar_wikimuc/
+type = discover
+color = light blue
+
 [[contacts_local]]
 path = ~/.contacts/4bd3f6c2-6bd1-7462-cd7a-9cfe98dabc39
 type = birthdays
