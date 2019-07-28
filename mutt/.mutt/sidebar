@@ -20,7 +20,7 @@ set sidebar_short_path = yes
 set sidebar_delim_chars = '/.'
 
 # If the mailbox path is abbreviated, should it be indented?
-set sidebar_folder_indent = no
+set sidebar_folder_indent = yes
 
 # Indent mailbox paths with this string.
 set sidebar_indent_string = '  '
