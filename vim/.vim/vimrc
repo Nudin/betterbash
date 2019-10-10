@@ -223,6 +223,8 @@ Plug 'inkarkat/vim-SpellCheck'
 Plug 'inkarkat/vim-ingo-library'
 Plug 'reedes/vim-wordy'
 Plug 'thaerkh/vim-indentguides'
+Plug 'sheerun/vim-polyglot'
+Plug 'chrisbra/NrrwRgn'
 Plug 'arp242/jumpy.vim'
 Plug 'bkad/CamelCaseMotion'
 """" Language specific plugins
@@ -232,6 +234,8 @@ Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'pbrisbin/vim-syntax-shakespeare'
 Plug 'vim-scripts/ditaa'
+Plug 'ternjs/tern_for_vim'
+Plug 'dbeniamine/cheat.sh-vim'
 """" Pluging not compatible with vim 7""""
 if has('nvim') || v:version > 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
@@ -300,6 +304,8 @@ let g:ale_c_gcc_options = '-std=gnu11 -Wall'
 let g:ale_python_pylint_options = "--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203"
 let g:ale_echo_msg_format="[%linter%] %s"
 let g:ale_fix_on_save = 1
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
