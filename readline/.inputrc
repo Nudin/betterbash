@@ -23,8 +23,11 @@ set mark-modified-lines On
 
 set enable-bracketed-paste On
 
+set revert-all-at-newline on
+
 "\es":"\C-asudo \C-e"
 
 "\e[Z": menu-complete
 
-
+Control-o: "\C-e > output.txt"
+Control-j: "\C-a$(\C-e)\C-a"

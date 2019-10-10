@@ -66,8 +66,6 @@ function find_subtitles(lang)
 	-- no matter what happened, try to load *.srt files (if any)    	
     	for filename in io.popen('ls -a "'..dr..'"'):lines() do    		
 		if string.match(filename,"%.srt$") then
-
-
 			--load file to mpv			
 			mp.command("sub-add \"" .. mputils.join_path(dr, filename) .. "\" select subliminal " .. lang)
 		end		

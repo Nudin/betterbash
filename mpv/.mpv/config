@@ -4,7 +4,11 @@ stop-screensaver
 quiet
 really-quiet
 
-cache-default=500000
+cache=auto
+cache-default=500000 # 500 MB
+cache-backbuffer=100000 #100 MB
+cache-pause-wait=3
+cache-pause-initial=yes
 
 ### Audio ###
 #mixer-channel=Master
@@ -22,6 +26,12 @@ hwdec=vaapi-copy	 	 # Hardware-acceleration for intel gpu
 vd-lavc-threads=3
 #vo=opengl-hq
 vo=gpu
+profile=gpu-hq
+scale=ewa_lanczossharp
+cscale=ewa_lanczossharp
+video-sync=display-resample
+interpolation
+tscale=oversample
 
 # Limit youtube-dl to max resolution of 1080p
 ytdl-format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'

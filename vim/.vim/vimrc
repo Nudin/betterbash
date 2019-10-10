@@ -91,8 +91,10 @@ noremap <C-k> k<C-y>
 
 " Add empty line without insertmode
 nnoremap <M-o> O<Esc>j
-nnoremap ø O<Esc>j
-nnoremap <C-o> o<Esc>k
+nnoremap ø o<Esc>k
+
+" delete without yank
+nnoremap s "_d
 
 " Save
 command! W w
@@ -103,6 +105,9 @@ command! WQ wq
 " Wrap current paragraph
 imap <C-q> <Esc>gqipA
 nmap <C-q> gqip$
+
+" set marker a from insert mode
+inoremap ;1 <c-o>ma
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
@@ -141,9 +146,9 @@ if has('nvim')
   func! s:mapMoveToWindowInDirection(direction)
       func! s:maybeInsertMode(direction)
           stopinsert
-          execute "wincmd" a:direction
+          execute 'wincmd' a:direction
 
-          if &buftype == 'terminal'
+          if &buftype is# 'terminal'
               startinsert!
           endif
       endfunc
@@ -195,7 +200,6 @@ Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'tbabej/taskwiki'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'farseer90718/vim-taskwarrior'
-Plug 'Floobits/floobits-neovim'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
@@ -213,13 +217,14 @@ Plug 'jiangmiao/auto-pairs' " to test #356
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'bfredl/nvim-miniyank'
 Plug 'vim-scripts/transpose-words'
 Plug 'junegunn/goyo.vim'
 Plug 'inkarkat/vim-SpellCheck'
 Plug 'inkarkat/vim-ingo-library'
 Plug 'reedes/vim-wordy'
 Plug 'thaerkh/vim-indentguides'
+Plug 'arp242/jumpy.vim'
+Plug 'bkad/CamelCaseMotion'
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
@@ -233,12 +238,18 @@ if has('nvim') || v:version > 800
   Plug 'thaerkh/vim-workspace'
 endif
 if has('nvim')  " neovimonly
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }  " completion
-  Plug 'deoplete-plugins/deoplete-jedi'
-  Plug 'Shougo/neco-syntax'
-  Plug 'Shougo/neco-vim'
-  Plug 'ujihisa/neco-look'
-  Plug 'eagletmt/neco-ghc'          " completion for haskell basing on deoplete
+  Plug 'bfredl/nvim-miniyank'
+  Plug 'Floobits/floobits-neovim'
+  " Completion with deoplete
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/neco-syntax'                                        " general (by vims syntax files)
+  Plug 'deoplete-plugins/deoplete-jedi'                            " python
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " js
+  Plug 'Shougo/neco-vim'                                           " vimscript
+  Plug 'eagletmt/neco-ghc'                                         " Haskell
+  Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
+  " Plug 'ujihisa/neco-look'                                        Dictionary
+
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
   Plug 'kassio/neoterm'
 endif
@@ -253,8 +264,10 @@ call plug#end()
 colorscheme badwolf
 
 " Enable deoplete
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#max_list = 100
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+set pumheight=15
 
 " workspace - disable autosave
 let g:workspace_autosave = 0
@@ -279,11 +292,13 @@ let g:lightline = {
       \ }
 
 " ale
-let g:ale_c_gcc_options = '-std=gnu11 -Wall'
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'python': ['black', 'isort'],
 \}
+let g:ale_c_gcc_options = '-std=gnu11 -Wall'
+let g:ale_python_pylint_options = "--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203"
+let g:ale_echo_msg_format="[%linter%] %s"
 let g:ale_fix_on_save = 1
 
 " mundo
@@ -306,7 +321,7 @@ let g:vimwiki_list = [
       \         'auto_toc': 1,
       \         'list_margin': 4},
       \ {
-      \         'path': '~/Code/vimwikiwiki',
+      \         'path': '~/Code/vimwikiwiki/wiki',
       \         'path_html': '~/Code/vimwikiwiki/docs',
       \         'auto_toc': 1},
       \ ]
@@ -367,9 +382,11 @@ let g:grepper.tools         = ['rg', 'git', 'grep', 'ag']
 let g:grepper.simple_prompt = 1
 
 " nvim-miniyank
-map p <Plug>(miniyank-autoput)
-map P <Plug>(miniyank-autoPut)
-map <leader>n <Plug>(miniyank-cycle)
+if exists('g:miniyank_filename')
+    map p <Plug>(miniyank-autoput)
+    map P <Plug>(miniyank-autoPut)
+    map <leader>n <Plug>(miniyank-cycle)
+endif
 
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
@@ -399,3 +416,21 @@ function! s:goyo_leave()
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" indentguides
+let g:indentguides_spacechar = '│'
+"let g:indentguides_ignorelist = ['text']
+let g:indentguides_conceal_color = 'ctermfg=235 ctermbg=NONE guifg=Grey27 guibg=NONE'
+let g:indentguides_specialkey_color = 'ctermfg=235 ctermbg=NONE guifg=Grey27 guibg=NONE'
+set concealcursor=n
+
+" CamelCaseMotion
+"let g:camelcasemotion_key = '<leader>'
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+"map <silent> ge <Plug>CamelCaseMotion_ge
+sunmap w
+sunmap b
+sunmap e
+"sunmap ge

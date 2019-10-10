@@ -55,6 +55,10 @@ if [[ "$-" =~ "i" ]]; then
   bind -x '"\C-p": vim $(fzf);'
 fi
 
+if [ -f ~/.git-aliases ] ; then
+  source ~/.git-aliases
+fi
+
 export TERM=xterm-256color
 
 # Using this, aliases will work with sudo
@@ -121,7 +125,7 @@ alias dmesg='sudo dmesg'
 alias route='sudo route -n'
 # other
 alias alsamixer='alsamixer -c 0'
-alias ping='LANG=en ping -c 4 -i 0.3'
+alias ping='LANG=en ping -c 6 -i 0.2'
 alias mplayer='mplayer -nolirc'
 alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
 
@@ -378,6 +382,12 @@ eom()       { command eom "$@" & }
 giggle()    { command giggle "$@" 2> /dev/null & }
 incognito() { command chromium --incognito "$@" & }
 
+#========================================
+# 	KEY BINDINGS
+#========================================
+bind '"^[7" complete-into-braces'
+bind '"^[[21~" "\16ls -l\n"'
+bind '"^[[24~" "\16htop\n"'
 
 #========================================
 # 	OHTER STUFF
