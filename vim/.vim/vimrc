@@ -75,6 +75,8 @@ set undofile	" keep an undo file (undo changes after closing)
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set whichwrap=b,s,<,>,[,]
+" make underscore a word boundary
+"set iskeyword-=_
 
 " Fold
 set foldenable
