@@ -5,7 +5,11 @@ define INST
   $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
 endef
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin tmux
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin tmux kitty
+
+kitty:
+	$(call INST,kitty)
+.PHONY: kitty
 
 tmux:
 	$(call INST,tmux)
