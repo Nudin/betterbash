@@ -28,6 +28,9 @@ longdatetimeformat = %Y-%m-%d %H:%M
 highlight_event_days = True
 show_all_days = False
 timedelta = 14d
+default_calendar = 2656744f-abe5-9e66-b46c-619a0c4b20df
 
 [view]
 dynamic_days = True
+frame = color
+hide_footer = True

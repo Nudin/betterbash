@@ -40,17 +40,27 @@ set sort_aux = last-date-received
 set menu_scroll # Don't jump when scrolling in message list
 set menu_context = 7
 
-set index_format = "%Z %{%b %d}  %-15.15L  (%4c)  %s"
+set index_format = "%M%Z %{%b %d}  %-15.15L  (%4c)  %s"
 # better but works only with neomutt:
-#set index_format = "%Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]>  %-20.20L  (%4c)  %s"
+set index_format = "%?X?A& ? %?M? ↳ &%Z? %<[y?%<[m?%<[d?%[ %H:%M]&%[ %a %d]>&%[%b %d]>&%[ %m/%y]>  %-25.25L  (%4c)  %s"
+set to_chars = "    →L"
 
 set wait_key = no
 bind index p search-opposite
+
+# threads
+set collapse_all = yes
+set collapse_unread = no
+#color index default default "~v"
+bind index - collapse-thread
+bind index _ collapse-all
+
+source ~/.mutt/sidebar
+
+### External tools ###
 macro index \" "|mbsync main:INBOX\n<sync-mailbox>"
 macro index § "|mbsync -a\n<sync-mailbox>"
 macro index % "|listadmin\n<sync-mailbox>"
-
-source ~/.mutt/sidebar
 
 ### Caches ###
 set header_cache = /tmp/mutt-cache/headers
