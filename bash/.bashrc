@@ -4,7 +4,7 @@ echo 1234 >> /tmp/test3
 
 # Source global definition
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+  source /etc/bashrc
 fi
 
 #========================================
@@ -28,7 +28,7 @@ export HISTFILESIZE=50000
 export PATH=$PATH:~/.cabal/bin/
 
 if [ -f /etc/bash_completion ] ; then
-	source /etc/bash_completion
+  source /etc/bash_completion
 fi
 if [ -f /usr/share/git/completion/git-prompt.sh ] ; then
   source /usr/share/git/completion/git-prompt.sh
@@ -48,7 +48,7 @@ if [ -f /usr/share/fzf/key-bindings.bash ] ; then
   source /usr/share/fzf/key-bindings.bash
 fi
 if [ -f /usr/share/fzf/completion.bash ] ; then
-  source /usr/share/fzf/completion.bash 
+#  source /usr/share/fzf/completion.bash 
   :
 fi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
@@ -98,16 +98,22 @@ settitle() {
 #========================================
 export BROWSER="$HOME/.browserweiche.sh"
 export DIFFPROG=meld
-export GPG_TTY=`tty`
+export GPG_TTY=$(tty)
 # Set editor
 if hash nvim 2> /dev/null; then
-  if [[ "$EDITOR" =~ "termedit.py" ]] ; then
+  if [[ "$EDITOR" =~ termedit.py ]] ; then
     alias nvim="$EDITOR"
   fi
   export EDITOR="nvim"
   alias vim='nvim'
+else
+  export EDITOR="vim"
 fi
 alias vi='vim'
+
+if [ "${SSH_AUTH_SOCK}" == "" ]; then
+  eval "$(ssh-agent)"
+fi
 
 #========================================
 # Set default values for several commands
@@ -227,7 +233,7 @@ lowercase()  # move filenames to lowercase
     for file ; do
         filename=${file##*/}
         case "$filename" in
-        */*) dirname==${file%/*} ;;
+        */*) dirname=${file%/*} ;;
         *) dirname=.;;
         esac
         nf=$(echo $filename | tr A-Z a-z)
@@ -261,7 +267,7 @@ swichfiles()  # Swap 2 filenames around, if they exist
 alias k9="kill -9"
 alias ka="killall"
 alias kfx="killall firefox xulrunner-bin firefox-bin"
-my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
+my_ps() { ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command ; }
 
 #-----------------------------
 #       Web
