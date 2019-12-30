@@ -1,5 +1,7 @@
 # .bashrc
 
+echo 1234 >> /tmp/test3
+
 # Source global definition
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -47,6 +49,7 @@ if [ -f /usr/share/fzf/key-bindings.bash ] ; then
 fi
 if [ -f /usr/share/fzf/completion.bash ] ; then
   source /usr/share/fzf/completion.bash 
+  :
 fi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -399,7 +402,7 @@ if [ -f ${HOME}/.bashrc.${HOSTNAME} ] ; then
         source ${HOME}/.bashrc.${HOSTNAME}
 fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 wttr()
 {
