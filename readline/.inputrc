@@ -31,3 +31,5 @@ set revert-all-at-newline on
 
 Control-o: "\C-e > output.txt"
 Control-j: "\C-a$(\C-e)\C-a"
+
+Control-n: "\C-creset\r\C-l"

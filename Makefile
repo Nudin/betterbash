@@ -103,6 +103,10 @@ git:
 	$(call INST,git)
 .PHONY: git
 
+python:
+	$(call INST,python)
+.PHONY: python
+
 ### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
 ### This is not run by all!
 hook:
