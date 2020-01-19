@@ -13,6 +13,7 @@ kitty:
 
 tmux:
 	$(call INST,tmux)
+	test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 .PHONY: tmux
 
 nano:
