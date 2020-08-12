@@ -9,6 +9,9 @@ all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter s
 
 kitty:
 	$(call INST,kitty)
+	curl https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/master/scroll_mark.py > ~/.config/kitty/scroll_mark.py
+	curl https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/master/search.py > ~/.config/kitty/search.py
+	test -d ~/.config/kitty/kitty_grab || git clone https://github.com/yurikhan/kitty_grab.git ~/.config/kitty/kitty_grab
 .PHONY: kitty
 
 tmux:
