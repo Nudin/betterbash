@@ -227,7 +227,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'inkarkat/vim-SpellCheck'
 Plug 'inkarkat/vim-ingo-library'
 Plug 'reedes/vim-wordy'
-Plug 'thaerkh/vim-indentguides'
+Plug 'Nudin/vim-indentguides'
 Plug 'sheerun/vim-polyglot'
 Plug 'chrisbra/NrrwRgn'
 Plug 'arp242/jumpy.vim'
@@ -277,6 +277,7 @@ if has('nvim')
   Plug 'bfredl/nvim-miniyank'
   Plug 'Floobits/floobits-neovim'
   " Terminal
+
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
   Plug 'kassio/neoterm'
 endif
@@ -324,6 +325,8 @@ let g:ale_python_mypy_options = '-ignore-missing-imports'
 let g:ale_writegood_options='--no-passive'
 let g:ale_echo_msg_format='[%linter%] %s'
 let g:ale_fix_on_save = 1
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
@@ -462,18 +465,3 @@ sunmap w
 sunmap b
 sunmap e
 "sunmap ge
-
-" vim-lexical
-augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType tex,latex,html call lexical#init()
-  autocmd FileType text call lexical#init()
-augroup END
-let g:lexical#spell_key = '<leader>z'
-let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur-en.txt',]
-
-
-" FZF
-noremap <leader>f :FZF<CR>

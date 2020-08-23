@@ -25,13 +25,6 @@ autosync=30
 hwdec=vaapi-copy	 	 # Hardware-acceleration for intel gpu
 vd-lavc-threads=3
 #vo=opengl-hq
-vo=gpu
-profile=gpu-hq
-scale=ewa_lanczossharp
-cscale=ewa_lanczossharp
-video-sync=display-resample
-interpolation
-tscale=oversample
 
 # Limit youtube-dl to max resolution of 1080p
 ytdl-format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'

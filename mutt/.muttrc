@@ -83,3 +83,4 @@ macro index,pager A \
 ### Set up mail ###
 set ssl_force_tls = yes # force TLS for all conections
 source "~/.mutt/accounts"
+alias domenikabolls Ulrike Domenika Bolls <domenikabolls@gmail.com>

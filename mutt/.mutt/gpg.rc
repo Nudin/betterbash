@@ -92,3 +92,6 @@ set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
 # pattern to verify a decryption occurred
 set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
 
+
+set pgp_self_encrypt = yes
+#set pgp_default_key  = 20F0829726204474BF913769D3F2CBA7A7AE3DA4
