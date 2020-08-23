@@ -97,6 +97,8 @@ nnoremap ø o<Esc>k
 
 " delete without yank
 nnoremap s "_d
+" "Y" to work from the cursor to the end of line (more logical)
+map Y y$
 
 " Save
 command! W w
@@ -201,7 +203,7 @@ Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'tbabej/taskwiki'
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'farseer90718/vim-taskwarrior'
+"Plug 'farseer90718/vim-taskwarrior'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
@@ -211,6 +213,7 @@ Plug 'jamessan/vim-gnupg'
 Plug 'EinfachToll/DidYouMean'       " asks for the right file to open
 Plug 'tpope/vim-obsession'          " autosave sessions
 Plug 'mhinz/vim-startify'           " start page
+Plug 'tpope/vim-abolish'            " search/substitute/abbreviate multiple variants of a word
 Plug 'tpope/vim-repeat'
 Plug 'vim-utils/vim-man'
 Plug 'Nudin/ToggleClip'
@@ -229,6 +232,9 @@ Plug 'sheerun/vim-polyglot'
 Plug 'chrisbra/NrrwRgn'
 Plug 'arp242/jumpy.vim'
 Plug 'bkad/CamelCaseMotion'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'reedes/vim-lexical'
+Plug 'CoatiSoftware/vim-sourcetrail'
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
@@ -238,35 +244,45 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 Plug 'vim-scripts/ditaa'
 Plug 'ternjs/tern_for_vim'
 Plug 'dbeniamine/cheat.sh-vim'
-"""" Pluging not compatible with vim 7""""
-if has('nvim') || v:version > 800
-  Plug 'w0rp/ale'                     " Asynchronous Lint Engine
-  Plug 'thaerkh/vim-workspace'
-endif
-if has('nvim')  " neovimonly
-  Plug 'bfredl/nvim-miniyank'
-  Plug 'Floobits/floobits-neovim'
-  " Completion with deoplete
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/neco-syntax'                                        " general (by vims syntax files)
-  Plug 'deoplete-plugins/deoplete-jedi'                            " python
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " js
-  Plug 'Shougo/neco-vim'                                           " vimscript
-  Plug 'eagletmt/neco-ghc'                                         " Haskell
-  Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
-  " Plug 'ujihisa/neco-look'                                        Dictionary
-
-  Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
-  Plug 'kassio/neoterm'
-endif
 """ Colorschemes
 Plug 'iCyMind/NeoSolarized'
 Plug 'joshdick/onedark.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'sjl/badwolf'
+"""" Pluging not compatible with vim 7""""
+" Completion with deoplete
+if has('nvim')
+   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+elseif v:version >= 800
+   Plug 'Shougo/deoplete.nvim'
+   Plug 'roxma/nvim-yarp'
+   Plug 'roxma/vim-hug-neovim-rpc'
+endif
+if has('nvim') || v:version >= 800
+  Plug 'Shougo/neco-syntax'                                        " general (by vims syntax files)
+  Plug 'deoplete-plugins/deoplete-jedi'                            " python
+  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " js
+  Plug 'Shougo/neco-vim'                                           " vimscript
+  Plug 'eagletmt/neco-ghc'                                         " Haskell
+  Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
+  Plug 'ujihisa/neco-look'                                         " Dictionary
+endif
+if has('nvim') || v:version >= 800
+  Plug 'w0rp/ale'                     " Asynchronous Lint Engine
+  Plug 'thaerkh/vim-workspace'
+endif
+" Plugins only compatible with Neovim
+if has('nvim')
+  Plug 'bfredl/nvim-miniyank'
+  Plug 'Floobits/floobits-neovim'
+  " Terminal
+  Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
+  Plug 'kassio/neoterm'
+endif
 call plug#end()
 
+" Set Colorscheme
 colorscheme badwolf
 
 " Enable deoplete
@@ -303,11 +319,11 @@ let g:ale_fixers = {
 \   'python': ['black', 'isort'],
 \}
 let g:ale_c_gcc_options = '-std=gnu11 -Wall'
-let g:ale_python_pylint_options = "--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203"
-let g:ale_echo_msg_format="[%linter%] %s"
+let g:ale_python_pylint_options = '--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203'
+let g:ale_python_mypy_options = '-ignore-missing-imports'
+let g:ale_writegood_options='--no-passive'
+let g:ale_echo_msg_format='[%linter%] %s'
 let g:ale_fix_on_save = 1
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
@@ -399,6 +415,8 @@ endif
 highlight GitGutterAdd    guifg=#009900 ctermfg=2
 highlight GitGutterChange guifg=#bbbb00 ctermfg=3
 highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+let g:gitgutter_highlight_linenrs = 1
+let g:gitgutter_preview_win_floating = 1
 
 " vim-latex
 let g:tex_flavor='latex'
@@ -416,11 +434,13 @@ function! s:goyo_enter()
   set nospell
   set linebreak
   set wrap
+  ALEDisable
 endfunction
 
 function! s:goyo_leave()
   set spell
   set nowrap
+  ALEEnable
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
@@ -442,3 +462,18 @@ sunmap w
 sunmap b
 sunmap e
 "sunmap ge
+
+" vim-lexical
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType tex,latex,html call lexical#init()
+  autocmd FileType text call lexical#init()
+augroup END
+let g:lexical#spell_key = '<leader>z'
+let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur-en.txt',]
+
+
+" FZF
+noremap <leader>f :FZF<CR>

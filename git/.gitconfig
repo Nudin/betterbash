@@ -1,47 +1,49 @@
 [user]
-	email = michael@schoenitzer.de
-	name = Michael F. Schönitzer
-	#signingkey = E58D0685
-[giggle]
-	main-window-maximized = false
-	main-window-geometry = 950x697+0+256
-	file-view-vpane-position = 450
-	history-view-vpane-position = 205
-	main-window-view = HistoryView
-[push]
-	default = simple
-	followTags = true
+   email = michael@schoenitzer.de
+   name = Michael F. Schönitzer
+   signingkey = 20F0829726204474BF913769D3F2CBA7A7AE3DA4
+[core]
+   excludesfile = /home/michi/.gitignore
 [color]
-	ui = auto
-[alias]
-	ucommit = reset HEAD~
-	undo = reset --hard HEAD
-	stash-all = stash save --include-untracked
-	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-	sync = "!ssh-add -l > /dev/null || ssh-add; git pull && git push"
-[merge]
-	conflictstyle = diff3
-	tool = meld
-[commit]
-	#gpgSign = true
-[transfer]
-	fsckobjects = true
-[fetch]
-	fsckobjects = false
+   ui = auto
 [init]
-	templatedir = ~/.git_template
-#[url "git@github.com:"]
-#	insteadOf = https://github.com/
-[pager]
-   diff = diff-so-fancy | less --tabs=1,5 -RFX
-   show = diff-so-fancy | less --tabs=1,5 -RFX
-[diff]
-    tool = kitty
-    guitool = kitty.gui
-[difftool]
-    prompt = false
-    trustExitCode = true
-[difftool "kitty"]
-    cmd = kitty +kitten diff $LOCAL $REMOTE
-[difftool "kitty.gui"]
-    cmd = kitty kitty +kitten diff $LOCAL $REMOTE
+   templatedir = ~/.git_template
+[transfer]
+   fsckobjects = true
+[fetch]
+   fsckobjects = false
+[push]
+   default = simple
+   followTags = true
+[merge]
+   conflictstyle = diff3
+   tool = meld
+[alias]
+   ucommit = reset HEAD~
+   undo = reset --hard HEAD
+   stash-all = stash save --include-untracked
+   glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+   sync = "!ssh-add -l > /dev/null || ssh-add; git pull && git push"
+   a = add
+   ap = add -p
+   c = commit --verbose
+   ca = commit -a --verbose
+   cm = commit -m
+   cam = commit -a -m
+   m = commit --amend --verbose
+   d = diff
+   ds = diff --stat
+   dc = diff --staged
+   # list branches sorted by last modified
+   b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+   # list aliases
+   la = "!git config -l | grep alias | cut -c 7-"
+[giggle]
+   main-window-maximized = false
+   main-window-geometry = 950x697+0+256
+   file-view-vpane-position = 450
+   history-view-vpane-position = 205
+   main-window-view = HistoryView
+; Add all setting that won't work on other environments in the following local file
+[include]
+   path = ~/.gitconfig.local
