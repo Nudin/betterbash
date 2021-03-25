@@ -7,23 +7,12 @@ keycode 60 = period colon ellipsis division ellipsis division
 keycode 61 = minus underscore endash abovedot endash abovedot
 ! ✓ & ✔ on [AltGr] ([shift]) + #
 keycode  51 = numbersign apostrophe backslash bar 0x1002713 0x1002714
+! dager †
+keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 
-! INVERT NUMLOCK arrows with [numpad activ]; [shit] + 8/4/6/2
-!keycode  79 = KP_7 KP_7 KP_Home KP_7 KP_Home KP_7 KP_Home KP_7
-!keycode  80 = KP_8 KP_8 KP_Up KP_8 uparrow b B
-!keycode  81 = KP_9 KP_9 KP_Prior KP_9 KP_Prior KP_9 KP_Prior KP_9
-!keycode  83 = KP_4 KP_4 KP_Left KP_4 leftarrow d D
-!keycode  84 = KP_5 KP_5 KP_Begin KP_5 KP_Begin KP_5 KP_Begin KP_5
-!keycode  85 = KP_6 KP_6 KP_Right KP_6 rightarrow f F
-!keycode  87 = KP_1 KP_1 KP_End KP_1 KP_End KP_1 KP_End KP_1
-!keycode  88 = KP_2 KP_2 KP_Down KP_2 downarrow x X
-!keycode  89 = KP_3 KP_3 KP_Next KP_3 KP_Next KP_3 KP_Next KP_3
-!keycode  90 = KP_0 KP_0 KP_Insert KP_0 KP_Insert KP_0 KP_Insert KP_0
-keycode  91 = KP_Separator period KP_Delete KP_Separator KP_Delete KP_Separator KP_Delete KP_Separator
-! numlock-key is now ^: (until now pause ist new numlock)
+! numlock-key is now ^ ('pause' ist new numlock)
 keycode  77 = asciicircum
 keycode 127 = Num_Lock Pause
-!remove Mod2 = asciicircum
 clear Mod2
 add Mod2 = Num_Lock
 
@@ -40,44 +29,19 @@ keycode 11 = 2 quotedbl 2 at twosuperior onehalf
 keycode 12 = 3 section 3 numbersign threesuperior onethird
 keycode 13 = 4 dollar 4 dollar foursuperior onequarter
 keycode 14 = 5 percent 5 percent fivesuperior onefifth
-! to be continued…
+
+! For Spanish: map ñ on AltGr-n
+keycode  57 = n N ntilde Ntilde ntilde Ntilde
 
 ! ### Math ###
-
-! The symbols ℕ/ℤ/ℝ/ℂ on [AltGr] + N/Z/R/C (Q on shift because of @)
-keycode  27 = r R Greek_rho Greek_RHO 0x100211d registered
-keycode  57 = n N Greek_nu Greek_NU 0x1002115 nabla
-keycode  29 = z Z Greek_upsilon Greek_UPSILON 0x1002124 yen
-keycode  24 = q Q semicolon colon at 0x100211A
-!keycode  54 = c C Greek_psi Greek_PSI 0x1002102 copyright
-
-! [AltGr]+C for cents
-keycode  54 = c C Greek_psi Greek_PSI 0x10000A2 copyright
-
 ! Logic quantifiers (∀ ∃)
 keycode  38 = a A Greek_alpha Greek_ALPHA 0x1002200 0x1002203
 keycode  26 = e E Greek_epsilon Greek_EPSILON EuroSign 0x1002203
-
-! integral, Partial differential, sum, delta/laplace, nabla
+! Delta and sigma
 keycode  40 = d D Greek_delta Greek_DELTA 0x1002202 Greek_DELTA
-keycode  31 = i I Greek_iota Greek_IOTA integral idotless
 keycode  39 = s S Greek_sigma Greek_SIGMA Greek_SIGMA U1E9E
-keycode  57 = n N Greek_nu Greek_NU 0x1002115 nabla
 
-! Not equal
-keycode  15 = 6 ampersand 6 asciicircum 0x1002260 fiveeighths
-
-! infinity
-keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
-
-! dager †
-keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
-
-!!! For testing and debuging !!!
-!keycode 61 = minus underscore endash abovedot a A q Q z Z u U
-
-
-!!! ToDo:
+!!! Ideas:
 ! Binary set and logic operators (∪ ∩ ∧ ∨): 0x1002227-0x100222a
 ! Subset (⊂ ⊆): 0x1002282 0x1002286
 ! Element (∈): 0x1002208
@@ -85,8 +49,3 @@ keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 ! Orthogonal (⊥): 0x10022a5
 ! Douple-Arrows: 0x10021d0-0x10021d3
 ! ALMOST EQUAL TO: 0x1002248; Not Equal To
-! plusminus ? (composefähig)
-! permille: 0x1002030
-! ∑√∝∡⅀
-
-
