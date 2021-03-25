@@ -19,6 +19,7 @@ set wildignore+=*.a,*.o,*.hi
 set wildignore+=*.pdf,*.gz,*.aux,*.out,*.nav,*.snm,*.vrb
 set updatetime=250  " Decrease updatetime from 4s to 250ms
 set fillchars+=vert:\│,fold:— " nice line for vsplit and folds
+set linebreak " when wrap – only at word boundaries
 
 " Syntax-Highlight and colors
 syntax on
@@ -52,6 +53,7 @@ set hlsearch
 if has('nvim')  " neovimonly
   set inccommand=nosplit " live search and replace; neovim only
 endif
+nnoremap <esc><esc> :silent! nohls<cr>
 
 " History
 set history=50		" keep 50 lines of command line history
@@ -117,10 +119,16 @@ inoremap ;1 <c-o>ma
 cmap w!! w !sudo tee > /dev/null %
 
 nnoremap <M-q> :nohl<CR>
+command! InsFileName r! echo %:t:r
 
 let mapleader=','
 " save session
 nnoremap <leader>s :mksession<CR>
+
+" buffer switching
+nnoremap gnn :bn<CR>
+nnoremap gnp :bp<CR>
+nnoremap gnd :bd<CR>
 
 " spellchecking
 if has('nvim')
@@ -218,7 +226,8 @@ Plug 'mhinz/vim-startify'           " start page
 Plug 'tpope/vim-abolish'            " search/substitute/abbreviate multiple variants of a word
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-utils/vim-man'
+Plug 'paretje/nvim-man'
+"Plug 'vim-utils/vim-man'
 Plug 'Nudin/ToggleClip'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 Plug 'jiangmiao/auto-pairs' " to test #356
@@ -241,16 +250,18 @@ Plug 'CoatiSoftware/vim-sourcetrail'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'     " Collection of snippets for ultisnips
 """" Language specific plugins
+Plug 'mmarchini/bpftrace.vim'
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
 Plug 'Nudin/vim-sparql'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'pbrisbin/vim-syntax-shakespeare'
 Plug 'vim-scripts/ditaa'
-Plug 'ternjs/tern_for_vim'
+"Plug 'ternjs/tern_for_vim'
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'alfredodeza/coveragepy.vim'
-Plug 'python-rope/ropevim'  " Python refactoring
+"Plug 'python-rope/ropevim'  " Python refactoring
+Plug 'python-mode/python-mode'
 Plug 'junegunn/vader.vim'
 """ Colorschemes
 Plug 'iCyMind/NeoSolarized'
@@ -270,11 +281,12 @@ endif
 if has('nvim') || v:version >= 800
   Plug 'Shougo/neco-syntax'                                        " general (by vims syntax files)
   Plug 'deoplete-plugins/deoplete-jedi'                            " python
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' } " js
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }  js
   Plug 'Shougo/neco-vim'                                           " vimscript
   Plug 'eagletmt/neco-ghc'                                         " Haskell
   Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
-  Plug 'ujihisa/neco-look'                                         " Dictionary
+  " Plug 'ujihisa/neco-look'                                          Dictionary
+  Plug 'deoplete-plugins/deoplete-dictionary'                      " Dictionary
   Plug 'lionawurscht/deoplete-biblatex'                            " Bibtex
 endif
 if has('nvim') || v:version >= 800
@@ -310,19 +322,23 @@ call deoplete#custom#var('around', {
 		\   'mark_below': '[↓]',
 		\   'mark_changes': '[*]',
 		\})
-let deoplete#sources#biblatex#bibfile = '/home/michi/uni/nsp/Arbeit/library.bib'
+"let deoplete#sources#biblatex#bibfile = '/home/michi/uni/nsp/Arbeit/library.bib'
 let deoplete#sources#biblatex#startpattern = '\\cite{'
-let g:deoplete#look#words = '/usr/share/dict/british-english'
 call deoplete#custom#source('biblatex', 'filetypes', ['tex'])
 call deoplete#custom#source('biblatex', 'rank', 300)
-call deoplete#custom#source('look', 'min_pattern_length', 4)
-call deoplete#custom#source('look', 'auto_complete_delay', 100)
+" let g:deoplete#look#words = '/usr/share/dict/british-english'
+setlocal dictionary+=/usr/share/dict/british-english
+setlocal dictionary+=/usr/share/dict/german
+setlocal dictionary+=~/.config/nvim/spell/mine.utf-8.add
+call deoplete#custom#source('look,dictionary', 'min_pattern_length', 5)
+call deoplete#custom#source('look,dictionary', 'max_candidates', 500)
+call deoplete#custom#source('look,dictionary', 'auto_complete_delay', 100)
 "let g:deoplete#auto_complete_delay = 100 " needed for semshi
 
 " semshi
 let g:semshi#excluded_hl_groups = ['local', 'unresolved', 'free', 'parameterUnused', 'attribute']
 let g:semshi#update_delay_factor = 0.0001
-function MyCustomHighlights()
+function! MyCustomHighlights()
     hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=53 guibg=#d7005f
 endfunction
 autocmd FileType python call MyCustomHighlights()
@@ -371,8 +387,6 @@ let g:ale_python_mypy_options = '-ignore-missing-imports'
 let g:ale_writegood_options='--no-passive --no-tooWordy --no-adverb'
 let g:ale_echo_msg_format='[%linter%] %s'
 let g:ale_fix_on_save = 1
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
 let g:ale_lint_delay = 500 " Not sure if I want this
 "let g:ale_set_balloons = 1    " doesn't work in neovim
 
