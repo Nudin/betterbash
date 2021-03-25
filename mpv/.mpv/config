@@ -16,6 +16,7 @@ cache-pause-initial=yes
 # Fix A/V sync problems. *
 mc=0.2
 autosync=30
+volume=80
 # Max volume
 #volume-max=100
 
@@ -28,6 +29,8 @@ vd-lavc-threads=3
 
 # Limit youtube-dl to max resolution of 1080p
 ytdl-format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'
+
+script-opts=webui-port=8000
 
 ### Subtitles ###
 slang=de,ger,en,eng

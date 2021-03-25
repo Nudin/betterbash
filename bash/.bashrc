@@ -18,8 +18,10 @@ fi
 
 #Configure history
 export HISTCONTROL=erasedups:ignorespace
-export HISTSIZE=50000
-export HISTFILESIZE=50000
+export HISTSIZE=100000
+export HISTFILESIZE=1000000
+#trap "history -n; history -w" EXIT
+#HISTIGNORE='ls:ll:cd:pwd:bg:fg:history'
 
 # Edit PATH
 export PATH=$PATH:~/.cabal/bin/
@@ -59,7 +61,7 @@ fi
 export LESS=' -R '
 
 # Autostart ssh-agent
-if [ "${SSH_AUTH_SOCK}" == "" ]; then
+if [[  "$SSH_CLIENT" == "" && "${SSH_AUTH_SOCK}" == "" ]]; then
   eval "$(ssh-agent)"
 fi
 
@@ -90,7 +92,9 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
-bind -x '"\C-p": vim $(fzf);'
+if [[ "$SSH_CLIENT" == "" ]]; then
+  bind -x '"\C-p": vim $(fzf);'
+fi
 
 # set up broot
 source_if_existent /home/michi/.config/broot/launcher/bash/br
@@ -146,6 +150,7 @@ alias iotop='sudo iotop'
 alias dmesg='sudo dmesg'
 alias route='sudo route -n'
 # other
+alias lsblk='lsblk -o NAME,SIZE,LABEL,TYPE,FSTYPE,MOUNTPOINT'
 alias alsamixer='alsamixer -c 0'
 alias ping='LANG=en ping -c 6 -i 0.2'
 alias sshfs="sshfs -o uid=$(id -u) -o gid=$(id -g)"
@@ -174,6 +179,7 @@ alias pbpaste='xsel --clipboard --output'
 alias vimwiki="vim ~/.vimwiki/index.wiki"
 alias vimrc="vim ~/.vim/vimrc"
 alias g++='gpp'
+alias whatfiles='strace -fe trace=creat,open,openat,unlink,unlinkat'
 
 #-----------------------------
 #	Onekeys
@@ -230,6 +236,24 @@ mkcd() {
 #-----------------------------
 #	rename files
 #-----------------------------
+# If you call mv without the second parameter it will prompt you to edit the filename on command line.
+# Original mv is called when it's called with more than one argument.
+# It's useful when you want to change just a few letters in a long name.
+#
+# Also see:
+# - imv from renameutils
+# - Ctrl-W Ctrl-Y Ctrl-Y (cut last word, paste, paste)
+
+function mv() {
+  if [ "$#" -ne 1 ] || [ ! -e "$1" ]; then
+    command mv "$@"
+    return
+  fi
+
+  read -rei "$1" newfilename
+  command mv -v -- "$1" "$newfilename"
+}
+
 lowercase()  # move filenames to lowercase
 {
     for file ; do
@@ -298,7 +322,7 @@ man() {
     man "$@"
 }
 
-svg2pdf() { inkscape -z -D --file=$1 --export-pdf=${1/.svg/.pdf}; }
+svg2pdf() { inkscape -D --export-file="${1/.svg/.pdf}" "${1}"; }
 
 rot13() {
 	if [ $# = 0 ] ; then
@@ -362,6 +386,24 @@ __MY_PROMPT() {
     exitstatuscolor="$red_$exitcode$reset_"
   fi
   PS1="${reset_}[$user$host|$exitstatuscolor|$time $dir$git ]$dollar "
+  PS1_LEN=$(echo -en "${PS1@P}" | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | wc -m)
+  local firstpart="${reset_}[$user$host|$exitstatuscolor|"
+  PS_OFFSET=$(echo -en "firstpart" | sed "s,\x1B\[[0-9;]*[a-zA-Z]\|\x01\|\x02,,g" | wc -m)
+  PS0="\e[s\$(move_cursor_to_start_of_ps1)\e[0;33m\t\e[00m\e[u"
+}
+
+move_cursor_to_start_of_ps1() {
+    command_rows=$(history 1 | wc -l)
+    if [ "$command_rows" -gt 1 ]; then
+      ((vertical_movement=command_rows))
+    else
+        command=$(history 1 | sed 's/^\s*[0-9]*\s*//')
+        command_length=${#command}
+        ((total_length=command_length+PS1_LEN))
+        ((lines=total_length/COLUMNS+1))
+        ((vertical_movement=lines))
+    fi
+    tput cuu "$vertical_movement"; tput cuf "$PS_OFFSET"
 }
 PROMPT_DIRTRIM=2
 
@@ -397,9 +439,11 @@ incognito() { command chromium --incognito "$@" & }
 #========================================
 # 	KEY BINDINGS
 #========================================
-bind '"^[7" complete-into-braces'
-bind '"^[[21~" "\16ls -l\n"'
-bind '"^[[24~" "\16htop\n"'
+if [[ "$SSH_CLIENT" == "" ]]; then
+  bind '"^[7" complete-into-braces'
+  bind '"^[[21~" "\16ls -l\n"'
+  bind '"^[[24~" "\16htop\n"'
+fi
 
 #========================================
 # 	OHTER STUFF
@@ -409,8 +453,12 @@ alias chromium='cgexec -g memory,cpuset:chrome /usr/bin/chromium'
 # if a file .bashrc.<hostname> exists, source it, this way I can create
 # host-specific configuration and overwrites
 if [ -f "${HOME}/.bashrc.${HOSTNAME}" ] ; then
-        source "${HOME}/.bashrc.${HOSTNAME}"
+       source "${HOME}/.bashrc.${HOSTNAME}"
 fi
+
+stmux() {
+  ssh "$1" -t -- /bin/sh -c "'tmux has-session && exec tmux attach || exec tmux'"
+}
 
 # Must be last, since sourced scripts my add themself as prefix
 PROMPT_COMMAND="__MY_PROMPT;${PROMPT_COMMAND}"

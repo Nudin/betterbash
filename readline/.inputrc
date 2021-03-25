@@ -19,7 +19,7 @@ set completion-query-items 80
 set skip-completed-text On
 
 set blink-matching-paren On
-set mark-modified-lines On
+#set mark-modified-lines On  # Incompatible with move_cursor_to_start in PS0
 
 set enable-bracketed-paste On
 

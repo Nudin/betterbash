@@ -116,7 +116,9 @@ inoremap ;1 <c-o>ma
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-let mapleader=","
+nnoremap <M-q> :nohl<CR>
+
+let mapleader=','
 " save session
 nnoremap <leader>s :mksession<CR>
 
@@ -136,6 +138,7 @@ endfun
 autocmd BufRead,BufNewFile * :call IgnoreABREVSpell()
 
 iabbrev retunr return
+iabbrev informations information
 
 " SETUP TERMINAL
 if has('nvim')
@@ -169,13 +172,13 @@ if has('nvim')
 endif
 
 " Show tipps
-let g:MyVimTips="off"
+let g:MyVimTips='off'
 function! ToggleVimTips()
-  if g:MyVimTips == "on"
-    let g:MyVimTips="off"
+  if g:MyVimTips == 'on'
+    let g:MyVimTips='off'
     pclose
   else
-    let g:MyVimTips="on"
+    let g:MyVimTips='on'
     pedit ~/.vimwiki/Vimnotes.wiki
   endif
 endfunction
@@ -188,22 +191,21 @@ autocmd! bufwritepost vimrc source %
 "===== PLUGINS =====
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'        " Statusline
-"Plug 'vim-airline/vim-airline'     " More powerfull alternative to airline
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-fugitive'           " Git wrapper
-Plug 'tpope/vim-rhubarb'            " fugitive extension for github
 Plug 'airblade/vim-gitgutter'       " Show changes to last commit in gutter
+Plug 'tpope/vim-rhubarb'            " fugitive extension for github
 Plug 'simnalamburt/vim-mundo'       " Global tree-structure undo
 Plug 'tpope/vim-sleuth'             " Set shiftwidth/expandtabs automatically
 Plug 'guns/xterm-color-table.vim', { 'on':  'XtermColorTable' }
 Plug 'vim-scripts/mru.vim'
+"Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 Plug 'mattn/calendar-vim'
-Plug 'Nudin/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
-"Plug 'vimwiki/vimwiki', { 'branch': 'dev' }    " Wiki for Vim
 "Plug 'tbabej/taskwiki'
-Plug 'powerman/vim-plugin-AnsiEsc'
 "Plug 'farseer90718/vim-taskwarrior'
+Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'majutsushi/tagbar'            " list functions, methods, structs... 
 Plug 'aquach/vim-mediawiki-editor'  " Edit mediawikis
 Plug 'scrooloose/nerdcommenter'     " Easy comment/uncoment lines
@@ -211,10 +213,11 @@ Plug 'dpelle/vim-LanguageTool'      " Check grammar with languagetool
 Plug 'sbdchd/neoformat'             " Pretty formatting code
 Plug 'jamessan/vim-gnupg'
 Plug 'EinfachToll/DidYouMean'       " asks for the right file to open
-Plug 'tpope/vim-obsession'          " autosave sessions
+"Plug 'tpope/vim-obsession'         " autosave sessions – see vim-workspace
 Plug 'mhinz/vim-startify'           " start page
 Plug 'tpope/vim-abolish'            " search/substitute/abbreviate multiple variants of a word
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 Plug 'vim-utils/vim-man'
 Plug 'Nudin/ToggleClip'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
@@ -235,6 +238,8 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'reedes/vim-lexical'
 Plug 'CoatiSoftware/vim-sourcetrail'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'     " Collection of snippets for ultisnips
 """" Language specific plugins
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
@@ -244,6 +249,9 @@ Plug 'pbrisbin/vim-syntax-shakespeare'
 Plug 'vim-scripts/ditaa'
 Plug 'ternjs/tern_for_vim'
 Plug 'dbeniamine/cheat.sh-vim'
+Plug 'alfredodeza/coveragepy.vim'
+Plug 'python-rope/ropevim'  " Python refactoring
+Plug 'junegunn/vader.vim'
 """ Colorschemes
 Plug 'iCyMind/NeoSolarized'
 Plug 'joshdick/onedark.vim'
@@ -267,17 +275,21 @@ if has('nvim') || v:version >= 800
   Plug 'eagletmt/neco-ghc'                                         " Haskell
   Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
   Plug 'ujihisa/neco-look'                                         " Dictionary
+  Plug 'lionawurscht/deoplete-biblatex'                            " Bibtex
 endif
 if has('nvim') || v:version >= 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
   Plug 'thaerkh/vim-workspace'
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}    " Python
+endif
+if has('python3') && has('timers')
+  "  Plug 'AlphaMycelium/pathfinder.vim'
 endif
 " Plugins only compatible with Neovim
 if has('nvim')
   Plug 'bfredl/nvim-miniyank'
-  Plug 'Floobits/floobits-neovim'
+  "Plug 'Floobits/floobits-neovim'
   " Terminal
-
   Plug 'rliang/termedit.nvim'       " set a envvar in neovims term to not open nvim in nvim
   Plug 'kassio/neoterm'
 endif
@@ -286,14 +298,44 @@ call plug#end()
 " Set Colorscheme
 colorscheme badwolf
 
-" Enable deoplete
+" Enable and configure deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#max_list = 100
+call deoplete#custom#option({
+\ 'max_list': 100
+\ })
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set pumheight=15
+call deoplete#custom#var('around', {
+		\   'mark_above': '[↑]',
+		\   'mark_below': '[↓]',
+		\   'mark_changes': '[*]',
+		\})
+let deoplete#sources#biblatex#bibfile = '/home/michi/uni/nsp/Arbeit/library.bib'
+let deoplete#sources#biblatex#startpattern = '\\cite{'
+let g:deoplete#look#words = '/usr/share/dict/british-english'
+call deoplete#custom#source('biblatex', 'filetypes', ['tex'])
+call deoplete#custom#source('biblatex', 'rank', 300)
+call deoplete#custom#source('look', 'min_pattern_length', 4)
+call deoplete#custom#source('look', 'auto_complete_delay', 100)
+"let g:deoplete#auto_complete_delay = 100 " needed for semshi
 
-" workspace - disable autosave
+" semshi
+let g:semshi#excluded_hl_groups = ['local', 'unresolved', 'free', 'parameterUnused', 'attribute']
+let g:semshi#update_delay_factor = 0.0001
+function MyCustomHighlights()
+    hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=53 guibg=#d7005f
+endfunction
+autocmd FileType python call MyCustomHighlights()
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger='<c-t>'
+let g:UltiSnipsJumpForwardTrigger='<c-b>'
+let g:UltiSnipsJumpBackwardTrigger='<c-z>'
+let g:UltiSnipsEditSplit='vertical'
+
+" workspace - disable autosave and session loading when vim is started with arguments
 let g:workspace_autosave = 0
+let g:workspace_session_disable_on_args = 1
 
 " lightline & obsession
 set noshowmode   " disable -- insert -- text
@@ -316,17 +358,23 @@ let g:lightline = {
 
 " ale
 let g:ale_fixers = {
-\   'javascript': ['eslint'],
+\   'javascript': ['eslint', 'standard'],
 \   'python': ['black', 'isort'],
 \}
+let g:ale_linters = {'vimwiki': []}
+"let g:ale_linters = {
+"            \ 'python': ['pyls', 'vulture', 'pyre-check'],
+"            \} 
 let g:ale_c_gcc_options = '-std=gnu11 -Wall'
 let g:ale_python_pylint_options = '--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203'
 let g:ale_python_mypy_options = '-ignore-missing-imports'
-let g:ale_writegood_options='--no-passive'
+let g:ale_writegood_options='--no-passive --no-tooWordy --no-adverb'
 let g:ale_echo_msg_format='[%linter%] %s'
 let g:ale_fix_on_save = 1
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
+let g:ale_lint_delay = 500 " Not sure if I want this
+"let g:ale_set_balloons = 1    " doesn't work in neovim
 
 " mundo
 nnoremap <leader>u :MundoToggle<CR>
@@ -427,11 +475,16 @@ let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_ShowErrorContext = 0
 let g:Tex_GotoError = 0
 
+" push quickfix window to the bottom if tagbar is open
+augroup quickfix
+    autocmd FileType qf wincmd J
+augroup END
+
 " languagetool
 let g:languagetool_jar="/home/michi/.vim/LanguageTool-4.0/languagetool-commandline.jar"
 
 " Goyo
-let g:goyo_width = 120
+let g:goyo_width = 99
 let g:goyo_height = '100%'
 function! s:goyo_enter()
   set nospell
@@ -465,3 +518,31 @@ sunmap w
 sunmap b
 sunmap e
 "sunmap ge
+
+" vim-lexical
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType tex,latex,html call lexical#init()
+  autocmd FileType text call lexical#init()
+  autocmd FileType vimwiki call lexical#init()
+augroup END
+let g:lexical#spell_key = '<leader>z'
+let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur-en.txt',]
+
+" autopair
+inoremap <M-r> <Esc>lx$pa
+let g:AutoPairsFlyMode = 1 " test if I prefer this
+augroup vimrcautopai
+au FileType vimwiki      let b:AutoPairsMapSpace = 0
+augroup END
+
+" FZF
+noremap <leader>f :FZF<CR>
+
+augroup vimrcale
+au BufReadPost * if getline(1) =~ "#ALEDisable" | ALEDisableBuffer | endif
+augroup END
+
+highlight Comment cterm=italic

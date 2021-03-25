@@ -7,9 +7,11 @@ hi vimwikiLink cterm=undercurl ctermfg=blue
 
 set titlestring=VimWiki
 
-:command! W w | execute "Gcommit -a -m 'update'" | Gpush | GitGutter
-:command! WQ w | execute "Gcommit -a -m 'update'" | Gpush | q
+:command! W w | execute "Git commit -a -m 'update'" | Git push | GitGutter
+:command! WQ w | execute "Git commit -a -m 'update'" | Git push | q
 
 let g:gitgutter_sign_column_always = 1
 
 set nowrap
+
+setlocal colorcolumn = ""
