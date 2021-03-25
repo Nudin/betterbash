@@ -7,6 +7,8 @@ endef
 
 all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin tmux kitty
 
+public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv git inputrc tmux kitty
+
 kitty:
 	$(call INST,kitty)
 	curl https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/master/scroll_mark.py > ~/.config/kitty/scroll_mark.py
