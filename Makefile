@@ -53,8 +53,10 @@ vimplugins:
 	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
+	cd ~/.vim && wget -c -N https://languagetool.org/download/LanguageTool-stable.zip && rm -rf LanguageTool-??? && unzip LanguageTool-stable.zip
+	cd ~/.vim && rm LanguageTool || true
+	cd ~/.vim && ln -s $$(unzip -Z1 LanguageTool-stable.zip | head -1) LanguageTool
 	$(call INST,vim)
-	$(OINST) privateconf/floo/.floorc.json ~/.floorc.json
 .PHONY: vimplugins
 
 vim: themes vimplugins

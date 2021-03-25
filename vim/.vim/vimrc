@@ -481,7 +481,7 @@ augroup quickfix
 augroup END
 
 " languagetool
-let g:languagetool_jar="/home/michi/.vim/LanguageTool-4.0/languagetool-commandline.jar"
+let g:languagetool_jar='/home/michi/.vim/LanguageTool/languagetool-commandline.jar'
 
 " Goyo
 let g:goyo_width = 99
