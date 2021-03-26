@@ -5,9 +5,9 @@ quiet
 really-quiet
 
 cache=auto
-cache-default=500000 # 500 MB
-cache-backbuffer=100000 #100 MB
-cache-pause-wait=3
+demuxer-max-bytes=500MiB
+demuxer-max-back-bytes=500MiB
+cache-pause-wait=5		# Cache 5s after 'buffering'
 cache-pause-initial=yes
 
 ### Audio ###
@@ -30,8 +30,6 @@ vd-lavc-threads=3
 # Limit youtube-dl to max resolution of 1080p
 ytdl-format='bestvideo[height<=?1080]+bestaudio/best[height<=?1080]'
 
-script-opts=webui-port=8000
-
 ### Subtitles ###
 slang=de,ger,en,eng
 sub-auto=all
@@ -48,3 +46,8 @@ osd-bar-w=75
 osd-bar-h=1.5
 osd-border-size=0.7
 osd-color='#D0FFFFFF'
+# autocrop
+script-opts-append=autocrop-auto=no
+#script-opts-append=autocrop-auto_delay=5
+script-opts-append=autocrop-detect_seconds=1
+script-opts=webui-port=8000
