@@ -29,7 +29,6 @@ export PATH=$PATH:~/.cabal/bin/
 #========================================
 # 	Environment
 #========================================
-export TERM=xterm-256color
 export BROWSER="$HOME/.browserweiche.sh"
 export DIFFPROG=meld
 export GPG_TTY=$(tty)
