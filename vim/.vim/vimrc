@@ -359,12 +359,11 @@ let g:lightline = {
       \ 'active': {
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'clip', 'fileformat', 'fileencoding', 'filetype', 'obsession' ] ],
+      \              [ 'clip', 'fileformat', 'fileencoding', 'filetype' ] ],
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ], [ 'branch' ] ]
       \ },
       \ 'component': {
-      \   'obsession': '%{ObsessionStatus("S", "")}',
       \   'clip': '%{ToggleClip#getstatus()}',
       \ },
       \ 'component_function': {
