@@ -61,7 +61,11 @@ export LESS=' -R '
 
 # Autostart ssh-agent
 if [[  "$SSH_CLIENT" == "" && "${SSH_AUTH_SOCK}" == "" ]]; then
-  eval "$(ssh-agent)"
+  if pidof -q ssh-agent; then
+    SSH_AUTH_SOCK=$(fd agent /tmp/ssh-* | head -1)
+  else
+    eval "$(ssh-agent)"
+  fi
 fi
 
 # Find DISTRIBUTION name
