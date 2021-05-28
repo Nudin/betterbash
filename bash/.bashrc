@@ -129,8 +129,10 @@ reset='\e[0m'
 # === to set Window-title ===
 settitle() {
     printf "\033]0;$1\007"
+    _force_title="$1"
 }
 settitle "$(hostname):$PWD"
+_force_title=""
 
 #========================================
 # Set default values for several commands
@@ -462,6 +464,7 @@ fi
 stmux() {
   ssh "$1" -t -- /bin/sh -c "'tmux has-session && exec tmux attach || exec tmux'"
 }
+PROMPT_COMMAND=${PROMPT_COMMAND}';if [[ "$_force_title" != "" ]]; then printf "\033]0;%s\033\007" "$_force_title"; fi'
 
 # Must be last, since sourced scripts my add themself as prefix
 PROMPT_COMMAND="__MY_PROMPT;${PROMPT_COMMAND}"
