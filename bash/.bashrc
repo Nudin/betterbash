@@ -190,6 +190,8 @@ alias g++='gpp'
 alias whatfiles='strace -fe trace=creat,open,openat,unlink,unlinkat'
 alias trunclines='cut -c -$COLUMNS'
 alias highlight='grep --color=yes -e '^' -e'
+alias nowrap='sed "s/\(.\{$(($(tput cols)-2))\}\).*/\1 …/"'
+alias rg='rg -M $(tput cols) --max-columns-preview'
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
