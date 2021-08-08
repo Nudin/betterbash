@@ -127,8 +127,14 @@ nnoremap <leader>s :mksession<CR>
 
 " buffer switching
 nnoremap gnn :bn<CR>
+nnoremap ä :bn<CR>
 nnoremap gnp :bp<CR>
+nnoremap ö :bp<CR>
 nnoremap gnd :bd<CR>
+command! Bc :b#|bd#
+
+" Repeat last command
+nmap ´ @:
 
 " spellchecking
 if has('nvim')
