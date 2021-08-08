@@ -33,3 +33,5 @@ Control-o: "\C-e > output.txt"
 Control-s: "\C-a$(\C-e)\C-a"
 
 Control-n: "\C-creset\r\C-l"
+
+"\e\C-l": alias-expand-line
