@@ -142,7 +142,7 @@ alias du='du -h --max-depth=1'
 alias df='df -h'
 alias free="free -m"
 # turn on color and make grep silent
-alias ls='ls -h --color=auto'
+alias ls='ls -h --color=auto --hyperlink=auto'
 alias grep='grep -s --color=auto'
 alias fgrep='fgrep -s  --color=auto'
 alias egrep='egrep -s --color=auto'
