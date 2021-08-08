@@ -144,6 +144,8 @@ alias free="free -m"
 # turn on color and make grep silent
 alias ls='ls -h --color=auto --hyperlink=auto'
 alias grep='grep -s --color=auto'
+alias Grep='grep -s --color=yes'
+alias GREP='grep -s --color=yes'
 alias fgrep='fgrep -s  --color=auto'
 alias egrep='egrep -s --color=auto'
 alias tree='tree -C'
@@ -185,6 +187,11 @@ alias vimwiki="vim ~/.vimwiki/index.wiki"
 alias vimrc="vim ~/.vim/vimrc"
 alias g++='gpp'
 alias whatfiles='strace -fe trace=creat,open,openat,unlink,unlinkat'
+alias trunclines='cut -c -$COLUMNS'
+alias highlight='grep --color=yes -e '^' -e'
+
+# Mirror stdout to stderr, useful for seeing data going through a pipe
+alias peek='tee >(cat 1>&2)'
 
 #-----------------------------
 #	Onekeys
@@ -349,6 +356,17 @@ wttr()
     curl -H "Accept-Language: ${LANG%_*}" wttr.in/"${1:-Munich}"
 }
 
+goto() {
+    cd "$(dirname ${1})"
+}
+
+# Execute a command in a specific directory
+xin() {
+    (
+        cd "${1}" && shift && "${@}"
+    )
+}
+
 #========================================
 # 	Tippos
 #========================================
@@ -464,6 +482,10 @@ fi
 stmux() {
   ssh "$1" -t -- /bin/sh -c "'tmux has-session && exec tmux attach || exec tmux'"
 }
+
+# Collect commands that where not found to create aliases for them later
+command_not_found_handle() { echo "$*" >> ~/.command_not_found_list; echo "Command not found: $1"; return 127; }
+
 PROMPT_COMMAND=${PROMPT_COMMAND}';if [[ "$_force_title" != "" ]]; then printf "\033]0;%s\033\007" "$_force_title"; fi'
 
 # Must be last, since sourced scripts my add themself as prefix
