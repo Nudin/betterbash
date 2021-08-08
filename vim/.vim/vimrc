@@ -559,3 +559,9 @@ au BufReadPost * if getline(1) =~ "#ALEDisable" | ALEDisableBuffer | endif
 augroup END
 
 highlight Comment cterm=italic
+
+" local customizations in ~/.vimrc_local
+let $LOCALFILE=expand('~/.vimrc_local')
+if filereadable($LOCALFILE)
+    source $LOCALFILE
+endif
