@@ -20,6 +20,7 @@ fi
 export HISTCONTROL=erasedups:ignorespace
 export HISTSIZE=100000
 export HISTFILESIZE=1000000
+export HISTTIMEFORMAT="%D %R "
 #trap "history -n; history -w" EXIT
 #HISTIGNORE='ls:ll:cd:pwd:bg:fg:history'
 
