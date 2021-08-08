@@ -255,7 +255,8 @@ Plug 'reedes/vim-lexical'
 Plug 'CoatiSoftware/vim-sourcetrail'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'     " Collection of snippets for ultisnips
-"""" Language specific plugins
+Plug 'gcmt/taboo.vim'
+""" Language specific plugins
 Plug 'mmarchini/bpftrace.vim'
 Plug 'vim-latex/vim-latex'
 Plug 'rust-lang/rust.vim'
