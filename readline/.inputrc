@@ -30,6 +30,6 @@ set revert-all-at-newline on
 "\e[Z": menu-complete
 
 Control-o: "\C-e > output.txt"
-Control-j: "\C-a$(\C-e)\C-a"
+Control-s: "\C-a$(\C-e)\C-a"
 
 Control-n: "\C-creset\r\C-l"
