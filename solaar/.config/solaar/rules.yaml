@@ -1,0 +1,56 @@
+%YAML 1.3
+---
+- Key: [Lock PC, pressed]
+- Execute: systemctl suspend
+...
+---
+- Key: [DPI Switch, pressed]
+- KeyPress: Return
+...
+---
+- Process: konsole
+- Key: [Back Button, pressed]
+- KeyPress: BackSpace
+...
+---
+- Process: kitty
+- Key: [Back Button, pressed]
+- KeyPress: odiaeresis
+...
+---
+- Or:
+  - Process: konsole
+  - Process: kitty
+- Key: [Forward Button, pressed]
+- KeyPress: adiaeresis
+...
+---
+- And:
+  - Not:
+      Process: kitty
+  - Not:
+      Process: konsole
+- Key: [Back Button, pressed]
+- KeyPress: XF86_Back
+...
+---
+- And:
+  - Not:
+      Process: konsole
+  - Not:
+      Process: kitty
+- Key: [Forward Button, pressed]
+- KeyPress: XF86_Forward
+...
+---
+- Key: [Host Switch Channel 2, pressed]
+- KeyPress: XF86_WWW
+...
+---
+- Key: [Lock PC, pressed]
+- KeyPress: XF86_Standby
+...
+---
+- Key: [App Contextual Menu/Right Click, pressed]
+- KeyPress: Print
+...

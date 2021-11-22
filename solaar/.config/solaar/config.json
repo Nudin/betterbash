@@ -1,0 +1,80 @@
+{
+  "407B:420592E2": {
+    "_dpi-sliding": 6,
+    "_modelId": "B020407BC08A",
+    "_name": "MX Vertical Wireless Mouse",
+    "_sensitive": {
+      "change-host": false,
+      "divert-keys": true,
+      "dpi": true,
+      "dpi-sliding": false,
+      "lowres-smooth-scroll": false,
+      "mouse-gestures": false,
+      "reprogrammable-keys": false
+    },
+    "_serial": "420592E2",
+    "_unitId": "422543F9",
+    "divert-keys": {
+      "253": 1,
+      "82": 0,
+      "83": 1,
+      "86": 1
+    },
+    "dpi": 1200,
+    "dpi-sliding": "0",
+    "lowres-smooth-scroll": false,
+    "mouse-gestures": "0",
+    "reprogrammable-keys": {
+      "253": 253,
+      "80": 80,
+      "81": 81,
+      "82": 82,
+      "83": 83,
+      "86": 86
+    }
+  },
+  "4088:F7EC37E4": {
+    "_modelId": "B35940880000",
+    "_name": "Wireless Keyboard ERGO K860",
+    "_sensitive": {
+      "divert-keys": true,
+      "multiplatform": false
+    },
+    "_serial": "F7EC37E4",
+    "_unitId": "F7EC37E4",
+    "disable-keyboard-keys": {
+      "1": false,
+      "16": false,
+      "2": false,
+      "4": false,
+      "8": false
+    },
+    "divert-keys": {
+      "10": 0,
+      "110": 0,
+      "111": 1,
+      "191": 0,
+      "199": 0,
+      "200": 0,
+      "209": 1,
+      "210": 1,
+      "211": 1,
+      "212": 0,
+      "224": 0,
+      "228": 0,
+      "229": 0,
+      "230": 0,
+      "231": 0,
+      "232": 0,
+      "233": 0,
+      "234": 1,
+      "235": 0,
+      "236": 0,
+      "256": 0,
+      "257": 0
+    },
+    "fn-swap": false,
+    "multiplatform": 0
+  },
+  "_version": "1.0.7"
+}

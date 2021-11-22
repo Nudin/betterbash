@@ -1,0 +1,2 @@
+evdev:name:HID 1a86:e026 Keyboard:dmi:*svn*:pn*
+ KEYBOARD_KEY_70005=esc
