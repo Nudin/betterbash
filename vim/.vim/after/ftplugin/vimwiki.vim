@@ -7,8 +7,10 @@ hi vimwikiLink cterm=undercurl ctermfg=blue
 
 set titlestring=VimWiki
 
-:command! W w | Git pull --autostash | execute "Git commit -a -m 'update'" | Git push | GitGutter
-:command! WQ w | Git pull --autostash | execute "Git commit -a -m 'update'" | Git push | q
+if expand('%:p') =~ "/\.vimwiki/"
+	:command! W w | Git pull --autostash | execute "Git commit -a -m 'update'" | Git push | GitGutter
+	:command! WQ w | Git pull --autostash | execute "Git commit -a -m 'update'" | Git push | q
+endif
 
 let g:gitgutter_sign_column_always = 1
 
