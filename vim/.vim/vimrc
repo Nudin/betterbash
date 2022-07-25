@@ -62,6 +62,10 @@ set laststatus=2
 " Copy & Paste
 set clipboard=unnamed
 set pastetoggle=<F11>
+if has('nvim')
+    " Flash yanked content
+    au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+endif
 
 " Split right & down
 set splitright
