@@ -260,6 +260,11 @@ Plug 'CoatiSoftware/vim-sourcetrail'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'     " Collection of snippets for ultisnips
 Plug 'gcmt/taboo.vim'
+Plug 'qpkorr/vim-bufkill'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-rsi'
+Plug 'AndrewRadev/splitjoin.vim'
 """ Language specific plugins
 Plug 'mmarchini/bpftrace.vim'
 Plug 'vim-latex/vim-latex'
@@ -271,8 +276,8 @@ Plug 'vim-scripts/ditaa'
 "Plug 'ternjs/tern_for_vim'
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'alfredodeza/coveragepy.vim'
-"Plug 'python-rope/ropevim'  " Python refactoring
-Plug 'python-mode/python-mode'
+Plug 'python-rope/ropevim'  " Python refactoring
+"Plug 'python-mode/python-mode'
 Plug 'junegunn/vader.vim'
 """ Colorschemes
 Plug 'iCyMind/NeoSolarized'
@@ -298,7 +303,7 @@ if has('nvim') || v:version >= 800
   Plug 'wellle/tmux-complete.vim'                                  " form other tmux panes
   " Plug 'ujihisa/neco-look'                                          Dictionary
   Plug 'deoplete-plugins/deoplete-dictionary'                      " Dictionary
-  Plug 'lionawurscht/deoplete-biblatex'                            " Bibtex
+  " Plug 'lionawurscht/deoplete-biblatex'                            Bibtex
 endif
 if has('nvim') || v:version >= 800
   Plug 'w0rp/ale'                     " Asynchronous Lint Engine
