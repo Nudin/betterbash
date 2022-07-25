@@ -371,7 +371,7 @@ xin() {
 }
 
 #========================================
-# 	Tippos
+# 	Typos
 #========================================
 alias cd..="cd .."
 alias xs='cd'
@@ -379,6 +379,7 @@ alias vf='cd'
 alias kk='ll'
 alias dgb="gdb -q"
 alias gbd="gdb -q"
+alias strc="strace"
 
 
 #========================================
