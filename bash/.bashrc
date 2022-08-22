@@ -495,3 +495,8 @@ PROMPT_COMMAND=${PROMPT_COMMAND}';if [[ "$_force_title" != "" ]]; then printf "\
 
 # Must be last, since sourced scripts my add themself as prefix
 PROMPT_COMMAND="__MY_PROMPT;${PROMPT_COMMAND}"
+
+
+# BEGIN_KITTY_SHELL_INTEGRATION
+if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
+# END_KITTY_SHELL_INTEGRATION
