@@ -15,3 +15,6 @@ let g:gitgutter_sign_column_always = 1
 set nowrap
 
 setlocal colorcolumn = ""
+
+" UltiSnips#ExpandSnippet usually on <C-T> – doesn't work in vimwiki
+inoremap  <C-S>       <C-R>=UltiSnips#ExpandSnippet()<CR>

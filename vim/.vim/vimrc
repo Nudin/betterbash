@@ -372,19 +372,30 @@ let g:workspace_session_disable_on_args = 1
 
 " lightline & obsession
 set noshowmode   " disable -- insert -- text
+function! GetYankContent()
+    let l:yank = @* "escape(@*, '''')
+  if len(l:yank) > 20
+    return '"' . l:yank[:20] . '…"'
+  elseif len(l:yank) == 0
+    return '-'
+  else
+    return '"' . l:yank . '"'
+  endif
+endfunction
 let g:lightline = {
       \ 'active': {
       \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'clip', 'fileformat', 'fileencoding', 'filetype' ] ],
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ], [ 'branch' ] ]
+      \             [ 'readonly', 'filename', 'modified' ], [ 'branch' ], [ 'yank' ]  ]
       \ },
       \ 'component': {
       \   'clip': '%{ToggleClip#getstatus()}',
       \ },
       \ 'component_function': {
-      \   'branch': 'fugitive#head'
+      \   'branch': 'fugitive#head',
+      \    'yank': 'GetYankContent'
       \ },
       \ }
 
@@ -398,7 +409,7 @@ let g:ale_linters = {'vimwiki': []}
 "            \ 'python': ['pyls', 'vulture', 'pyre-check'],
 "            \} 
 let g:ale_c_gcc_options = '-std=gnu11 -Wall'
-let g:ale_python_pylint_options = '--disable=invalid-name,missing-docstring,no-else-return,C0330,W1203'
+let g:ale_python_pylint_options = '--disable=invalid-name,missing-docstring,no-else-return,W1203'
 let g:ale_python_mypy_options = '-ignore-missing-imports'
 let g:ale_writegood_options='--no-passive --no-tooWordy --no-adverb'
 let g:ale_echo_msg_format='[%linter%] %s'
@@ -609,3 +620,10 @@ nnoremap <silent> <M-left> :KittyNavigateLeft<cr>
 nnoremap <silent> <M-down> :KittyNavigateDown<cr>
 nnoremap <silent> <M-up> :KittyNavigateUp<cr>
 nnoremap <silent> <M-right> :KittyNavigateRight<cr>
+
+
+augroup dateformats
+	autocmd!
+	autocmd VimEnter * silent execute 'SpeedDatingFormat %d.%m.%y'
+    " autocmd VimEnter * silent execute 'SpeedDatingFormat %d.%m.'
+augroup END
