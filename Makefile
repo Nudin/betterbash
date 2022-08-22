@@ -81,7 +81,6 @@ xmodmap:
 .PHONY: xmodmap
 
 mpv:
-	mkdir -p ~/.mpv/lua-settings/
 	mkdir -p ~/.config/mpv/scripts
 	mkdir -p ~/.config/mpv/bin
 	$(call INST,mpv)
