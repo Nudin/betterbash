@@ -22,6 +22,7 @@ export HISTSIZE=100000
 export HISTFILESIZE=1000000
 export HISTTIMEFORMAT="%D %R "
 #trap "history -n; history -w" EXIT
+HISTIGNORE='kshisen:kshisen '
 #HISTIGNORE='ls:ll:cd:pwd:bg:fg:history'
 
 # Edit PATH
@@ -63,7 +64,7 @@ export LESS=' -R '
 # Autostart ssh-agent
 if [[  "$SSH_CLIENT" == "" && "${SSH_AUTH_SOCK}" == "" ]]; then
   if pidof -q ssh-agent; then
-    SSH_AUTH_SOCK=$(fd agent /tmp/ssh-* | head -1)
+    SSH_AUTH_SOCK=$(fd agent /tmp/ssh-* 2>/dev/null | head -1)
   else
     eval "$(ssh-agent)"
   fi
