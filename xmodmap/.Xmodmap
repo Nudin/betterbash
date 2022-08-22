@@ -1,18 +1,8 @@
-! German doublequotemark on [AltGr] + ö/ä
-keycode 47 = odiaeresis Odiaeresis doublelowquotemark singlelowquotemark doublelowquotemark singlelowquotemark
-keycode 48 = adiaeresis Adiaeresis leftdoublequotemark leftsinglequotemark leftdoublequotemark leftsinglequotemark
-! … on [AltGr] + .
-keycode 60 = period colon ellipsis division ellipsis division
-! – on [AltGr] + -
-keycode 61 = minus underscore endash abovedot endash abovedot
-! ✓ & ✔ on [AltGr] ([shift]) + #
-keycode  51 = numbersign apostrophe backslash bar 0x1002713 0x1002714
-! dager †
-keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
-
-! numlock-key is now ^ ('pause' ist new numlock)
+!keycode  91 = KP_Separator period KP_Delete KP_Separator KP_Delete KP_Separator KP_Delete KP_Separator
+! numlock-key is now ^: (until now pause ist new numlock)
 keycode  77 = asciicircum
 keycode 127 = Num_Lock Pause
+!remove Mod2 = asciicircum
 clear Mod2
 add Mod2 = Num_Lock
 
@@ -23,29 +13,43 @@ add Mod1 = Alt_R
 ! Replace Insert-key with another delete key
 keycode 118 = Delete
 
-! Supersript numbers and fractures
-keycode 10 = 1 exclam 1 exclam onesuperior exclamdown
-keycode 11 = 2 quotedbl 2 at twosuperior onehalf
-keycode 12 = 3 section 3 numbersign threesuperior onethird
-keycode 13 = 4 dollar 4 dollar foursuperior onequarter
-keycode 14 = 5 percent 5 percent fivesuperior onefifth
 
-! For Spanish: map ñ on AltGr-n
-keycode  57 = n N ntilde Ntilde ntilde Ntilde
-
-! ### Math ###
+! German double quote mark on [AltGr] + ö/ä
+keycode 47 = odiaeresis Odiaeresis doublelowquotemark singlelowquotemark doublelowquotemark singlelowquotemark
+keycode 48 = adiaeresis Adiaeresis leftdoublequotemark leftsinglequotemark leftdoublequotemark leftsinglequotemark
+! … on [AltGr] + .
+keycode 60 = period colon ellipsis division ellipsis division
+! – on [AltGr] + -
+keycode 61 = minus underscore endash emdash endash emdash
+! ✓ & ✔ on [AltGr] ([shift]) + #
+keycode  51 = numbersign apostrophe backslash bar 0x1002713 0x1002714
+! [AltGr]+C for cents
+keycode  54 = c C Greek_psi Greek_PSI 0x10000A2 copyright
 ! Logic quantifiers (∀ ∃)
 keycode  38 = a A Greek_alpha Greek_ALPHA 0x1002200 0x1002203
 keycode  26 = e E Greek_epsilon Greek_EPSILON EuroSign 0x1002203
-! Delta and sigma
-keycode  40 = d D Greek_delta Greek_DELTA 0x1002202 Greek_DELTA
-keycode  39 = s S Greek_sigma Greek_SIGMA Greek_SIGMA U1E9E
+! infinity
+keycode  30 = u U Greek_theta Greek_THETA 0x100221e uparrow
+! dager †
+keycode  28 = t T Greek_tau Greek_TAU 0x1002020 Tcedilla t T tslash Tslash
 
-!!! Ideas:
-! Binary set and logic operators (∪ ∩ ∧ ∨): 0x1002227-0x100222a
-! Subset (⊂ ⊆): 0x1002282 0x1002286
-! Element (∈): 0x1002208
-! Mapsto (↦): 0x10021a6
-! Orthogonal (⊥): 0x10022a5
-! Douple-Arrows: 0x10021d0-0x10021d3
-! ALMOST EQUAL TO: 0x1002248; Not Equal To
+! diacritics for Spanish
+keycode  57 = n N ntilde Ntilde ntilde Ntilde
+!keycode  26 = e E eacute Eacute eacute Eacute
+!keycode 158 = eacute
+!Toggle keymap for e Hack:
+! - solaar umgeleitet und auf eine "Taste" gemapt (muss existieren)
+! - mate Tastenkombination ruft script auf
+! - script ruft xmodmap auf
+keycode  30 = u U uacute Uacute uacute Uacute
+keycode  31 = i I iacute idotless iacute idotless
+keycode  32 = o O oacute Oacute oacute Oacute
+! This overwrites ∀∃ set above
+keycode  38 = a A aacute Aacute aacute Aacute
+
+! Supersript numbers and fractures
+!keycode 10 = 1 exclam 1 exclam onesuperior exclamdown
+!keycode 11 = 2 quotedbl 2 at twosuperior onehalf
+!keycode 12 = 3 section 3 numbersign threesuperior onethird
+!keycode 13 = 4 dollar 4 dollar foursuperior onequarter
+!keycode 14 = 5 percent 5 percent fivesuperior onefifth
