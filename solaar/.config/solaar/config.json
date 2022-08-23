@@ -1,5 +1,30 @@
 {
   "407B:420592E2": {
+    "_absent": [
+      "hi-res-scroll",
+      "hires-smooth-invert",
+      "hires-smooth-resolution",
+      "smart-shift",
+      "thumb-scroll-mode",
+      "thumb-scroll-invert",
+      "onboard_profiles",
+      "report_rate",
+      "pointer_speed",
+      "speed-change",
+      "backlight",
+      "backlight-timed",
+      "fn-swap",
+      "disable-keyboard-keys",
+      "divert-crown",
+      "crown-smooth",
+      "divert-gkeys",
+      "m-key-leds",
+      "mr-key-led",
+      "multiplatform",
+      "gesture2-gestures",
+      "gesture2-divert",
+      "gesture2-params"
+    ],
     "_dpi-sliding": 6,
     "_modelId": "B020407BC08A",
     "_name": "MX Vertical Wireless Mouse",
@@ -33,7 +58,35 @@
       "86": 86
     }
   },
-  "4088:F7EC37E4": {
+  "4088:64D79A42": {
+    "_absent": [
+      "hi-res-scroll",
+      "lowres-smooth-scroll",
+      "hires-smooth-invert",
+      "hires-smooth-resolution",
+      "smart-shift",
+      "thumb-scroll-mode",
+      "thumb-scroll-invert",
+      "onboard_profiles",
+      "report_rate",
+      "pointer_speed",
+      "dpi",
+      "dpi-sliding",
+      "speed-change",
+      "mouse-gestures",
+      "backlight",
+      "backlight-timed",
+      "reprogrammable-keys",
+      "persistent-remappable-keys",
+      "divert-crown",
+      "crown-smooth",
+      "divert-gkeys",
+      "m-key-leds",
+      "mr-key-led",
+      "gesture2-gestures",
+      "gesture2-divert",
+      "gesture2-params"
+    ],
     "_modelId": "B35940880000",
     "_name": "Wireless Keyboard ERGO K860",
     "_sensitive": {
@@ -76,5 +129,5 @@
     "fn-swap": false,
     "multiplatform": 0
   },
-  "_version": "1.0.7"
+  "_version": "1.1.2"
 }
