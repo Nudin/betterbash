@@ -19,7 +19,6 @@ set wildignore+=*.a,*.o,*.hi
 set wildignore+=*.pdf,*.gz,*.aux,*.out,*.nav,*.snm,*.vrb
 set updatetime=250  " Decrease updatetime from 4s to 250ms
 set fillchars+=vert:\│,fold:— " nice line for vsplit and folds
-set linebreak " when wrap – only at word boundaries
 
 " Syntax-Highlight and colors
 syntax on
@@ -44,6 +43,13 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smarttab
+
+" Wrap
+set linebreak " when wrap – only at word boundaries
+set showbreak=-->
+set breakindentopt=sbr,shift:0
+set cpoptions+=n
+set cindent cinkeys-=0#
 
 " Search
 set incsearch
@@ -136,6 +142,11 @@ nnoremap gnp :bp<CR>
 nnoremap ö :bp<CR>
 nnoremap gnd :bd<CR>
 command! Bc :b#|bd#
+
+" Quickfix
+nnoremap Ä :cn<CR>
+nnoremap Ö :cp<CR>
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
 " Repeat last command
 nmap ´ @:
