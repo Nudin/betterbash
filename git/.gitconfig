@@ -8,6 +8,7 @@
    ui = auto
 [init]
    templatedir = ~/.git_template
+   defaultBranch = main
 [transfer]
    fsckobjects = true
 [fetch]
@@ -18,6 +19,8 @@
 [merge]
    conflictstyle = diff3
    tool = meld
+[commit]
+  verbose = true
 [alias]
    ucommit = reset HEAD~
    undo = reset --hard HEAD
@@ -27,6 +30,7 @@
    sync = "!ssh-add -l > /dev/null || ssh-add; git pull && git push"
    hide = update-index --assume-unchanged
    unhide = update-index --no-assume-unchanged
+   fpush = push --force-with-lease
    a = add
    ap = add -p
    c = commit --verbose
@@ -37,6 +41,15 @@
    d = diff
    ds = diff --stat
    dc = diff --staged
+   ri = rebase -i
+   cdiff = !git --no-pager diff
+   wdiff = diff --word-diff
+   sdiff = diff --staged
+   delta = -c core.pager=delta diff 
+   with-delta = !git -c core.pager=delta
+   tdiff = -c core.pager=delta -c delta.side-by-side=true diff 
+   dshow = -c core.pager=delta show
+   tshow = -c core.pager=delta -c delta.side-by-side=true show
    # list branches sorted by last modified
    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
    # list aliases
@@ -50,5 +63,22 @@
    history-view-vpane-position = 205
    main-window-view = HistoryView
 ; Add all setting that won't work on other environments in the following local file
+[rebase]
+   autosquash = true
+   autoStash = true
+[delta]
+   features = decorations
+[delta "decorations"]
+   commit-decoration-style = blue ul
+   commit-style = raw
+   file-style = omit
+   hunk-header-decoration-style = blue box
+   hunk-header-file-style = red
+   hunk-header-line-number-style = "#067a00"
+   hunk-header-style = file line-number syntax
+   line-numbers = true
+[interactive]
+   diffFilter = delta --color-only --features=interactive
+[delta "interactive"]
 [include]
    path = ~/.gitconfig.local
