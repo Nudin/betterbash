@@ -10,6 +10,10 @@
 - KeyPress: '4'
 ...
 ---
+- Key: [Calc Vkeyboard, pressed]
+- Execute: [kittz, qalc]
+...
+---
 - Key: [Lock PC, pressed]
 - Execute: systemctl suspend
 ...
