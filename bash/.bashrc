@@ -59,7 +59,7 @@ fi
 if [ -f "$HOME/.lesspipe.sh" ] ; then
   export LESSOPEN="|$HOME/.lesspipe.sh %s"
 fi
-export LESS=' -R '
+export LESS=' -R -#1 -j3 --incsearch --line-num-width 5 --save-marks'
 
 # Autostart ssh-agent
 if [[  "$SSH_CLIENT" == "" && "${SSH_AUTH_SOCK}" == "" ]]; then
@@ -93,7 +93,7 @@ source_if_existent ~/.git-aliases
 source_if_existent /usr/share/fzf/key-bindings.bash
 source_if_existent /usr/share/fzf/completion.bash
 source_if_existent ~/.fzf.bash
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='command rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 
@@ -143,6 +143,7 @@ _force_title=""
 alias du='du -h --max-depth=1'
 alias df='df -h'
 alias free="free -m"
+alias rsync="rsync -h"
 # turn on color and make grep silent
 alias ls='ls -h --color=auto --hyperlink=auto'
 alias grep='grep -s --color=auto'
@@ -185,6 +186,7 @@ alias mx='chmod a+x'
 line() {  head "-$1"  | tail -1; }
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
+alias cnv="tee >(xsel --clipboard --input)"
 alias vimwiki="vim ~/.vimwiki/index.wiki"
 alias vimrc="vim ~/.vim/vimrc"
 alias g++='gpp'
@@ -193,6 +195,7 @@ alias trunclines='cut -c -$COLUMNS'
 alias highlight='grep --color=yes -e '^' -e'
 alias nowrap='sed "s/\(.\{$(($(tput cols)-2))\}\).*/\1 …/"'
 alias rg='rg -M $(tput cols) --max-columns-preview'
+alias rg0='rg --max-depth=1'
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
@@ -371,12 +374,18 @@ xin() {
     )
 }
 
+# Replace string by another in all files, recursively
+rec_replace() {
+	sd "$1" "$2" $(\rg --files-with-matches "$1");
+}
+
 #========================================
-# 	Typos
+# 	Tippos
 #========================================
 alias cd..="cd .."
 alias xs='cd'
 alias vf='cd'
+alias ...="cd ../.."
 alias kk='ll'
 alias dgb="gdb -q"
 alias gbd="gdb -q"
