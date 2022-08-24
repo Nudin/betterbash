@@ -37,3 +37,5 @@ Control-v: '\C-a$(\C-e)\C-a'
 Control-n: "\C-creset\r\C-l"
 
 "\e\C-l": alias-expand-line
+
+$include ~/.inputrc.local
