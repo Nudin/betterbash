@@ -46,6 +46,12 @@ themes:
 	curl -s https://raw.githubusercontent.com/sjl/badwolf/master/colors/badwolf.vim > ~/.vim/colors/badwolf.vim
 	curl -s https://raw.githubusercontent.com/thomd/vim-wasabi-colorscheme/master/colors/wasabi256.vim > ~/.vim/colors/wasabi256.vim
 .PHONY: themes
+
+vimlanguagetool:
+	cd ~/.vim && wget -c -N https://languagetool.org/download/LanguageTool-stable.zip && rm -rf LanguageTool-??? && unzip LanguageTool-stable.zip
+	cd ~/.vim && rm LanguageTool || true
+	cd ~/.vim && ln -s $$(unzip -Z1 LanguageTool-stable.zip | head -1) LanguageTool
+.PHONY: vimlanguagetool
  
 vimplugins:
 	mkdir -p ~/.vim/autoload
@@ -55,13 +61,10 @@ vimplugins:
 	mkdir -p ~/.local/share/nvim/site/spell/
 	curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	curl -fLo ~/.vim/syntax/haskell.vim https://raw.githubusercontent.com/sdiehl/haskell-vim-proto/master/vim/syntax/haskell.vim
-	cd ~/.vim && wget -c -N https://languagetool.org/download/LanguageTool-stable.zip && rm -rf LanguageTool-??? && unzip LanguageTool-stable.zip
-	cd ~/.vim && rm LanguageTool || true
-	cd ~/.vim && ln -s $$(unzip -Z1 LanguageTool-stable.zip | head -1) LanguageTool
 	$(call INST,vim)
 .PHONY: vimplugins
 
-vim: themes vimplugins
+vim: themes vimplugins # vimlanguagetool
 	mkdir -p ~/.vim
 	mkdir -p ~/.vim/.backup ~/.vim/.swp ~/.vim/.undo
 	$(call INST,vim)
