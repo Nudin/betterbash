@@ -94,7 +94,12 @@ mutt:
 .PHONY: mutt
 
 ssh:
-	$(OINST) privateconf/ssh/.ssh/config ~/.ssh/config
+	$(OINST) ssh/.ssh/config ~/.ssh/config
+	$(OINST) privateconf/ssh/.ssh/hosts ~/.ssh/
+	$(OINST) privateconf/ssh/.ssh/hosts_local ~/.ssh/
+	$(OINST) privateconf/ssh/.ssh/hosts_orgs ~/.ssh/
+	$(OINST) privateconf/ssh/.ssh/hosts_wiki ~/.ssh/
+	$(OINST) privateconf/ssh/.ssh/hosts_work ~/.ssh/
 .PHONY: ssh
 
 imapfilter:
