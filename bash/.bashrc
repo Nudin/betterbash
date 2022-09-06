@@ -500,7 +500,7 @@ stmux() {
 # Collect commands that where not found to create aliases for them later
 command_not_found_handle() { echo "$*" >> ~/.command_not_found_list; echo "Command not found: $1"; return 127; }
 
-PROMPT_COMMAND=${PROMPT_COMMAND}';if [[ "$_force_title" != "" ]]; then printf "\033]0;%s\033\007" "$_force_title"; fi'
+PROMPT_COMMAND=${PROMPT_COMMAND%;}';if [[ "$_force_title" != "" ]]; then printf "\033]0;%s\033\007" "$_force_title"; fi'
 
 # Must be last, since sourced scripts my add themself as prefix
 PROMPT_COMMAND="__MY_PROMPT;${PROMPT_COMMAND}"
