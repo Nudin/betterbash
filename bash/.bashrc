@@ -59,7 +59,7 @@ fi
 if [ -f "$HOME/.lesspipe.sh" ] ; then
   export LESSOPEN="|$HOME/.lesspipe.sh %s"
 fi
-export LESS=' -R -#1 -j3 --incsearch --line-num-width 5 --save-marks'
+export LESS=' -R -#1 -j3 --incsearch --line-num-width 5 --save-marks --search-options=W'
 
 # Autostart ssh-agent
 if [[  "$SSH_CLIENT" == "" && "${SSH_AUTH_SOCK}" == "" ]]; then
