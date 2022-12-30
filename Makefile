@@ -7,7 +7,7 @@ endef
 
 default: vim bc bashrc lesspipe xmodmap mpv mutt ssh git inputrc tmux kitty
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty khal khard
 
 public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc git inputrc tmux kitty
 
@@ -127,6 +127,14 @@ python:
 mpvc:
 	$(call INST,mpvc)
 .PHONY: mpvc
+
+khal:
+	$(call INST,khal)
+.PHONY: khal
+
+khard:
+	$(call INST,khard)
+.PHONY: khard
 
 ### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
 ### This is not run by all!
