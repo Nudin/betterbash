@@ -25,17 +25,33 @@ set enable-bracketed-paste On
 
 set revert-all-at-newline on
 
-"\es":"\C-asudo \C-e"
-
+# Esc z Cycle through completion list (run twice to start)
 "\e[Z": menu-complete
 
-Control-o: "\C-e > output.txt"
+# ?
+#Control-c: "\C-creset\r\C-l"
 
-# Macht immer wieder Probleme…
-Control-v: '\C-a$(\C-e)\C-a'
+$if Bash
+	# Complete word from history
+	"\e\C-o": dabbrev-expand
 
-Control-n: "\C-creset\r\C-l"
+	# Append " > output.txt" at end of line
+	Control-o: "\C-e > output.txt"
 
-"\e\C-l": alias-expand-line
+	# Alt-Ctl-a: expand alias
+	"\e\C-a": alias-expand-line
+
+	# Add sudo at begin of line
+	"\es":"\C-asudo \C-e"
+
+	# Wrap line in $()
+	# Macht immer wieder Probleme…
+	Control-v: '\C-a$(\C-e)\C-a'
+$endif
+
+# Dump all readline settings/functions an their values
+"\e\C-f": dump-functions
+"\e\C-x": dump-variables
+"\e\C-m": dump-macros
 
 $include ~/.inputrc.local
