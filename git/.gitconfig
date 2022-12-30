@@ -14,22 +14,26 @@
 [fetch]
    fsckobjects = false
 [push]
-   default = simple
+   default = upstream
    followTags = true
 [merge]
    conflictstyle = diff3
    tool = meld
 [commit]
-  verbose = true
+   verbose = true
+[mergetool]
+   keepBackup = false
 [alias]
+   idff = diff
    ucommit = reset HEAD~
    undo = reset --hard HEAD
    stash-all = stash save --include-untracked
    glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-   alog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+   alog = log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset '
    sync = "!ssh-add -l > /dev/null || ssh-add; git pull && git push"
    hide = update-index --assume-unchanged
    unhide = update-index --no-assume-unchanged
+   introduced = log --source --all -S
    fpush = push --force-with-lease
    a = add
    ap = add -p
@@ -56,6 +60,8 @@
    la = "!git config -l | grep alias | cut -c 7-"
    # list recently used branches
    lb = !git reflog show --pretty=format:'%gs ~ %gd' --date=relative | grep 'checkout:' | grep -oE '[^ ]+ ~ .*' | awk -F~ '!seen[$1]++' | head -n 10 | awk -F' ~ HEAD@{' '{printf(\"  \\033[33m%s: \\033[37m %s\\033[0m\\n\", substr($2, 1, length($2)-1), $1)}'
+   tbranch = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+   fixup = "!f() { TARGET=$(git rev-parse "$1"); git commit --fixup=$TARGET ${@:2} && EDITOR=true git rebase -i --autostash --autosquash $TARGET^; }; f"
 [giggle]
    main-window-maximized = false
    main-window-geometry = 950x697+0+256
@@ -80,5 +86,13 @@
 [interactive]
    diffFilter = delta --color-only --features=interactive
 [delta "interactive"]
+[gpg]
+   program = /usr/bin/gpg2
+[pull]
+   ff = only
+[help]
+   autocorrect = 1
+[cola]
+   spellcheck = false
 [include]
    path = ~/.gitconfig.local
