@@ -5,9 +5,9 @@ define INST
   $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
 endef
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mutt imapfilter ssh git inputrc listadmin tmux kitty
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty
 
-public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv git inputrc tmux kitty
+public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc git inputrc tmux kitty
 
 kitty:
 	$(call INST,kitty)
@@ -121,6 +121,10 @@ git:
 python:
 	$(call INST,python)
 .PHONY: python
+
+mpvc:
+	$(call INST,mpvc)
+.PHONY: mpvc
 
 ### This files sets up a hook to run 'make INSTFLAGS='-f' after pull/merge
 ### This is not run by all!
