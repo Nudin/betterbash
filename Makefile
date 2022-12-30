@@ -5,6 +5,8 @@ define INST
   $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
 endef
 
+default: vim bc bashrc lesspipe xmodmap mpv mutt ssh git inputrc tmux kitty
+
 all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty
 
 public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc git inputrc tmux kitty
