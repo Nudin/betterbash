@@ -152,6 +152,7 @@ alias GREP='grep -s --color=yes'
 alias fgrep='fgrep -s  --color=auto'
 alias egrep='egrep -s --color=auto'
 alias tree='tree -C'
+alias ip='ip -color=auto'
 if hash colour-valgrind 2> /dev/null; then
   alias valgrind="colour-valgrind"
 fi
