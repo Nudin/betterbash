@@ -2,12 +2,16 @@
 ---
 - Process: anki
 - Key: [Back Button, pressed]
-- KeyPress: '2'
+- KeyPress:
+  - '2'
+  - click
 ...
 ---
 - Process: anki
 - Key: [Forward Button, pressed]
-- KeyPress: '4'
+- KeyPress:
+  - '4'
+  - click
 ...
 ---
 - Key: [Calc Vkeyboard, pressed]
@@ -20,28 +24,38 @@
 ---
 - Process: mpv
 - Key: [DPI Switch, pressed]
-- KeyPress: f
+- KeyPress:
+  - f
+  - click
 ...
 ---
 - Key: [DPI Switch, pressed]
-- KeyPress: Return
+- KeyPress:
+  - Return
+  - click
 ...
 ---
 - Process: konsole
 - Key: [Back Button, pressed]
-- KeyPress: BackSpace
+- KeyPress:
+  - BackSpace
+  - click
 ...
 ---
 - Process: kitty
 - Key: [Back Button, pressed]
-- KeyPress: odiaeresis
+- KeyPress:
+  - odiaeresis
+  - click
 ...
 ---
 - Or:
   - Process: konsole
   - Process: kitty
 - Key: [Forward Button, pressed]
-- KeyPress: adiaeresis
+- KeyPress:
+  - adiaeresis
+  - click
 ...
 ---
 - And:
@@ -50,7 +64,9 @@
   - Not:
       Process: konsole
 - Key: [Back Button, pressed]
-- KeyPress: XF86_Back
+- KeyPress:
+  - XF86_Back
+  - click
 ...
 ---
 - And:
@@ -59,17 +75,25 @@
   - Not:
       Process: kitty
 - Key: [Forward Button, pressed]
-- KeyPress: XF86_Forward
+- KeyPress:
+  - XF86_Forward
+  - click
 ...
 ---
 - Key: [Host Switch Channel 2, pressed]
-- KeyPress: XF86_WLAN
+- KeyPress:
+  - XF86_WLAN
+  - click
 ...
 ---
 - Key: [Lock PC, pressed]
-- KeyPress: XF86_Standby
+- KeyPress:
+  - XF86_Standby
+  - click
 ...
 ---
 - Key: [App Contextual Menu/Right Click, pressed]
-- KeyPress: Print
+- KeyPress:
+  - Print
+  - click
 ...
