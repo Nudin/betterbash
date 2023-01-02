@@ -26,9 +26,10 @@ for project in * privateconf/*; do
 	# shellcheck disable=SC2044
 	for file in $(find . -type f); do
 		file=${file#./}
+		full_file="$project/$file"
 		# 0. File not installed on system
 		if [[ ! -f "$HOME/$file" ]]; then
-			echo "Missing file: $file"
+			echo "Missing file: $full_file"
 			continue
 			if [[ "$mode" == "repo2system" ]]; then
 				echo "Updating system"
@@ -39,27 +40,27 @@ for project in * privateconf/*; do
 		inode_local=$(stat -c %i "$HOME/$file")
 		# 1. File is hardlinked
 		if [[ $inode_local -eq $inode_repo ]]; then
-			#echo "$file is hardlinked"
+			#echo "$full_file is hardlinked"
 			continue;
 		# 2. Files are identical
 		elif cmp --silent "$file" "$HOME/$file"; then
-			echo "Identical file $file – making it a hardlink"
+			echo "Identical file $full_file – making it a hardlink"
 			ln -f "$file" "$HOME/$file"
 			continue
 		# 3. Files are different & worktree clean
 		elif [[ $(git status --porcelain "$file") == "" ]]; then
 			if [[ "$mode" == "system2repo" ]]; then
-				echo "Different file $file – update repo"
+				echo "Different file $full_file – update repo"
 				ln -f "$HOME/$file" "$file"
 			elif [[ "$mode" == "repo2system" ]]; then
-				echo "Different file $file – update system"
+				echo "Different file $full_file – update system"
 				ln -f "$file" "$HOME/$file"
 			else
-				echo "Different file $file"
+				echo "Different file $full_file"
 			fi
 		# 4. Conflict
 		else
-			echo "Conflict $file $HOME/$file"
+			echo "Conflict $full_file $HOME/$file"
 		fi
 	done
 	cd "$base_dir" || exit
