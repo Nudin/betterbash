@@ -23,8 +23,8 @@ volume=80
 
 ### Video ###
 #framedrop=decoder+vo # For slow machines
-hwdec=auto-safe
-vd-lavc-threads=3
+#hwdec=auto-safe
+#vd-lavc-threads=3
 #vo=opengl-hq
 
 # Limit youtube-dl to max resolution of 1080p
