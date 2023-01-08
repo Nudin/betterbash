@@ -5,11 +5,11 @@ define INST
   $(OINST) -r $(1)/*(*|.[^.]|.??*) ~/
 endef
 
-default: vim bc bashrc lesspipe xmodmap mpv mutt ssh git inputrc tmux kitty
+default: vim bc bashrc lesspipe xmodmap mpv mutt ssh git inputrc tmux kitty python
 
-all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty khal khard
+all: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc mutt imapfilter ssh git inputrc listadmin tmux kitty khal khard python
 
-public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc git inputrc tmux kitty
+public: vim bc bashrc w3m nano browserweiche lesspipe xmodmap mpv mpvc git inputrc tmux kitty python
 
 kitty:
 	$(call INST,kitty)
