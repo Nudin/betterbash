@@ -104,8 +104,9 @@ fi
 # set up broot
 source_if_existent /home/michi/.config/broot/launcher/bash/br
 
-# Using this, aliases will work with sudo
+# Using this, aliases will work with sudo and watch
 alias sudo='sudo '
+alias watch='watch '
 
 #========================================
 #	ANSI-Colors for Bash
